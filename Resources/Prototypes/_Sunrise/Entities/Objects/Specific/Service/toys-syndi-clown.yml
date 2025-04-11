@@ -33,9 +33,9 @@
   - type: Tag
     tags:
     - Sidearm
-  - type: BasicEntityAmmoProvider # Ыбебееб
+  - type: BasicEntityAmmoProvider
     proto: FoodPieBananaCream
     capacity: 4
     count: 4
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 3 # Ыбебееб
+    rechargeCooldown: 3
