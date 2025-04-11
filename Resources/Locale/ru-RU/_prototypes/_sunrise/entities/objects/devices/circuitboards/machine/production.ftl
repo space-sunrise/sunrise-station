@@ -1,8 +1,8 @@
-ent-PrinterDocMachineCircuitboard = принтер документов (машинная плата)
-    .desc = Машинная плата принтера документов.
-ent-PacificatorCircuitboard = генератор пацифизма (машинная плата)
+ent-PrinterDocMachineCircuitboard = плата принтера документов
+    .desc = Машинная печатная плата для принтера документов
+ent-PacificatorCircuitboard = плата генератора пацифизма
+    .desc = Делает всех разумных существ в радиусе действия пацифистами.
+ent-ReflectorMachineCircuitboard = плата отражателя
     .desc = { ent-BaseMachineCircuitboard.desc }
-ent-ImplantExtractorMachineCircuitboard = Экстрактор имплантов (машинная плата)
-    .desc = Машинная плата Микроволнового экстрактора имплантов.
-ent-InterrogatorMachineCircuitboard = Экстрактор имплантов "Interrogator" (машинная плата)
-    .desc = { ent-ImplantExtractorMachineCircuitboard.desc }
+ent-ExosuitFabricatorHyperConvectionMachineCircuitboard = гиперконвекционный фабрикатор экзокостюмов (машинная плата)
+    .desc = { ent-BaseMachineCircuitboard.desc }

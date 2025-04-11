@@ -1,5 +1,7 @@
 ent-BasePDA = PDA
     .desc = Personal Data Assistant.
+ent-BaseWidePDA = { ent-BasePDA }
+    .desc = { ent-BasePDA.desc }
 ent-BaseSecurityPDA = { ent-BasePDA }
     .desc = { ent-BasePDA.desc }
 ent-BaseMedicalPDA = { ent-BasePDA }
@@ -151,3 +153,8 @@ ent-PiratePDA = pirate PDA
     .desc = Yargh!
 ent-SyndiAgentPDA = syndicate agent PDA
     .desc = For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
+ent-ChameleonPDA = passenger PDA
+    .desc = Why isn't it gray?
+    .suffix = Chameleon
+ent-WizardPDA = wizard PDA
+    .desc = You hear faint whispers coming from it.

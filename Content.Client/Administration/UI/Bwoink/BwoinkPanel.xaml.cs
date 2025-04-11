@@ -15,6 +15,7 @@ namespace Content.Client.Administration.UI.Bwoink
         public int Unread { get; private set; } = 0;
         public DateTime LastMessage { get; private set; } = DateTime.MinValue;
         private List<string> PeopleTyping { get; set; } = new();
+        public bool LoadDb { get; set; } = false;
         public event Action<string>? InputTextChanged;
 
         public BwoinkPanel(Action<string> messageSender)
@@ -55,11 +56,12 @@ namespace Content.Client.Administration.UI.Bwoink
 
         public void ReceiveLine(SharedBwoinkSystem.BwoinkTextMessage message)
         {
-            if (!Visible)
+            if (!Visible && !message.DbLoad)
                 Unread++;
 
             var formatted = new FormattedMessage(1);
-            formatted.AddMarkupOrThrow($"[color=gray]{message.SentAt.ToShortTimeString()}[/color] {message.Text}");
+            var formattedDate = $"[bold]{message.SentAt:dd.MM HH:mm}[/bold]";
+            formatted.AddMarkupOrThrow($"{formattedDate} {message.Text}");
             TextOutput.AddMessage(formatted);
             LastMessage = message.SentAt;
         }

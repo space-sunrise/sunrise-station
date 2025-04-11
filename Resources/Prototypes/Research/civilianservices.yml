@@ -91,10 +91,10 @@
     state: display
   discipline: CivilianServices
   tier: 1
-  cost: 7500
+  cost: 4500 #Sunrise-edit
   recipeUnlocks:
   - FatExtractorMachineCircuitboard
-  - BiofabricatorMachineCircuitboard
+  # - BiofabricatorMachineCircuitboard #Sunrise-edit
   - BiomassReclaimerMachineCircuitboard
 
 # Tier 2
@@ -114,6 +114,7 @@
   - FauxTileJungleAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
+  - FauxTileAstroAsteroidSand
 
 - type: technology
   id: BiochemicalStasis
@@ -216,17 +217,17 @@
 
 # Tier 3
 
-#- type: technology
-#  id: QuantumFiberWeaving
-#  name: research-technology-quantum-fiber-weaving
-#  icon:
-#    sprite: Clothing/Shoes/Boots/speedboots.rsi
-#    state: icon
-#  discipline: CivilianServices
-#  tier: 3
-#  cost: 10000
-#  recipeUnlocks:
-#  - ClothingShoesBootsSpeed
+- type: technology
+  id: QuantumFiberWeaving
+  name: research-technology-quantum-fiber-weaving
+  icon:
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - ClothingShoesBootsSpeed
 
 - type: technology
   id: BluespaceChemistry

@@ -7,6 +7,7 @@
   - CargoTechnician
   - Quartermaster
   - SalvageSpecialist
+  - MailCarrier # Sunrise-Roles
 
 - type: department
   id: Civilian
@@ -152,7 +153,6 @@
   - ClownBorg # Sunrise-Edit
   - PeaceBorg # Sunrise-Edit
   - SecurityBorg # Sunrise-Edit
-  - SecurityCombatBorg # Sunrise-Edit
   primary: false
 
 - type: department

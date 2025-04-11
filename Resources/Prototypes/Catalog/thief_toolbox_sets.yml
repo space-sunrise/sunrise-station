@@ -6,17 +6,9 @@
     sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
     state: icon
   content:
-  - ChameleonPDA
-  - ClothingUniformJumpsuitChameleon
-  - ClothingOuterChameleon
-  - ClothingNeckChameleon
-  - ClothingMaskGasChameleon
-  - ClothingHeadHatChameleon
-  - ClothingEyesChameleon
-  - ClothingHeadsetChameleon
-  - ClothingShoesChameleon
-  - BarberScissors
+  - ClothingBackpackChameleonFill
   - ChameleonProjector
+  - FakeMindShieldImplanter
   - AgentIDCard
 
 - type: thiefBackpackSet
@@ -47,7 +39,7 @@
   content:
   - StorageImplanter
   - DnaScramblerImplanter
-  - EphedrineChemistryBottle
+  - ChemistryBottleEphedrine
   - SoapOmega
   - Syringe
   - DrinkShaker
@@ -61,9 +53,10 @@
     state: telecrystal
   content:
   - RadioJammer
-  - EmpImplant # Sunrise-Edit
+  - EmpImplanter # Sunrise-Edit
   - TraitorCodePaper
   - Emag
+  - AccessBreaker
   - Lighter
   - CigPackSyndicate
   - SyndicatePersonalAI # Sunrise-Edit
@@ -77,11 +70,11 @@
     sprite: Objects/Tanks/anesthetic.rsi
     state: icon
   content:
-  - ScramImplant # Sunrise-Edit
-  - NocturineChemistryBottle
-  - NocturineChemistryBottle
+  - ChemistryBottleNocturine
+  - ChemistryBottleNocturine
   - HypopenBox
   - NitrousOxideTankFilled
+  - ScramImplanter # Sunrise-Edit
 
 - type: thiefBackpackSet
   id: CommunicatorSet
@@ -105,7 +98,7 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
     state: icon
   content:
-  - ScramImplant # Sunrise-Edit
+  - ScramImplanter # Sunrise-Edit
   - InvisibleCrate
   - FultonBeacon
   - Fulton

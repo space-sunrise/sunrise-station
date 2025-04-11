@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Humanoid;
 using Content.Shared.Item;
-using Content.Shared.Roles;
 using Content.Shared.Tag;
 
 namespace Content.Shared.Whitelist;
@@ -9,7 +8,6 @@ namespace Content.Shared.Whitelist;
 public sealed class EntityWhitelistSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
@@ -58,22 +56,6 @@ public sealed class EntityWhitelistSystem : EntitySystem
             }
         }
 
-        if (list.MindRoles != null)
-        {
-            var regs = StringsToRegs(list.MindRoles);
-
-            foreach (var role in regs)
-            {
-                if ( _roles.MindHasRole(uid, role.Type, out _))
-                {
-                    if (!list.RequireAll)
-                        return true;
-                }
-                else if (list.RequireAll)
-                    return false;
-            }
-        }
-
         if (list.Registrations != null && list.Registrations.Count > 0)
         {
             foreach (var reg in list.Registrations)
@@ -96,14 +78,28 @@ public sealed class EntityWhitelistSystem : EntitySystem
 
         if (list.Tags != null)
         {
-            return list.RequireAll
-                ? _tag.HasAllTags(uid, list.Tags)
-                : _tag.HasAnyTag(uid, list.Tags);
+            // Sunrise-Start
+            if (list.RequireAllTags ? _tag.HasAllTags(uid, list.Tags) : _tag.HasAnyTag(uid, list.Tags))
+            {
+                if (!list.RequireAll)
+                    return true;
+            }
+            else if (list.RequireAll)
+                return false;
+            // Sunrise-End
         }
 
         // Sunrise-Start
         if (list.Species != null && TryComp<HumanoidAppearanceComponent>(uid, out var appearance))
-            return list.Species.Contains(appearance.Species);
+        {
+            if (list.Species.Contains(appearance.Species))
+            {
+                if (!list.RequireAll)
+                    return true;
+            }
+            else if (list.RequireAll)
+                return false;
+        }
         // Sunrise-End
 
         return list.RequireAll;

@@ -9,13 +9,13 @@
       - id: ClothingHeadsetAltCommand
       - id: CigarGoldCase
         prob: 0.25
-      - id: ClothingMaskGasSecurity
+      - id: ClothingMaskGasBlueShield
       - id: TrackingImplanter
         amount: 8
 
 - type: entity
   id: LockerBlueshieldFilledUplink
-  suffix: Filled
+  suffix: Filled, Uplink
   parent: LockerBlueshield
   components:
   - type: StorageFill
@@ -24,7 +24,23 @@
       - id: ClothingHeadsetAltCommand
       - id: CigarGoldCase
         prob: 0.25
-      - id: ClothingMaskGasSecurity
+      - id: ClothingMaskGasBlueShield
+      - id: TrackingImplanter
+        amount: 8
+
+- type: entity
+  id: LockerBlueshieldFilledUplinkMultiphase
+  suffix: Filled, Uplink, Multiphase
+  parent: LockerBlueshield
+  components:
+  - type: StorageFill
+    contents:
+      - id: BaseUplinkNTERTBlueShield
+      - id: ClothingHeadsetAltCommand
+      - id: CigarGoldCase
+        prob: 0.25
+      - id: WeaponEnergyGunMultiphase
+      - id: ClothingMaskGasBlueShield
       - id: TrackingImplanter
         amount: 8
 
@@ -39,7 +55,7 @@
     - id: ClothingHeadsetAltCommand
     - id: CigarGoldCase
       prob: 0.25
-    - id: ClothingMaskGasSecurity
+    - id: ClothingMaskGasBlueShield
     - id: TrackingImplanter
       amount: 8
     - id: ClothingOuterHardsuitBlueshield
@@ -55,8 +71,4 @@
     access: [["BlueShield"]]
   - type: StorageFill
     contents:
-    - id: WeaponRifleLecter
-      amount: 1
-    - id: MagazineRifle
-      amount: 2
     - id: WeaponEnergyGunMultiphase

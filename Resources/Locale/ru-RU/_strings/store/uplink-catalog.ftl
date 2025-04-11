@@ -11,6 +11,8 @@ uplink-esword-name = Энергетический меч
 uplink-esword-desc = Очень опасный энергомеч, способный отражать выстрелы. В выключенном состоянии может храниться в карманах. Сильно шумит при использовании или включении.
 uplink-esword-double-name = Двухклинковый энергетический меч
 uplink-esword-double-desc = Гораздо более дорогая альтернатива обычному энергетическому мечу: с большим шансом отражения, большим углом атаки, более высоким уроном по конструкциям и большей скоростью замаха. Сильно шумит при включении и использовании.
+uplink-hypereutactic-blade-name = Hypereutactic Blade
+uplink-hypereutactic-blade-desc = A gigantic energy sword with power that matches its looks. Requires two hands. Slow and unwieldy, yet pretty adept at reflecting. Previously made infamous by an operative wearing a joy mask. You wouldn't want to see this coming at you down the hall!
 uplink-edagger-name = Энергокинжал
 uplink-edagger-desc = Небольшой энергитический кинжал, удобно замаскированный под ручку.
 uplink-fire-axe-flaming-name = Пылающий топор
@@ -26,6 +28,8 @@ uplink-smoke-grenade-name = Дымовая граната
 uplink-smoke-grenade-desc = Граната, выпускающая огромное облако дыма, идеально подходит для того, чтобы убить кого-то в тени или незаметно скрыться.
 uplink-mini-bomb-name = Минибомба Синдиката
 uplink-mini-bomb-desc = Маломощное, высокоэффективное точечное взрывное устройство для диверсий, с пятисекундным взрывателем. Идеально подходит для быстрого уничтожения устройств, трупа или чего-либо ещё.
+uplink-singularity-grenade-name = Граната сингулярности
+uplink-singularity-grenade-desc = Граната, имитирующая мощь сингулярности, создаёт мощный гравитационный колодец.
 uplink-supermatter-grenade-name = Граната суперматерии
 uplink-supermatter-grenade-desc = Граната, имитирующая расслоение суперматерии в одноимённом двигателе, создающая мощный гравитационный колодец. Взрыв сравним с взрывом минибомбы.
 uplink-whitehole-grenade-name = Граната белой дыры
@@ -79,7 +83,11 @@ uplink-holster-desc = Глубокая плечевая кобура, спосо
 uplink-chest-rig-name = Армейская ременно-плечевая система
 uplink-chest-rig-desc = Взрывоустойчивая тактическая разгрузочная система, используемая для хранения предательского снаряжения.
 uplink-emag-name = Криптографический секвенсор
-uplink-emag-desc = Он же ЕМАГ, визитная карточка Синдиката. Устройство, способное открывать шлюзы и взламывать различные станционные устройства. Перезаряжается автоматически.
+uplink-emag-desc = Визитка Синдиката. Электронный модуль для вмешательства в работу станционного оборудования. Автоперезарядка.
+uplink-access-breaker-name = Взломщик доступа
+uplink-access-breaker-desc = Взломанный ID-конфигуратор, верный напарник ЕМАГа. Принудительно открывает шлюзы и сбрасывает уровни доступа. Автоперезарядка.
+uplink-syndie-intellicard-name = Интелликард Синдиката
+uplink-syndie-intellicard-desc = Самый надёжный друг в деле борьбы против Станционного ИИ!
 uplink-agent-id-card-name = ID карта Агента
 uplink-agent-id-card-desc = Модифицированная ID карта, которая может копировать доступы с других карт и менять своё имя и должность по усмотрению.
 uplink-black-jetpack-name = Чёрный джетпак
@@ -92,10 +100,6 @@ uplink-reinforcement-radio-nukeops-name = Телепорт Ядерного оп
 uplink-reinforcement-radio-nukeops-desc = Телепортирует в качестве подкрепления сомнительного качества ядерного оперативника. Не имеет кнопки отключения, покупайте его только если вы готовы к вечеринке. У них будет базовое снаряжение ядерного оперативника.
 uplink-reinforcement-radio-cyborg-assault-name = Телепорт штурмового киборга Синдиката
 uplink-reinforcement-radio-cyborg-assault-desc = Машина для убийств с доступом к энергомечу, пулемёту, криптографическому секвенсору и пинпоинтеру.
-uplink-mech-teleporter-heavy-name = Телепорт тяжелого меха
-uplink-mech-teleporter-heavy-desc = Содержит тяжелобронированный мех Cybersan с интегрированными цепным мечом и ракетной установкой BRM-6.
-uplink-mech-teleporter-assault-name = Телепорт штурмового меха
-uplink-mech-teleporter-assault-desc = Содержит легкобронированный мех Cybersan с интегрированными цепным мечом и легкой ракетной установкой SRM-8.
 uplink-stealth-box-name = Стелс-коробка
 uplink-stealth-box-desc = Ящик, оснащённый технологией невидимости, проникните везде и не двигайтесь слишком быстро!
 uplink-headset-name = Полноразмерная гарнитура Синдиката
@@ -141,6 +145,8 @@ uplink-death-acidifier-implant-name = Имплантер Посмертный р
 uplink-death-acidifier-implant-desc = Полностью растворяет пользователя и его снаряжение при ручной активации или гибели носителя.
 uplink-micro-bomb-implanter-name = Имплантер Микробомба
 uplink-micro-bomb-implanter-desc = Взрывается при ручной активации или гибели носителя этого импланта. Уничтожает тело пользователя со всем снаряжением.
+uplink-radio-implanter-name = Радиоимплант
+uplink-radio-implanter-desc = Вживляемое радио Синдиката для скрытой связи. Не требует гарнитуры.
 # Bundles
 uplink-observation-kit-name = Набор наблюдателя
 uplink-observation-kit-desc = В комплект входят консольная плата монитора камер наблюдения, и охранный визор, замаскированный под солнцезащитные очки.
@@ -158,40 +164,6 @@ uplink-meds-bundle-name = Медицинский набор
 uplink-meds-bundle-desc = Всё, что нужно для возвращения в строй ваших товарищей: главным образом, боевая аптечка, дефибриллятор и три боевых медипена.
 uplink-ammo-bundle-name = Набор боеприпасов
 uplink-ammo-bundle-desc = Перезаряжаю! Содержит 1 коробку с магазинами для c20r, 1 коробка с магазинами для Бульдога и 1 коробка с магазинами L6 Saw.
-
-uplink-ammo-crate-ammokit-bundle-name = ящик супер набора боеприпасов синдиката
-uplink-ammo-crate-ammokit-bundle-desc = Перезаряжаю! Перезаряжаю! Перезаряжаю! Содержит все виды и наборы патронов, исключая боеприпасов для больших пушек.
-
-uplink-ammo-caselesskit-name = Набор безгильзовых патронов
-uplink-ammo-caselesskit-desc = Перезаряжаю! Содержит 3 расширеных магазина and 3 базовых магазина для Siar-52.
-
-uplink-ammo-smgkit-name = Набор магазинов для C-20r
-uplink-ammo-smgkit-desc = Перезаряжаю! Содержит 8 магазинов для C-20r.
-
-uplink-ammo-smgincendiarykit-name = Набор зажигательных магазинов для C-20r
-uplink-ammo-smgincendiarykit-desc = Перезаряжаю! Содержит 8 зажигательных магазина для C-20r.
-
-uplink-ammo-smguraniumkit-name = Набор урановых магазинов для C-20r
-uplink-ammo-smguraniumkit-desc = Перезаряжаю! Содержит 8 урановых магазина для C-20r.
-
-uplink-ammo-shotgunkit-name = Набор магазинов для дробовика
-uplink-ammo-shotgunkit-desc = Перезаряжаю! Содержит 5 магазина дроби and 3 магазина пуля для Bulldog.
-
-uplink-ammo-shotgunincendiarykit-name = Набор зажигательных магазинов для дробовика
-uplink-ammo-shotgunincendiarykit-desc = Перезаряжаю! Содержит 8 зажигательные магазины для Bulldog.
-
-uplink-ammo-shotgunuraniumkit-name = Набор урановых магазинов для дробовика
-uplink-ammo-shotgunuraniumkit-desc = Перезаряжаю! Содержит 8 урановые магазины для Bulldog.
-
-uplink-ammo-lmgkit-name = Набор коробов
-uplink-ammo-lmgkit-desc = Перезаряжаю! Содержит 4 магазина для L6 Saw или DL6902.
-
-uplink-ammo-lmgincendiarykit-name = Набор зажигательных коробов
-uplink-ammo-lmgincendiarykit-desc = Перезаряжаю! Содержит 4 зажигательных магазина для L6 Saw или DL6902.
-
-uplink-ammo-lmguraniumkit-name = Набор урановых коробов
-uplink-ammo-lmguraniumkit-desc = Перезаряжаю! Содержит 4 урановых магазина для L6 Saw или DL6902.
-
 uplink-sniper-bundle-name = Набор снайпера
 uplink-sniper-bundle-desc = Неприметный чемодан, в котором находятся Христов, 10 запасных патронов и удобная маскировка.
 # Bundles
@@ -347,7 +319,9 @@ uplink-combat-bakery-name = Набор боевой выпечки
 uplink-combat-bakery-desc = Набор скрытых выпечных оружий. Включает багет, который умелый мим может использовать как меч, и пару метательных круассанов. После выполнения работы съешьте улики.
 uplink-business-card-name = Визитная карточка синдиката
 uplink-business-card-desc = Визитная карточка, которую можно подарить кому-нибудь, чтобы продемонстрировать свою причастность к синдикату, или оставить на месте преступления, чтобы подшутить над детективом. Вы можете купить не более трех таких визиток.
-uplink-syndicate-teleporter-name = Ручной телепорт Синдиката
-uplink-syndicate-teleporter-desc = Экспериментальное устройство ручного телепорта. Телепортирует владельца на небольшое расстояние вперед. Будьте осторожны, чтобы не оказаться в стене.
+uplink-smuggler-satchel-name = Сумка контрабандиста
+uplink-smuggler-satchel-desc = Удобная, подозрительно выглядящая сумка. Достаточно плоская, чтобы поместиться под напольной плиткой.
+uplink-fake-mindshield-name = Имитатор защиты разума
+uplink-fake-mindshield-desc = Переключаемый имплант, воспроизводящий сигнатуры настоящего щита. Обманывает сканеры командования, создавая ложное присутствие защиты. (Имплантер NT не включён в поставку.)
 uplink-handcuffs-name = Наручники
 uplink-handcuffs-desc = Используется для удержания жертв.

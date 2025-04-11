@@ -65,7 +65,31 @@
             "name": "Barber"
         },
         {
+            "name": "NanotrasenGuard"
+        },
+        {
+            "name": "NanotrasenLeader"
+        },
+        {
             "name": "Pathologist"
+        },
+        {
+            "name": "CaptainUSSP"
+        },
+        {
+            "name": "CrewUSSP"
+        },
+        {
+            "name": "OfficerUSSP"
+        },
+        {
+            "name": "OfficerAltUSSP"
+        },
+        {
+            "name": "SoldierUSSP"
+        },
+        {
+            "name": "MailCarrier"
         }
     ]
 }

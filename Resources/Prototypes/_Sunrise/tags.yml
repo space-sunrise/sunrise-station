@@ -332,3 +332,21 @@
 
 - type: Tag
   id: FugitiveUplink
+
+- type: Tag
+  id: Vest
+
+- type: Tag
+  id: FullBodyOuter
+
+- type: Tag
+  id: Directional
+
+- type: Tag
+  id: Geranium
+
+- type: Tag
+  id: WhitelistChameleonSuit
+
+- type: Tag
+  id: Sunflower

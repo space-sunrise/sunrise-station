@@ -50,14 +50,16 @@ public sealed partial class SubdermalImplantComponent : Component
     [DataField]
     public EntityWhitelist? Blacklist;
 
-    // Sunrise-Start
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("dropContainerItemsIfGibbed"), AutoNetworkedField]
-    public bool DropContainerItemsIfGibbed = true;
+    /// <summary>
+    /// If set, this ProtoId is used when attempting to draw the implant instead.
+    /// Useful if the implant is a child to another implant and you don't want to differentiate between them when drawing.
+    /// </summary>
+    [DataField]
+    public EntProtoId? DrawableProtoIdOverride;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("deleteWhenDraw"), AutoNetworkedField]
-    public bool DeleteWhenDraw;
+    // Sunrise-Start
+    [DataField, AutoNetworkedField]
+    public bool DropContainerItemsIfGib;
     // Sunrise-End
 }
 

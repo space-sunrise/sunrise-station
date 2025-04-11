@@ -65,7 +65,7 @@
   parent: BaseMobFleshCult
   id: MobFleshSpider
   components:
-#    - type: VentCrawler
+    - type: VentCrawler
     - type: HTN
       rootTask:
         task: XenoCompound
@@ -100,13 +100,13 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        125: Dead
+        150: Dead
     - type: Bloodstream
       bloodMaxVolume: 300
       bloodReagent: Blood
     - type: MovementSpeedModifier
-      baseWalkSpeed: 3
-      baseSprintSpeed: 4.5
+      baseWalkSpeed: 4.5
+      baseSprintSpeed: 5
     - type: GhostRole
       allowMovement: true
       allowSpeech: true
@@ -114,6 +114,10 @@
       name: mob-flesh-spider-ghost-role-name
       description: mob-flesh-spider-ghost-role-desc
       rules: mob-flesh-cult-rules
+      raffle:
+        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
     - type: GhostTakeoverAvailable
     - type: MeleeWeapon
       hidden: true
@@ -123,8 +127,8 @@
       animation: WeaponArcClaw
       damage:
         types:
-          Piercing: 5
-          Poison: 3
+          Piercing: 7
+          Poison: 5
     - type: Spider
       webPrototype: FleshSpiderWeb
       webAction: FleshSpiderWebAction
@@ -218,8 +222,8 @@
       animation: WeaponArcSmash
       damage:
         types:
-          Slash: 10
-          Blunt: 20
+          Slash: 15
+          Blunt: 25
           Structural: 300
     - type: GhostRole
       allowMovement: true
@@ -228,6 +232,10 @@
       name: mob-flesh-pudge-ghost-role-name
       description: mob-flesh-pudge-ghost-role-desc
       rules: mob-flesh-cult-rules
+      raffle:
+        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
     - type: GhostTakeoverAvailable
     - type: Fixtures
       fixtures:
@@ -268,7 +276,7 @@
       animation: WeaponArcSmash
       damage:
         types:
-          Piercing: 3
+          Piercing: 5
     - type: DamageStateVisuals
       states:
         Alive:
@@ -293,11 +301,15 @@
       name: mob-flesh-ball-ghost-role-name
       description: mob-flesh-ball-ghost-role-desc
       rules: mob-flesh-cult-rules
+      raffle:
+        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
     - type: GhostTakeoverAvailable
     - type: MobThresholds
       thresholds:
         0: Alive
-        25: Dead
+        50: Dead
     - type: MovementSpeedModifier
       baseWalkSpeed: 5
       baseSprintSpeed: 6
@@ -366,6 +378,10 @@
       name: mob-flesh-bat-ghost-role-name
       description: mob-flesh-bat-ghost-role-desc
       rules: mob-flesh-cult-rules
+      raffle:
+        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
     - type: GhostTakeoverAvailable
     - type: MeleeWeapon
       hidden: true
@@ -375,7 +391,7 @@
       animation: WeaponArcBite
       damage:
         types:
-          Piercing: 5
+          Piercing: 7
     - type: MobThresholds
       thresholds:
         0: Alive
@@ -390,7 +406,7 @@
   parent: BaseMobFleshCult
   id: MobFleshHugger
   components:
-#    - type: VentCrawler
+    - type: VentCrawler
     - type: FleshMob
       soundDeath: "/Audio/_Sunrise/FleshCult/flesh_worm_dead.ogg"
       deathMobSpawnId: "MobFleshWorm"
@@ -400,7 +416,7 @@
       chansePounce: 33
       damage:
         types:
-          Piercing: 2
+          Piercing: 5
       actionJump: FleshHuggerJump
       actionGetOff: FleshHuggerGetOff
     - type: Sprite
@@ -448,6 +464,10 @@
       name: mob-flesh-hugger-ghost-role-name
       description: mob-flesh-hugger-ghost-role-desc
       rules: mob-flesh-cult-rules
+      raffle:
+        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
     - type: GhostTakeoverAvailable
     - type: MeleeWeapon
       hidden: true
@@ -457,11 +477,11 @@
       animation: WeaponArcBite
       damage:
         types:
-          Piercing: 2
+          Piercing: 5
     - type: MobThresholds
       thresholds:
         0: Alive
-        25: Dead
+        50: Dead
     - type: MovementSpeedModifier
       baseWalkSpeed: 3.5
       baseSprintSpeed: 4.5
@@ -519,11 +539,11 @@
       animation: WeaponArcBite
       damage:
         types:
-          Piercing: 1
+          Piercing: 3
     - type: MobThresholds
       thresholds:
         0: Alive
-        15: Dead
+        25: Dead
     - type: MovementSpeedModifier
       baseWalkSpeed: 4
       baseSprintSpeed: 5
@@ -535,7 +555,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 25
+          damage: 45
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -564,7 +584,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        5: Dead
+        15: Dead
     - type: MeleeWeapon
       hidden: true
       soundHit:
@@ -573,12 +593,12 @@
       animation: WeaponArcBite
       damage:
         types:
-          Piercing: 0.5
+          Piercing: 1
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 15
+          damage: 25
         behaviors:
         - !type:SpawnEntitiesBehavior
           spawn:

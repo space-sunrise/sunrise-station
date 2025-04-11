@@ -40,6 +40,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string HitscanProto = "HitscanEffect";
@@ -126,7 +127,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
             var startCoords = GetCoordinates(a.coordinates);
 
-            if (Deleted(startCoords.EntityId))
+            if (!TryComp(startCoords.EntityId, out TransformComponent? relativeXform))
                 continue;
 
             if (a.effectType == EffectType.Tracer)
@@ -137,58 +138,56 @@ public sealed partial class GunSystem : SharedGunSystem
                 var stepIndex = 0;
                 foreach (var stepCoords in entityCoordinatesEnumerable)
                 {
-                    var localIndex = stepIndex;
-                    var delay = localIndex * tracerInterval;
+                    var ent = CreateTracerEffect(stepCoords, a.angle, rsi, relativeXform);
 
-                    Timer.Spawn(TimeSpan.FromSeconds(delay), () =>
+                    var anim = new Animation()
                     {
-                        CreateTracerEffect(stepCoords, a.angle, rsi);
-                    });
+                        Length = TimeSpan.FromSeconds(3.00f),
+                        AnimationTracks =
+                        {
+                            new AnimationTrackSpriteFlick()
+                            {
+                                LayerKey = EffectLayers.Unshaded,
+                                KeyFrames =
+                                {
+                                    new AnimationTrackSpriteFlick.KeyFrame("empty", stepIndex * (float)tracerInterval),
+                                    new AnimationTrackSpriteFlick.KeyFrame(rsi.RsiState, (stepIndex + 1) * (float)tracerInterval),
+                                    new AnimationTrackSpriteFlick.KeyFrame("empty", (stepIndex + 2) * (float)tracerInterval),
+                                }
+                            }
+                        }
+                    };
 
+                    _animPlayer.Play(ent, anim, "hitscan-effect");
                     stepIndex++;
                 }
             }
             else if (a.effectType == EffectType.Static)
             {
-                CreateStaticEffect(startCoords, a.angle, rsi, a.distance);
+                CreateStaticEffect(startCoords, a.angle, rsi, a.distance, relativeXform);
             }
         }
     }
 
-    private EntityUid CreateTracerEffect(EntityCoordinates coords, Angle angle, SpriteSpecifier.Rsi rsi)
+    private EntityUid CreateTracerEffect(EntityCoordinates coords, Angle angle, SpriteSpecifier.Rsi rsi, TransformComponent relativeXform)
     {
         var ent = Spawn(HitscanTracerProto, coords);
         var sprite = Comp<SpriteComponent>(ent);
+
         var xform = Transform(ent);
-        xform.LocalRotation = angle;
+        var targetWorldRot = angle + _xform.GetWorldRotation(relativeXform);
+        var delta = targetWorldRot - _xform.GetWorldRotation(xform);
+        _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
+
         sprite[EffectLayers.Unshaded].AutoAnimated = false;
         sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
         sprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
         sprite.Scale = new Vector2(1f, 1f);
         sprite[EffectLayers.Unshaded].Visible = true;
-
-        var anim = new Animation()
-        {
-            Length = TimeSpan.FromSeconds(0.48f),
-            AnimationTracks =
-            {
-                new AnimationTrackSpriteFlick()
-                {
-                    LayerKey = EffectLayers.Unshaded,
-                    KeyFrames =
-                    {
-                        new AnimationTrackSpriteFlick.KeyFrame(rsi.RsiState, 0f),
-                        new AnimationTrackSpriteFlick.KeyFrame("empty", 0.02f),
-                    }
-                }
-            }
-        };
-
-        _animPlayer.Play(ent, anim, "hitscan-effect");
         return ent;
     }
 
-    private void CreateStaticEffect(EntityCoordinates coords, Angle angle, SpriteSpecifier.Rsi rsi, float distance)
+    private void CreateStaticEffect(EntityCoordinates coords, Angle angle, SpriteSpecifier.Rsi rsi, float distance, TransformComponent relativeXform)
     {
         var ent = Spawn(HitscanProto, coords);
         var sprite = Comp<SpriteComponent>(ent);

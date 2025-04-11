@@ -21,7 +21,31 @@ vampire-unnaturalstrength = Верхние мышцы { CAPITALIZE(THE($user)) }
 vampire-supernaturalstrength = Верхние мышцы { CAPITALIZE(THE($user)) } набухают от мощи делая его сверхсильным!
 store-currency-display-blood-essence = Кровавая эссенция
 store-category-vampirepowers = Силы
+vampire-power-summonheirloom = Призыв реликвии
+vampire-power-summonheirloom-description = Вызовите семейную реликвию, подаренную самой Лилит.
+vampire-power-blessing = Благословение Лилит
+vampire-power-blessing-description = Поклянитесь своей душой Лилит, получите ее благословение и пируйте от щедрот вокруг.
+vampire-power-togglefangs = Переключение клыков
+vampire-power-togglefangs-description = Выдвигайте или втягивайте клыки. Если вы будете ходить с выпущенными клыками, это может раскрыть вашу истинную сущность.
+vampire-power-glare = Блики
+vampire-power-glare-description = Выпустите из глаз ослепительную вспышку, оглушающую незащищенного смертного на 10 секунд. Стоимость активации: 20 эссенции. Время действия: 60 секунд
+vampire-power-hypnotise = Гипноз
+vampire-power-hypnotise-description = Глубоко загляните в глаза смертного, заставляя его уснуть на 60 секунд. Стоимость активации: 20 эссенции. Задержка активации: 5 секунд. Время действия: 5 минут
+vampire-power-screech = Скрип
+vampire-power-screech-description = Издайте пронзительный крик, оглушая незащищенных смертных и разбивая вдребезги хрупкие предметы поблизости. Стоимость активации: 20 эссенции. Задержка активации: 5 секунд. Время действия: 5 минут
+vampire-power-bloodsteal = Кража крови
+vampire-power-bloodsteal-description = Выжимает кровь из всех тел поблизости - живых или мертвых. Стоимость активации: 20 эссенции. Время действия: 60 секунд
+vampire-power-batform = Форма летучей мыши
+vampire-power-batform-description = Принимает форму летучей мыши. Быстрая, трудноуязвимая, любит фрукты. Стоимость активации: 20 эссенции. Время действия: 180 секунд
+vampire-power-mouseform = Мышиная форма
+vampire-power-mouseform-description = Примите облик мыши. Быстрая, маленькая, невосприимчива к дверям. Стоимость активации: 20 эссенции. Время действия: 180 секунд.
+vampire-power-cloakofdarkness = Плащ тьмы
+vampire-power-cloakofdarkness-description = Замаскируйте себя от глаз смертных, делая вас невидимым в неподвижном состоянии. Стоимость активации: 30 эссенции. Уход: 1 эссенция/секунда Время действия: 10 секунд
 store-category-vampirepassives = Пассивные
+vampire-power-thermalvision = Тепловое зрение
+vampire-power-thermalvision-description = Включите тепловое зрение, позволяющее видеть живых существ сквозь стены. Эта способность открывается, как только вы достигнете 500 эссенции крови.
+vampire-thermal-vision-on = Вы активируете тепловое зрение.
+vampire-thermal-vision-off = Вы деактивируете тепловое зрение.
 #Powers
 
 #Passives
@@ -71,6 +95,11 @@ vampire-mutation-bestia-info =
     
     - Форма летучей мыши
     - Мышиная форма
+# Alerts
+alerts-vampire-blood-name = Кровь
+alerts-vampire-blood-desc = Уровень крови вампира.
+alerts-vampire-stellar-weakness-name = Слабость к свету
+alerts-vampire-stellar-weakness-desc = Вампиры слабы к солнечному свету. Будьте осторожны!
 
 ## Objectives
 

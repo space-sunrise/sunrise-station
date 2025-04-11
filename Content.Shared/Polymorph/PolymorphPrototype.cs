@@ -128,6 +128,26 @@ public sealed partial record PolymorphConfiguration
     /// </summary>
     [DataField]
     public SoundSpecifier? ExitPolymorphSound;
+
+    /// <summary>
+    ///     If not null, this popup will be displayed when being polymorphed into something.
+    /// </summary>
+    [DataField]
+    public LocId? PolymorphPopup = "polymorph-popup-generic";
+
+    /// <summary>
+    ///     If not null, this popup will be displayed when when being reverted from a polymorph.
+    /// </summary>
+    [DataField]
+    public LocId? ExitPolymorphPopup = "polymorph-revert-popup-generic";
+
+    // Sunrise-Start
+    /// <summary>
+    /// Если true, полиморф будет заблокирован для сущностей с MindContainerComponent.HasMind
+    /// </summary>
+    [DataField(serverOnly: false)]
+    public bool BlockIfHasMind = false;
+    // Sunrise-End
 }
 
 public enum PolymorphInventoryChange : byte

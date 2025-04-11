@@ -111,6 +111,8 @@
         Blunt: -15
         Slash: -15
         Piercing: -15
+        Caustic: -15
+        Structural: -15
     allowSelfRepair: false
   # Sunrise-End
   - type: BorgChassis
@@ -165,6 +167,8 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
+    screamAction: null
+  - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
@@ -177,7 +181,6 @@
     - cell_slot
   - type: Lock
     locked: true
-    breakOnEmag: false
     unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
@@ -235,7 +238,8 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    radius: 4
+    energy: 2 # Sunrise-edit
+    radius: 12 # Sunrise-edit
     netsync: false
   - type: Pullable
   - type: Puller
@@ -246,6 +250,7 @@
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
+    - Unimplantable
   - type: Emoting
   - type: GuideHelp
     guides:
@@ -265,7 +270,8 @@
     sprintModifier: 0.8
   - type: Strap
     position: Stand
-    buckleOffset: "0,0.15"
+    buckleOffsets: # Sunrise-Edit
+    - "0,0.15"
   - type: Stripping
     useDragDrop: false
   # Sunrise-end
@@ -306,7 +312,7 @@
   components:
   - type: RandomMetadata
     nameSegments:
-      - names_borg
+    - NamesBorg
   - type: NpcFactionMember
     factions:
     - NanoTrasen
@@ -314,6 +320,7 @@
     enabled: false
     # Sunrise-Start
     tags:
+    - Borg
     - EmergencyShuttleRepealAll
     - Command
     - Lawyer
@@ -337,6 +344,7 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
+  - type: ShowMindShieldIcons
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
@@ -366,6 +374,7 @@
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: SiliconLawProvider
     laws: SyndicateStatic
+    subverted: true
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
@@ -377,6 +386,8 @@
   - type: MovementAlwaysTouching
   - type: Speech
     speechSounds: SyndieBorg
+    allowedEmotes:
+    - Laugh
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconSyndicate
