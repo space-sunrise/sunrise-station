@@ -391,7 +391,7 @@
 - type: ghostTheme
   id: BoyKisser
   name: ghost-theme-boykisser
-  sponsoronly: true 
+  sponsorOnly: true 
   sprite:
     sprite: _Sunrise/Mobs/Ghosts/boykisser_ghost.rsi
     state: boykisser
