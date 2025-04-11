@@ -387,3 +387,11 @@
   sprite:
     sprite: Mobs/Aliens/Carps/holo.rsi
     state: alive
+
+- type: ghostTheme
+  id: BoyKisser
+  name: ghost-theme-boykisser
+  sponsoronly: true 
+  sprite:
+    sprite: _Sunrise/Mobs/Ghosts/boykisser_ghost.rsi
+    state: boykisser
