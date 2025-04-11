@@ -13,7 +13,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'TG'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/_Sunrise/Shuttles/emergency_box.yml
+          emergencyShuttlePath: /Maps/_Sunrise/ShuttlesNTES_Centipede_grid.yml
         - type: StationJobs
           availableJobs:
             Passenger: [ -1, -1 ]
