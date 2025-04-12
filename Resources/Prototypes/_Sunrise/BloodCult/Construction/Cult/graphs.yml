@@ -80,7 +80,7 @@
               southRotation: true
           steps:
             - material: RunicMetalSheets
-              amount: 4
+              amount: 10
               doAfter: 1
     - node: pylon
       entity: CultPylon
@@ -148,7 +148,7 @@
         southRotation: true
       steps:
       - material: RunicMetalSheets
-        amount: 4
+        amount: 10
         doAfter: 1
   - node: narsie_pylon
     entity: NarsieCultPylon
@@ -165,7 +165,7 @@
         southRotation: true
       steps:
       - material: RunicMetalSheets
-        amount: 4
+        amount: 10
         doAfter: 1
   - node: narbee_pylon
     entity: NarbeeCultPylon
@@ -182,7 +182,7 @@
         southRotation: true
       steps:
       - material: RunicMetalSheets
-        amount: 4
+        amount: 10
         doAfter: 1
   - node: reaper_pylon
     entity: ReaperCultPylon
