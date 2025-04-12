@@ -1,0 +1,16 @@
+ent-BulletAcid2 = acid spit
+    .desc = { ent-BaseBullet.desc }
+ent-BulletEMP = EMP impulse
+    .desc = { ent-BaseBulletTrigger.desc }
+ent-RadiationBullet = radiation particle
+    .desc = { ent-BaseBullet.desc }
+ent-BulletShellFragArtillery = artillery frag shell
+    .desc = { ent-BaseBulletTrigger.desc }
+ent-BulletShellBatonArtillery = baton shell
+    .desc = { ent-BaseBullet.desc }
+ent-BulletShellBlastArtillery = blast shell
+    .desc = { ent-BaseBulletTrigger.desc }
+ent-BulletShellFlashArtillery = flash shell
+    .desc = { ent-BaseBulletTrigger.desc }
+ent-BulletShellEMPArtillery = EMP shell
+    .desc = { ent-BaseBulletTrigger.desc }

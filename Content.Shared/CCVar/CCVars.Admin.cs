@@ -66,6 +66,12 @@ public sealed partial class CCVars
         CVarDef.Create("admin.server_ban_default_severity", "High", CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    /// Default Roleban appeal information to player when banned
+    /// </summary>
+    public static readonly CVarDef<string> InstructionToAppeal =
+        CVarDef.Create("admin.server_ban_default_appeal_instructions", "Appeal On Forums.", CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     ///     Whether a server ban will ban the player's ip by default.
     /// </summary>
     public static readonly CVarDef<bool> ServerBanIpBanDefault =
@@ -182,6 +188,12 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<bool> BanHardwareIds =
         CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Determines if we'll reject connections from clients who don't have a modern hwid.
+    /// </summary>
+    public static readonly CVarDef<bool> RequireModernHardwareId =
+        CVarDef.Create("admin.require_modern_hwid", true, CVar.SERVERONLY);
 
     /// <summary>
     /// If true, players are allowed to connect to multiple game servers at once.

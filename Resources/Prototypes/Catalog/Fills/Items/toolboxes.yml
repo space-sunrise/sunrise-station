@@ -22,7 +22,7 @@
         prob: 0.15
       - id: HarmonicaInstrument
         prob: 0.15
- 
+
 - type: entity
   id: ToolboxElectricalFilled
   name: electrical toolbox
@@ -34,14 +34,14 @@
       - id: Screwdriver
       - id: CrowbarOrange
       - id: Wirecutter
-      - id: CableApcStack10
-      - id: CableMVStack10
+      - id: CableApcStack
+      - id: CableMVStack
       - id: trayScanner
         prob: 0.9
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
-      - id: CableHVStack10
+      - id: CableHVStack
         orGroup: GlovesOrWires
 
 - type: entity
@@ -55,14 +55,14 @@
       - id: Screwdriver
       - id: CrowbarOrange
       - id: Wirecutter
-      - id: CableApcStack10
-      - id: CableMVStack10
+      - id: CableApcStack
+      - id: CableMVStack
       - id: trayScanner
         prob: 0.9
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
-      - id: CableHVStack10
+      - id: CableHVStack
         orGroup: GlovesOrWires
 
 - type: entity
@@ -82,7 +82,7 @@
     - id: MysteryFigureBox
       prob: 0.5
     - id: BookRandom
-      amount: 2 
+      amount: 2
     - id: CrayonMime
     - id: CrayonRainbow
 
@@ -106,6 +106,21 @@
         prob: 0.5
 
 - type: entity
+  id: ToolboxMechanicalFilledAllTools
+  name: mechanical toolbox
+  suffix: Filled, all tools
+  parent: ToolboxMechanical
+  components:
+  - type: StorageFill
+    contents:
+    - id: Crowbar
+    - id: Wrench
+    - id: Screwdriver
+    - id: Wirecutter
+    - id: Welder
+    - id: Multitool
+
+- type: entity
   parent: ToolboxSyndicate
   id: ToolboxSyndicateFilled
   suffix: Filled
@@ -119,7 +134,7 @@
     - id: Welder
     - id: Multitool
     - id: ClothingHandsGlovesCombat
-    - id: ClothingMaskGasSyndicate
+    - id: ClothingEyesGlassesWelding #Sunrise-edit: rebalance toolbox
 
 - type: entity
   id: ToolboxGoldFilled

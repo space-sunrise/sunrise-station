@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Execution;
@@ -52,7 +52,7 @@ public sealed class SuicideCommandTests
   name: test version of the material reclaimer
   components:
   - type: MaterialReclaimer";
-
+    private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     /// <summary>
     /// Run the suicide command in the console
     /// Should successfully kill the player and ghost them
@@ -145,7 +145,7 @@ public sealed class SuicideCommandTests
             damageableComp = entManager.GetComponent<DamageableComponent>(player);
 
             if (protoMan.TryIndex<DamageTypePrototype>("Slash", out var slashProto))
-                damageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5)));
+                damageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5)), useModifier: false, useVariance: false); // Sunrise-Edit
         });
 
         // Check that running the suicide command kills the player
@@ -201,7 +201,7 @@ public sealed class SuicideCommandTests
             mobStateComp = entManager.GetComponent<MobStateComponent>(player);
         });
 
-        tagSystem.AddTag(player, "CannotSuicide");
+        tagSystem.AddTag(player, CannotSuicideTag);
 
         // Check that running the suicide command kills the player
         // and properly ghosts them without them being able to return to their body

@@ -50,7 +50,7 @@ public sealed partial class CCVars
     /// Whether or not to prevent the restart vote from having any effect when there is an online admin
     /// </summary>
     public static readonly CVarDef<bool> VoteRestartNotAllowedWhenAdminOnline =
-        CVarDef.Create("vote.restart_not_allowed_when_admin_online", true, CVar.SERVERONLY);
+        CVarDef.Create("vote.restart_not_allowed_when_admin_online", false, CVar.SERVERONLY); // Sunrise-Edit
 
     /// <summary>
     ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
@@ -62,19 +62,19 @@ public sealed partial class CCVars
     ///     Sets the duration of the map vote timer.
     /// </summary>
     public static readonly CVarDef<int>
-        VoteTimerMap = CVarDef.Create("vote.timermap", 90, CVar.SERVERONLY);
+        VoteTimerMap = CVarDef.Create("vote.timermap", 50, CVar.SERVERONLY); // Sunrise-Edit
 
     /// <summary>
     ///     Sets the duration of the restart vote timer.
     /// </summary>
     public static readonly CVarDef<int>
-        VoteTimerRestart = CVarDef.Create("vote.timerrestart", 60, CVar.SERVERONLY);
+        VoteTimerRestart = CVarDef.Create("vote.timerrestart", 50, CVar.SERVERONLY); // Sunrise-Edit
 
     /// <summary>
     ///     Sets the duration of the gamemode/preset vote timer.
     /// </summary>
     public static readonly CVarDef<int>
-        VoteTimerPreset = CVarDef.Create("vote.timerpreset", 30, CVar.SERVERONLY);
+        VoteTimerPreset = CVarDef.Create("vote.timerpreset", 50, CVar.SERVERONLY); // Sunrise-Edit
 
     /// <summary>
     ///     Sets the duration of the map vote timer when ALONE.
@@ -98,37 +98,37 @@ public sealed partial class CCVars
     ///     Whether a votekick initiator must be a ghost or not.
     /// </summary>
     public static readonly CVarDef<bool> VotekickInitiatorGhostRequirement =
-        CVarDef.Create("votekick.initiator_ghost_requirement", true, CVar.SERVERONLY);
+        CVarDef.Create("votekick.initiator_ghost_requirement", false, CVar.SERVERONLY); // Sunrise-Edit
 
     /// <summary>
     ///     Should the initiator be whitelisted to initiate a votekick?
     /// </summary>
     public static readonly CVarDef<bool> VotekickInitiatorWhitelistedRequirement =
-        CVarDef.Create("votekick.initiator_whitelist_requirement", true, CVar.SERVERONLY);
+        CVarDef.Create("votekick.initiator_whitelist_requirement", false, CVar.REPLICATED | CVar.SERVER); // Sunrise-Edit
 
     /// <summary>
     ///     Should the initiator be able to start a votekick if they are bellow the votekick.voter_playtime requirement?
     /// </summary>
     public static readonly CVarDef<bool> VotekickInitiatorTimeRequirement =
-        CVarDef.Create("votekick.initiator_time_requirement", false, CVar.SERVERONLY);
+        CVarDef.Create("votekick.initiator_time_requirement", true, CVar.REPLICATED | CVar.SERVER); // Sunrise-Edit
 
     /// <summary>
     ///     Whether a votekick voter must be a ghost or not.
     /// </summary>
     public static readonly CVarDef<bool> VotekickVoterGhostRequirement =
-        CVarDef.Create("votekick.voter_ghost_requirement", true, CVar.SERVERONLY);
+        CVarDef.Create("votekick.voter_ghost_requirement", false, CVar.SERVERONLY); // Sunrise-Edit
 
     /// <summary>
     ///     Config for how many hours playtime a player must have to be able to vote on a votekick.
     /// </summary>
     public static readonly CVarDef<int> VotekickEligibleVoterPlaytime =
-        CVarDef.Create("votekick.voter_playtime", 100, CVar.SERVERONLY);
+        CVarDef.Create("votekick.voter_playtime", 300, CVar.REPLICATED | CVar.SERVER); // Sunrise-Edit
 
     /// <summary>
     ///     Config for how many seconds a player must have been dead to initiate a votekick / be able to vote on a votekick.
     /// </summary>
     public static readonly CVarDef<int> VotekickEligibleVoterDeathtime =
-        CVarDef.Create("votekick.voter_deathtime", 30, CVar.REPLICATED | CVar.SERVER);
+        CVarDef.Create("votekick.voter_deathtime", 0, CVar.REPLICATED | CVar.SERVER); // Sunrise-Edit
 
     /// <summary>
     ///     The required ratio of eligible voters that must agree for a votekick to go through.
@@ -140,19 +140,19 @@ public sealed partial class CCVars
     ///     Whether or not to prevent the votekick from having any effect when there is an online admin.
     /// </summary>
     public static readonly CVarDef<bool> VotekickNotAllowedWhenAdminOnline =
-        CVarDef.Create("votekick.not_allowed_when_admin_online", true, CVar.SERVERONLY);
+        CVarDef.Create("votekick.not_allowed_when_admin_online", false, CVar.SERVERONLY); // Sunrise-Edit
 
     /// <summary>
     ///     The delay for which two votekicks are allowed to be made by separate people, in seconds.
     /// </summary>
     public static readonly CVarDef<float> VotekickTimeout =
-        CVarDef.Create("votekick.timeout", 120f, CVar.SERVERONLY);
+        CVarDef.Create("votekick.timeout", 60f, CVar.SERVERONLY);
 
     /// <summary>
     ///     Sets the duration of the votekick vote timer.
     /// </summary>
     public static readonly CVarDef<int>
-        VotekickTimer = CVarDef.Create("votekick.timer", 60, CVar.SERVERONLY);
+        VotekickTimer = CVarDef.Create("votekick.timer", 45, CVar.SERVERONLY);
 
     /// <summary>
     ///     Config for how many hours playtime a player must have to get protection from the Raider votekick type when playing as an antag.

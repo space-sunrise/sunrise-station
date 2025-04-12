@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingHeadHatHoodGoliathCloak
+  id: ClothingHeadHatHoodBlackCloak
+  categories: [ HideSpawnMenu ]
+  name: hood
+  description: Closes the back of head.
+  components:
+  - type: Sprite
+    sprite: _Sunrise/Clothing/Head/Hoods/blackcloak.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Sunrise/Clothing/Head/Hoods/blackcloak.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorCyan
+  categories: [ HideSpawnMenu ]
+  name: cyan winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#109992"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#109992"
+      - state: winterbits-equipped-HELMET

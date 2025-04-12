@@ -3,8 +3,13 @@
   id: BaseMobVox
   abstract: true
   components:
+  - type: Absorbable
   - type: Hunger
   - type: Thirst
+    dehydrationDamage:
+      types:
+        Bloodloss: 0.5
+        Asphyxiation: 0.5
   - type: Icon
     sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m
@@ -71,20 +76,25 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "jumpsuit" ]
     - map: [ "enum.HumanoidVisualLayers.LFoot" ]
     - map: [ "enum.HumanoidVisualLayers.RFoot" ]
     - map: [ "enum.HumanoidVisualLayers.LHand" ]
     - map: [ "enum.HumanoidVisualLayers.RHand" ]
+    # Sunrise-start
+    - map: ["bra"]
+    - map: ["pants"]
+    - map: ["socks"]
+    - map: ["jumpsuit"]
+    # Sunrise-end
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
-    - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "id" ]
-    - map: [ "neck" ]
+    - map: [ "outerClothing" ]
     - map: [ "back" ]
+    - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -142,6 +152,25 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: shoes
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_l
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_r
+  # Sunrise ed!
+  - type: FootprintEmitter
+    leftBareFootState:
+    - "footprint-left-bare-lizard"
+    rightBareFootState:
+    - "footprint-right-bare-lizard"
+  - type: Carriable
+  # Sunrise edit end.
 
 - type: entity
   parent: BaseSpeciesDummy
@@ -190,3 +219,14 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: shoes
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_l
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_r

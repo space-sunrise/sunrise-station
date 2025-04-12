@@ -66,14 +66,42 @@ public sealed partial class GunSystem
         if (damageSpec == null)
             return;
 
-        var damageType = component switch
-        {
-            HitscanBatteryAmmoProviderComponent => Loc.GetString("damage-hitscan"),
-            ProjectileBatteryAmmoProviderComponent => Loc.GetString("damage-projectile"),
-            _ => throw new ArgumentOutOfRangeException(),
-        };
+        string damageType;
+        var shotCount = 1;
+        var shootModifier = ShootModifier.None;
 
-        _damageExamine.AddDamageExamine(args.Message, damageSpec, damageType);
+        switch (component)
+        {
+            case HitscanBatteryAmmoProviderComponent hitscan:
+                var hitScanPrototype = _proto.Index<HitscanPrototype>(hitscan.Prototype);
+                if (hitScanPrototype.ShootModifier == ShootModifier.Split)
+                {
+                    shotCount = hitScanPrototype.SplitCount;
+                    shootModifier = ShootModifier.Split;
+                }
+                else if (hitScanPrototype.ShootModifier == ShootModifier.Spread)
+                {
+                    shotCount = hitScanPrototype.SpreadCount;
+                    shootModifier = ShootModifier.Spread;
+                }
+
+                damageType = Loc.GetString("damage-hitscan");
+                break;
+            case ProjectileBatteryAmmoProviderComponent projectile:
+                var prototype = _proto.Index<EntityPrototype>(projectile.Prototype);
+                if (prototype.TryGetComponent<ProjectileSpreadComponent>(out var ammoSpreadComp, _componentFactory))
+                {
+                    shotCount = ammoSpreadComp.Count;
+                    shootModifier = ShootModifier.Spread;
+                }
+
+                damageType = Loc.GetString("damage-projectile");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        _damageExamine.AddDamageExamineWithModifier(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), shotCount, shootModifier, damageType);
     }
 
     private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)
@@ -87,7 +115,7 @@ public sealed partial class GunSystem
 
                 if (!p.Damage.Empty)
                 {
-                    return p.Damage;
+                    return p.Damage * Damageable.UniversalProjectileDamageModifier;
                 }
             }
 
@@ -96,7 +124,8 @@ public sealed partial class GunSystem
 
         if (component is HitscanBatteryAmmoProviderComponent hitscan)
         {
-            return ProtoManager.Index<HitscanPrototype>(hitscan.Prototype).Damage;
+            var dmg = ProtoManager.Index<HitscanPrototype>(hitscan.Prototype).Damage;
+            return dmg == null ? dmg : dmg * Damageable.UniversalHitscanDamageModifier;
         }
 
         return null;

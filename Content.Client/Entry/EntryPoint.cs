@@ -1,3 +1,7 @@
+using Content.Client._RMC14.Explosion;
+using Content.Client._RMC14.Xenonids.Screech;
+using Content.Client._Sunrise.Entry;
+using Content.Client._Sunrise.ServersHub;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -24,6 +28,8 @@ using Content.Client.Voting;
 using Content.Shared.Ame.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
+using Content.Sunrise.Interfaces.Client;
+using Content.Sunrise.Interfaces.Shared;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -72,6 +78,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
+        [Dependency] private readonly ServersHubManager _serversHubManager = default!; // Sunrise-Hub
 
         public override void Init()
         {
@@ -106,7 +113,8 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("gameMapPool");
-            _prototypeManager.RegisterIgnore("lobbyBackground");
+            // Sunrise-Edit
+            // _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("gamePreset");
             _prototypeManager.RegisterIgnore("noiseChannel");
             _prototypeManager.RegisterIgnore("playerConnectionWhitelist");
@@ -120,6 +128,9 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("wireLayout");
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
+            _prototypeManager.RegisterIgnore("stationGoal"); // Sunrise-StationGoal
+            _prototypeManager.RegisterIgnore("sponsorLoadout"); // Sunrise-Sponsors
+            _prototypeManager.RegisterIgnore("holidayGiveawayItem"); // Sunrise-Edit
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
 
             _componentFactory.GenerateNetIds();
@@ -132,6 +143,12 @@ namespace Content.Client.Entry
             _extendedDisconnectInformation.Initialize();
             _jobRequirements.Initialize();
             _playbackMan.Initialize();
+
+            _serversHubManager.Initialize(); // Sunrise-Hub
+
+            // Sunrise-Sponsors-Start
+            SunriseClientEntry.Init();
+            // Sunrise-Sponsors-End
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
@@ -159,6 +176,10 @@ namespace Content.Client.Entry
             _parallaxManager.LoadDefaultParallax();
 
             _overlayManager.AddOverlay(new SingularityOverlay());
+            // Sunrise edit start
+            _overlayManager.AddOverlay(new RMCExplosionShockWaveOverlay());
+            _overlayManager.AddOverlay(new RMCXenoScreechShockWaveOverlay());
+            // Sunrise edit end
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
@@ -168,6 +189,10 @@ namespace Content.Client.Entry
             _userInterfaceManager.SetActiveTheme(_configManager.GetCVar(CVars.InterfaceTheme));
             _documentParsingManager.Initialize();
             _titleWindowManager.Initialize();
+
+            // Sunrise-Sponsors-Start
+            SunriseClientEntry.PostInit();
+            // Sunrise-Sponsors-End
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

@@ -1,0 +1,12 @@
+ent-BaseArtilleryShell = base shell
+    .desc = { ent-BaseItem.desc }
+ent-ShellFragArtillery = artillery frag shell
+    .desc = { ent-BaseArtilleryShell.desc }
+ent-ShellBatonArtillery = baton shell
+    .desc = { ent-BaseArtilleryShell.desc }
+ent-ShellBlastArtillery = blast shell
+    .desc = { ent-BaseArtilleryShell.desc }
+ent-ShellFlashArtillery = flash shell
+    .desc = { ent-BaseArtilleryShell.desc }
+ent-ShellEMPArtillery = EMP shell
+    .desc = { ent-BaseArtilleryShell.desc }

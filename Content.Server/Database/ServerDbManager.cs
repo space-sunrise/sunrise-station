@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -360,6 +361,16 @@ namespace Content.Server.Database
         Task SendNotification(DatabaseNotification notification);
 
         #endregion
+
+        // Sunrise-Start
+        #region Ahelp
+
+        Task AddAHelpMessage(Guid senderSessionUserId, Guid messageUserId, string message, DateTimeOffset sentAt, bool playSound, bool adminOnly);
+
+        public Task<List<AHelpMessage>> GetAHelpMessagesByReceiverAsync(Guid receiverUserId);
+
+        #endregion
+        // Sunrise-End
     }
 
     /// <summary>
@@ -1039,6 +1050,18 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.CleanIPIntelCache(range));
+        }
+
+        public Task AddAHelpMessage(Guid senderUserId, Guid receiverUserId, string message, DateTimeOffset sentAt, bool playSound, bool adminOnly)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAHelpMessage(senderUserId, receiverUserId, message, sentAt, playSound, adminOnly));
+        }
+
+        public Task<List<AHelpMessage>> GetAHelpMessagesByReceiverAsync(Guid receiverUserId)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAHelpMessagesByReceiverAsync(receiverUserId));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)

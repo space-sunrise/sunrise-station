@@ -10,7 +10,7 @@ namespace Content.Client.Store.Ui;
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
-    private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     [ViewVariables]
     private StoreMenu? _menu;
@@ -27,6 +27,8 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
+        base.Open();
+
         _menu = this.CreateWindow<StoreMenu>();
         if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
             _menu.Title = Loc.GetString(store.Name);

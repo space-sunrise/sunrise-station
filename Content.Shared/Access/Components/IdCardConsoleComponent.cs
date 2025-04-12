@@ -74,6 +74,11 @@ public sealed partial class IdCardConsoleComponent : Component
         "Security",
         "Service",
         "Theatre",
+        "BlueShield", // Sunrise-Edit
+        "Ntrep", // Sunrise-Edit
+        "Magistrat", // Sunrise-Edit
+        "Barber", // Sunrise-Edit
+        "Mail", // Sunrise-Edit
     };
 
     [Serializable, NetSerializable]

@@ -1,0 +1,16 @@
+ent-BulletAcid2 = кислотный плевок
+    .desc = { ent-BaseBullet.desc }
+ent-BulletEMP = импульс ЭМИ
+    .desc = { ent-BaseBulletTrigger.desc }
+ent-RadiationBullet = поток радиоактивных частиц
+    .desc = { ent-BaseBullet.desc }
+ent-BulletShellFragArtillery = осколочный артиллерийский снаряд
+    .desc = { ent-BaseBullet.desc }
+ent-BulletShellBatonArtillery = шоковый артиллерийский снаряд
+    .desc = { ent-BaseBullet.desc }
+ent-BulletShellBlastArtillery = фугасный артиллерийский снаряд
+    .desc = { ent-BaseBullet.desc }
+ent-BulletShellFlashArtillery = ослепляющий артиллерийский снаряд
+    .desc = { ent-BaseBullet.desc }
+ent-BulletShellEMPArtillery = ЭМИ артиллерийский снаряд
+    .desc = { ent-BaseBullet.desc }

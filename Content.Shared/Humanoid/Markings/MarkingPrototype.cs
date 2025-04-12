@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings
 {
-    [Prototype("marking")]
+    [Prototype]
     public sealed partial class MarkingPrototype : IPrototype
     {
         [IdDataField]
@@ -22,6 +22,11 @@ namespace Content.Shared.Humanoid.Markings
 
         [DataField("sexRestriction")]
         public Sex? SexRestriction { get; private set; }
+
+        // Sunrise-Sponsors-Start
+        [DataField("sponsorOnly")]
+        public bool SponsorOnly = false;
+        // Sunrise-Sponsors-End
 
         [DataField("followSkinColor")]
         public bool FollowSkinColor { get; private set; } = false;

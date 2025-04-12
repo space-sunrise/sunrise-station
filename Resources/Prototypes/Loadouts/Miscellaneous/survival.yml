@@ -14,10 +14,15 @@
     species:
     - Arachnid
     - Diona
-    - Dwarf
     - Human
     - Moth
     - Reptilian
+    - Swine # Sunrise-Edit
+    - Felinid # Sunrise-Edit
+    - Vulpkanin # Sunrise-Edit
+    - Predator # Sunrise-Edit
+    - Tajaran # Sunrise-Edit
+    - Demon # Sunrise-Edit
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox

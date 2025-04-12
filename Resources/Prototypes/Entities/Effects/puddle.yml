@@ -137,6 +137,8 @@
         hard: false
   - type: IconSmooth
     key: puddles
+    additionalKeys:
+    - walls
     base: splat
     mode: CardinalFlags
   - type: SolutionContainerManager
@@ -162,6 +164,9 @@
     solution: puddle
   - type: BadDrink
   - type: IgnoresFingerprints
+  # Sunrise Edit.
+  - type: PuddleFootprint
+  # Sunrise Edit End!
   - type: Tag
     tags:
     - DNASolutionScannable

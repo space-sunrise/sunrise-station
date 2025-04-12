@@ -174,6 +174,9 @@ namespace Content.Shared.Atmos
             [Gas.Plasma] = Loc.GetString("gas-plasma-abbreviation"),
             [Gas.Tritium] = Loc.GetString("gas-tritium-abbreviation"),
             [Gas.WaterVapor] = Loc.GetString("gas-water-vapor-abbreviation"),
+            [Gas.BZ] = Loc.GetString("gas-bz-abbreviation"), //SunRise edit
+            [Gas.Healium] = Loc.GetString("gas-healium-abbreviation"), //SunRise edit
+            [Gas.Nitrium] = Loc.GetString("gas-nitrium-abbreviation"), //SunRise edit
         };
 
         #region Excited Groups
@@ -203,7 +206,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 9;
+        public const int TotalNumberOfGases = 12; //SunRise edit
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -281,6 +284,25 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float AmmoniaOxygenReactionRate = 10f;
 
+        ///SunRise start
+
+        /// <summary>
+        ///     The amount of energy 1 mole of BZ forming from N2O and plasma releases.
+        /// </summary>
+        public const float BZFormationEnergy = 80e3f;
+
+        /// <summary>
+        ///     Some number taken from the air to keep BZ from instantly converting everything.
+        /// </summary>
+        public const float BZFormationRate = 5f;
+
+        /// <summary>
+        ///     The amount of energy 1 mol of Healium forming from BZ and frezon releases.
+        /// </summary>
+        public const float HealiumProductionEnergy = 10e3f;
+
+        ///SunRise end
+
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
         /// </summary>
@@ -318,7 +340,7 @@ namespace Content.Shared.Atmos
         ///     so it just applies this flat value).
         /// </summary>
         // Original value is 4, buff back when we have proper ways for players to deal with breaches.
-        public const int LowPressureDamage = 1;
+        public const int LowPressureDamage = 2; //Sunrise-Edit
 
         public const float WindowHeatTransferCoefficient = 0.1f;
 
@@ -367,6 +389,9 @@ namespace Content.Shared.Atmos
         WaterVapor = 5,
         Ammonia = 6,
         NitrousOxide = 7,
-        Frezon = 8
+        Frezon = 8,
+        BZ = 9, //SunRise edit
+        Healium = 10, //SunRise edit
+        Nitrium = 11 //SunRise edit
     }
 }

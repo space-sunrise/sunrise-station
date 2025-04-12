@@ -1,15 +1,21 @@
+using Content.Shared._Sunrise.Mood;
 using Content.Shared.Alert;
+using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusIcon;
 using JetBrains.Annotations;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._Sunrise.SunriseCCVars;
+using Content.Shared.Damage;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -22,6 +28,9 @@ public sealed class ThirstSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     [ValidatePrototypeId<SatiationIconPrototype>]
     private const string ThirstIconOverhydratedId = "ThirstIconOverhydrated";
@@ -63,7 +72,8 @@ public sealed class ThirstSystem : EntitySystem
     private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         // TODO: This should really be taken care of somewhere else
-        if (_jetpack.IsUserFlying(uid))
+        if (_config.GetCVar(SunriseCCVars.MoodEnabled)
+            || _jetpack.IsUserFlying(uid))
             return;
 
         var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
@@ -146,10 +156,24 @@ public sealed class ThirstSystem : EntitySystem
         return prototype != null;
     }
 
+    private void DoContinuousThirstEffects(EntityUid uid, ThirstComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.CurrentThirstThreshold == ThirstThreshold.Dead &&
+            component.DehydrationDamage is { } damage &&
+            !_mobState.IsDead(uid))
+        {
+            _damageable.TryChangeDamage(uid, damage, true, false);
+        }
+    }
+
     private void UpdateEffects(EntityUid uid, ThirstComponent component)
     {
-        if (IsMovementThreshold(component.LastThirstThreshold) != IsMovementThreshold(component.CurrentThirstThreshold) &&
-                TryComp(uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
+        if (!_config.GetCVar(SunriseCCVars.MoodEnabled)
+            && IsMovementThreshold(component.LastThirstThreshold) != IsMovementThreshold(component.CurrentThirstThreshold)
+            && TryComp(uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
         {
             _movement.RefreshMovementSpeedModifiers(uid, movementSlowdownComponent);
         }
@@ -163,6 +187,9 @@ public sealed class ThirstSystem : EntitySystem
         {
             _alerts.ClearAlertCategory(uid, component.ThirstyCategory);
         }
+
+        var ev = new MoodEffectEvent("Thirst" + component.CurrentThirstThreshold);
+        RaiseLocalEvent(uid, ev);
 
         switch (component.CurrentThirstThreshold)
         {
@@ -203,12 +230,13 @@ public sealed class ThirstSystem : EntitySystem
         var query = EntityQueryEnumerator<ThirstComponent>();
         while (query.MoveNext(out var uid, out var thirst))
         {
-            if (_timing.CurTime < thirst.NextUpdateTime)
+            if (_timing.CurTime < thirst.NextUpdateTime || _mobState.IsDead(uid)) // Sunrise-Edit
                 continue;
 
             thirst.NextUpdateTime += thirst.UpdateRate;
 
             ModifyThirst(uid, thirst, -thirst.ActualDecayRate);
+            DoContinuousThirstEffects(uid, thirst);
             var calculatedThirstThreshold = GetThirstThreshold(thirst, thirst.CurrentThirst);
 
             if (calculatedThirstThreshold == thirst.CurrentThirstThreshold)

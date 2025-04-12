@@ -7,6 +7,7 @@ using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Shared.Implants;
@@ -20,6 +21,9 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public const string BaseStorageId = "storagebase";
+
+    private static readonly ProtoId<TagPrototype> MicroBombTag = "MicroBomb";
+    private static readonly ProtoId<TagPrototype> MacroBombTag = "MacroBomb";
 
     public override void Initialize()
     {
@@ -37,17 +41,22 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         if (component.ImplantedEntity == null || _net.IsClient)
             return;
 
+        // Sunrise-Start
+        if (args.Container.ID != "implant")
+            return;
+        // Sunrise-End
+
         if (!string.IsNullOrWhiteSpace(component.ImplantAction))
         {
             _actionsSystem.AddAction(component.ImplantedEntity.Value, ref component.Action, component.ImplantAction, uid);
         }
 
         //replace micro bomb with macro bomb
-        if (_container.TryGetContainer(component.ImplantedEntity.Value, ImplanterComponent.ImplantSlotId, out var implantContainer) && _tag.HasTag(uid, "MacroBomb"))
+        if (_container.TryGetContainer(component.ImplantedEntity.Value, ImplanterComponent.ImplantSlotId, out var implantContainer) && _tag.HasTag(uid, MacroBombTag))
         {
             foreach (var implant in implantContainer.ContainedEntities)
             {
-                if (_tag.HasTag(implant, "MicroBomb"))
+                if (_tag.HasTag(implant, MicroBombTag))
                 {
                     _container.Remove(implant, implantContainer);
                     QueueDel(implant);
@@ -61,6 +70,11 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnRemoveAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingRemovedAttemptEvent args)
     {
+        // Sunrise-Start
+        if (args.Container.ID != "implant")
+            return;
+        // Sunrise-End
+
         if (component.Permanent && component.ImplantedEntity != null)
             args.Cancel();
     }
@@ -69,6 +83,11 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     {
         if (component.ImplantedEntity == null || Terminating(component.ImplantedEntity.Value))
             return;
+
+        // Sunrise-Start
+        if (args.Container.ID != "implant")
+            return;
+        // Sunrise-End
 
         if (component.ImplantAction != null)
             _actionsSystem.RemoveProvidedActions(component.ImplantedEntity.Value, uid);
@@ -82,6 +101,11 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         {
             _transformSystem.DropNextTo(entity, uid);
         }
+
+        // Sunrsie-Start
+        var ev = new ImplantEjectEvent(uid, component.ImplantedEntity.Value);
+        RaiseLocalEvent(uid, ref ev);
+        // Sunrsie-End
     }
 
     /// <summary>
@@ -217,3 +241,18 @@ public readonly struct ImplantImplantedEvent
         Implanted = implanted;
     }
 }
+
+// Sunrise-Start
+[ByRefEvent]
+public readonly struct ImplantEjectEvent
+{
+    public readonly EntityUid Implant;
+    public readonly EntityUid? Implanted;
+
+    public ImplantEjectEvent(EntityUid implant, EntityUid? implanted)
+    {
+        Implant = implant;
+        Implanted = implanted;
+    }
+}
+// Sunrise-End

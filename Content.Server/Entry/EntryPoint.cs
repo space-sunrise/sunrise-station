@@ -1,3 +1,7 @@
+using Content.Server._Sunrise.Entry;
+using Content.Server._Sunrise.GuideGenerator;
+using Content.Server._Sunrise.ServersHub;
+using Content.Server._Sunrise.TTS;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -26,6 +30,8 @@ using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Content.Shared.Localizations;
+using Content.Sunrise.Interfaces.Server;
+using Content.Sunrise.Interfaces.Shared;
 using Robust.Server;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
@@ -44,11 +50,13 @@ namespace Content.Server.Entry
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
         private ServerUpdateManager _updateManager = default!;
+        private ServersHubManager _serversHubManager = default!; // Sunrise-Edit
         private PlayTimeTrackingManager? _playTimeTracking;
         private IEntitySystemManager? _sysMan;
         private IServerDbManager? _dbManager;
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
+        private ISharedSponsorsManager? _sponsorsManager; // Sunrise-Sponsors
 
         /// <inheritdoc />
         public override void Init()
@@ -92,6 +100,7 @@ namespace Content.Server.Entry
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
+                _serversHubManager = IoCManager.Resolve<ServersHubManager>(); // Sunrise-Edit
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
                 _connectionManager = IoCManager.Resolve<IConnectionManager>();
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
@@ -108,8 +117,16 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<ContentNetworkResourceManager>().Initialize();
                 IoCManager.Resolve<GhostKickManager>().Initialize();
+                IoCManager.Resolve<TTSManager>().Initialize(); // Sunrise-TTS
                 IoCManager.Resolve<ServerInfoManager>().Initialize();
                 IoCManager.Resolve<ServerApi>().Initialize();
+
+                IoCManager.Resolve<ServersHubManager>().Initialize(); // Sunrise-Hub
+
+                // Sunrise-Sponsors-Start
+                SunriseServerEntry.Init();
+                IoCManager.Instance!.TryResolveType(out _sponsorsManager);
+                // Sunrise-Sponsors-End
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
@@ -138,6 +155,17 @@ namespace Content.Server.Entry
                 file = resourceManager.UserData.OpenWriteText(resPath.WithName("react_" + dest));
                 ReactionJsonGenerator.PublishJson(file);
                 file.Flush();
+                // Wiki-Start
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("entity_" + dest));
+                EntityJsonGenerator.PublishJson(file);
+                file.Flush();
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("mealrecipes_" + dest));
+                MealsRecipesJsonGenerator.PublishJson(file);
+                file.Flush();
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("healthchangereagents_" + dest));
+                HealthChangeReagentsJsonGenerator.PublishJson(file);
+                file.Flush();
+                // Wiki-End
                 IoCManager.Resolve<IBaseServer>().Shutdown("Data generation done");
             }
             else
@@ -153,6 +181,10 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IBanManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().PostInit();
                 IoCManager.Resolve<MultiServerKickManager>().Initialize();
+                IoCManager.Resolve<CVarControlManager>().Initialize();
+                // Sunrise-Sponsors-Start
+                SunriseServerEntry.PostInit();
+                // Sunrise-Sponsors-End
             }
         }
 
@@ -174,6 +206,8 @@ namespace Content.Server.Entry
                     _playTimeTracking?.Update();
                     _watchlistWebhookManager.Update();
                     _connectionManager?.Update();
+                    _serversHubManager.Update(); // Sunrise-Edit
+                    _sponsorsManager?.Update(); // Sunrise-Edit
                     break;
             }
         }

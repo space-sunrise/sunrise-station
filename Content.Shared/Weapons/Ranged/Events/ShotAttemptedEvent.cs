@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Inventory; // Sunrise-Edit
 
 namespace Content.Shared.Weapons.Ranged.Events;
 
@@ -7,8 +8,9 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// Cancel this event to prevent it from shooting.
 /// </summary>
 [ByRefEvent]
-public record struct ShotAttemptedEvent
+public record struct ShotAttemptedEvent : IInventoryRelayEvent // Sunrise-Edit
 {
+    SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.GLOVES; // Sunrise-Edit
     /// <summary>
     /// The user attempting to shoot the gun.
     /// </summary>
@@ -18,6 +20,8 @@ public record struct ShotAttemptedEvent
     /// The gun being shot.
     /// </summary>
     public Entity<GunComponent> Used;
+
+    public string? Message;
 
     public bool Cancelled { get; private set; }
 

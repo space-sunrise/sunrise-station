@@ -93,8 +93,10 @@ namespace Content.Server.Light.EntitySystems
         private void OnMapInit(Entity<HandheldLightComponent> ent, ref MapInitEvent args)
         {
             var component = ent.Comp;
-            _actionContainer.EnsureAction(ent, ref component.ToggleActionEntity, component.ToggleAction);
-            _actions.AddAction(ent, ref component.SelfToggleActionEntity, component.ToggleAction);
+            //Sunrise-Start
+            //_actionContainer.EnsureAction(ent, ref component.ToggleActionEntity, component.ToggleAction);
+            _actions.AddAction(ent, ref component.ToggleActionEntity, component.ToggleAction);
+            //Sunrise-End
         }
 
         private void OnShutdown(EntityUid uid, HandheldLightComponent component, ComponentShutdown args)
@@ -202,7 +204,7 @@ namespace Content.Server.Light.EntitySystems
             if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
                 !TryComp(uid, out battery))
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _audio.PlayPvs(_audio.ResolveSound(component.TurnOnFailSound), uid);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), uid, user);
                 return false;
             }
@@ -212,7 +214,7 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _audio.PlayPvs(_audio.ResolveSound(component.TurnOnFailSound), uid);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), uid, user);
                 return false;
             }

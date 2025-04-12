@@ -21,6 +21,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Content.Shared.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -42,6 +43,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     private EntityQuery<TransformComponent> _xformQuery;
 
     private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
+
+    private static readonly ProtoId<TagPrototype> CanPilotTag = "CanPilot";
 
     public override void Initialize()
     {
@@ -168,10 +171,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private bool TryPilot(EntityUid user, EntityUid uid)
     {
-        if (!_tags.HasTag(user, "CanPilot") ||
+        if (!_tags.HasTag(user, CanPilotTag) ||
             !TryComp<ShuttleConsoleComponent>(uid, out var component) ||
             !this.IsPowered(uid, EntityManager) ||
-            !Transform(uid).Anchored ||
+            !Transform(uid).Anchored && !component.Portable || // Sunrise-Edit
             !_blocker.CanInteract(user, uid))
         {
             return false;
@@ -251,6 +254,13 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         RaiseLocalEvent(entity.Value, ref getShuttleEv);
         entity = getShuttleEv.Console;
+
+        // Sunrise-Start
+        if (TryComp<DroneConsoleComponent>(entity, out var droneConsole))
+        {
+            entity = droneConsole.Entity;
+        }
+        // Sunrise-End
 
         TryComp(entity, out TransformComponent? consoleXform);
         var shuttleGridUid = consoleXform?.GridUid;

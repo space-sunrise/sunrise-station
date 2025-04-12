@@ -5,12 +5,17 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
-    baseDecayRate: 0.0083
+    baseDecayRate: 0.015
   - type: Thirst
-    baseDecayRate: 0.0083
+    baseDecayRate: 0.05
+    dehydrationDamage:
+      types:
+        Bloodloss: 0.5
+        Asphyxiation: 0.5
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
@@ -110,6 +115,17 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  # Sunrise-Start
+  - type: CollectiveMind
+    minds:
+    - Dioneas
+  - type: FootprintEmitter
+    leftBareFootState:
+      - "footprint-left-bare-diona"
+    rightBareFootState:
+      - "footprint-right-bare-diona"
+  - type: Carriable
+  # Sunrise-End
 
 - type: entity
   parent: BaseSpeciesDummy

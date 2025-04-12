@@ -88,11 +88,11 @@ GeneratorUranium: PortableGeneratorSuperPacman
 GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
 GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
 
-# 2023-12-10
-SpawnPointSeniorResearcher: null
-SpawnPointSeniorOfficer: null
-SpawnPointSeniorEngineer: null
-SpawnPointSeniorPhysician: null
+# 2023-12-10 //Sunrise edit
+# SpawnPointSeniorResearcher: null
+# SpawnPointSeniorOfficer: null
+# SpawnPointSeniorEngineer: null
+# SpawnPointSeniorPhysician: null
 
 # 2023-12-12
 #No this is not the CMO hardsuit, their prototype IDs were just confusingly similar
@@ -157,7 +157,7 @@ TransmitterSubspaceStockPart: null
 ClothingHeadHatHoodRad: null
 
 # 2024-01-12
-SpaceMedipen: null
+#SpaceMedipen: null
 
 # 2024-01-18
 ClothingHeadHelmetVoidParamed: null
@@ -287,6 +287,7 @@ BriefcaseSyndieBase: null
 BodyBag_Container: BodyBag
 BodyBag_Folded: BodyBagFolded
 
+# Sunrise-Edit: Возвращены резиновые боеприпасы.
 # 2024-04-26
 BaseBulletRubber: null
 BulletPistolRubber: BulletPistol
@@ -317,6 +318,7 @@ MagazineBoxLightRifleRubber: MagazineBoxLightRifle
 MagazineBoxRifleRubber: MagazineBoxRifle
 MagazineBoxRifleBigRubber: MagazineBoxRifleBig
 MagazineBoxCaselessRifleRubber: MagazineBoxCaselessRifle
+#MagazineBoxCaselessRifleBigRubber: MagazineBoxCaselessRifle10x24
 BoxMagazinePistolRubber: BoxMagazinePistol
 BoxMagazinePistolHighCapacityRubber: BoxMagazinePistolHighCapacity
 BoxMagazinePistolSubMachineGunRubber: BoxMagazinePistolSubMachineGun
@@ -327,7 +329,7 @@ BoxMagazineMagnumSubMachineGunRubber: BoxMagazineMagnumSubMachineGun
 WeaponPistolMk58Nonlethal: WeaponPistolMk58
 WeaponPistolN1984Nonlethal: WeaponPistolN1984
 WeaponSubMachineGunDrozdRubber: WeaponSubMachineGunDrozd
-WeaponRifleLecterRubber: WeaponRifleLecter
+#WeaponRifleLecterRubber: WeaponRifleLecter
 
 # 2024-04-26
 GlassBoxLaserBroken: GlassBoxBroken
@@ -549,3 +551,112 @@ FoodCondimentPacketFrostoil: FoodCondimentPacketColdsauce
 #2025-02-05
 WeaponSubMachineGunVector: null
 WeaponSubMachineGunVectorRubber: null
+
+# 2025-02-20
+MagazineBoxAntiMaterielBig: null
+MagazineBoxCaselessRifle10x24: null
+MagazineBoxCaselessRifleBig: null
+MagazinePistolHighCapacityRubber: null
+
+# 2025-03-18
+EpinephrineChemistryBottle: ChemistryBottleEpinephrine
+RobustHarvestChemistryBottle: ChemistryBottleRobustHarvest
+EZNutrientChemistryBottle: ChemistryBottleEZNutrient
+Left4ZedChemistryBottle: ChemistryBottleLeft4Zed
+UnstableMutagenChemistryBottle: ChemistryBottleUnstableMutagen
+PotassiumChemistryBottle: ChemistryBottlePotassium
+NocturineChemistryBottle: ChemistryBottleNocturine
+NitrogenChemistryBottle: ChemistryBottleNitrogen
+EphedrineChemistryBottle: ChemistryBottleEphedrine
+PhosphorusChemistryBottle: ChemistryBottlePhosphorus
+OmnizineChemistryBottle: ChemistryBottleOmnizine
+HydrogenChemistryBottle: ChemistryBottleHydrogen
+CognizineChemistryBottle: ChemistryBottleCognizine
+EthanolChemistryBottle: ChemistryBottleEthanol
+PaxChemistryBottle: ChemistryBottlePax
+MuteToxinChemistryBottle: ChemistryBottleMuteToxin
+LeadChemistryBottle: ChemistryBottleLead
+ToxinChemistryBottle: ChemistryBottleToxin
+
+# 2025-03-29
+ClothingBackpackDuffelSyndicateRaidBundle: ClothingBackpackSyndicateRaidBundle
+
+# Sunrise migrations
+AirlockExternalGlassShuttleArrivals: AirlockExternalGlassShuttleArrivalsLocked
+AirlockHatchSyndicate: AirlockHatchSyndicateLocked
+SurveillanceCameraWirelessRouterBase: SurveillanceCameraWirelessRouterConstructed
+CryogenicSleepUnitSpawner: CryogenicSleepUnitSpawnerLateJoin
+WeaponLaserCannon: WeaponEarthGovLaserSniper
+WeaponRifleLecter: WeaponRifleM16A4
+WeaponDisabler: WeaponEnergyGunMini
+MagazinePistolSubMachineGunTopMounted: MagazinePistolSubMachineGun
+WeaponSubMachineGunWt550: WeaponSubMachineGunSkorpion
+WeaponRevolverMateba: WeaponRevolverMatebaNew
+WeaponSniperHristov: WeaponIONRifle
+WeaponLaserCarbine: WeaponEnergyGun
+WeaponPistolMk58: WeaponPistolG22
+WeaponRifleAk: WeaponRifleAKM
+WeaponRifleM90GrenadeLauncher: WeaponRifleM28
+WeaponShotgunEnforcer: WeaponShotgunSPAS12
+WeaponShotgunKammerer: WeaponShotgunTrenchgun4034
+WeaponSubMachineGunDrozd: WeaponSubMachineGunMP7
+GunSafeDisabler: GunSafeCombineSmallArms
+GunSafeSubMachineGunDrozd: GunSafeSubMachineGunMP7
+GunSafeSubMachineGunWt550: GunSafeSubMachineGunSkorpion
+GunSafeShotgunKammerer: GunSafeShotgunTrenchgun4034
+GunSafeRifleLecter: GunSafeRifleM16A4
+CrateArmorySMG: CrateArmoryMP7
+CrateArmoryShotgun: CrateArmoryWeaponXM1014
+ComputerCargoShuttle: null
+ComputerShuttleCargo: null
+ClothingOuterHardsuitSecurity: ClothingOuterHardsuitSecuritySunrise
+ClothingHeadHelmetHardsuitSecurity: ClothingHeadHelmetHardsuitSecuritySunrise
+AirlockMailGlassLocked: AirlockServiceGlassLocked
+AirlockMailLocked: AirlockServiceLocked
+RandomAnimalSpawner: MobMothroach
+ClothingOuterWizardFake: ClothingOuterWizard
+SpawnPointPrisoner: SpawnPointPlanetPrisoner
+PoweredLightPostSmallRed: PoweredlightRed
+PoweredSmallLightMaintenanceRed: PoweredDimSmallLight
+FoodCondimentBottleSmallVinegar: FoodCondimentBottleVinegar
+PoweredLightColoredRed: PoweredlightRed
+AtmTerminal: ATM
+Shinai: ToySword
+PosterLegitSMMeth: RandomPosterLegit
+PosterLegitSMPoisoning: RandomPosterLegit
+PosterLegitSMBoH: RandomPosterLegit
+PosterContrabandSMSyndie: RandomPosterContraband
+CrateMedicalDefib: DefibrillatorCompact
+MailPAI: PersonalAI
+BoxMaintenanceLightbulb: BoxWarmLightbulb
+WindoorSecureBlueShieldLocked: WindoorSecureCommandLocked
+VendingMachineRepDrobe: VendingMachineCigs
+Wakizashi: KukriKnife
+TearSmokeGrenade: TearGasGrenade
+BlueLightTube: LightTubeCrystalCyan
+MailTeleporter: CargoMailTeleporter
+ClothingHeadHoodBrown: null
+ClaymoreDulled: null
+Amphora: null
+WallPaper: null #temporarily
+CrateNPCPibble: null
+ClothingHeadHatBellhop: null
+ClothingHeadHoodMystic: null
+ClothingOuterCoatHyenhSweater: null
+ClothingOuterVestValet: null
+SpawnPointGladiator: null
+SchoolgirlUniformSpawner: null
+SpawnPointMailCarrier: null
+SpawnMobPibble: null
+ClothingOuterRobeBrown: null
+ClothingUniformMNKTracksuitBlack: null
+QSI: null
+EffectHearts: null
+Oracle: null
+ServiceTechFab: null
+ServiceTechFabCircuitboard: null
+EngineeringTechFab: null
+ScienceTechFab: null
+ReverseEngineeringMachine: null
+ScienceTechFabCircuitboard: null
+EngineeringTechFabCircuitboard: null

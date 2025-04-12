@@ -1,10 +1,12 @@
 ﻿using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Silicons.Borgs;
 
@@ -19,7 +21,7 @@ public sealed partial class BorgTypePrototype : IPrototype
     private static readonly ProtoId<SoundCollectionPrototype> DefaultFootsteps = new("FootstepBorg");
 
     [IdDataField]
-    public required string ID { get; init; }
+    public required string ID { get; set; }
 
     //
     // Description info (name/desc) is configured via localization strings directly.
@@ -29,7 +31,7 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// The prototype displayed in the selection menu for this type.
     /// </summary>
     [DataField]
-    public required EntProtoId DummyPrototype { get; init; }
+    public required EntProtoId DummyPrototype;
 
     //
     // Functional information
@@ -152,4 +154,9 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// </summary>
     [DataField]
     public SoundSpecifier FootstepCollection { get; set; } = new SoundCollectionSpecifier(DefaultFootsteps);
+
+    // Sunrise-Start
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
+    public string Job = string.Empty;
+    // Sunrise-End
 }

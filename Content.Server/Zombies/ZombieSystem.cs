@@ -1,22 +1,29 @@
 using System.Linq;
+using System.Text.RegularExpressions;
 using Content.Server.Actions;
 using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
+using Content.Server.Pinpointer;
 using Content.Server.Speech.EntitySystems;
+using Content.Server.Roles;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Bed.Sleep;
-using Content.Shared.Cloning;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Mech.Components; // Sunrise-Edit
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
+using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -38,7 +45,13 @@ namespace Content.Server.Zombies
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly NameModifierSystem _nameMod = default!;
+        [Dependency] private readonly SharedRoleSystem _role = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly ThrowingSystem _throwing = default!;
+        [Dependency] private readonly ActionsSystem _action = default!;
+        [Dependency] private readonly SharedStunSystem _stun = default!;
+        [Dependency] private readonly NavMapSystem _navMap = default!; // Sunrise-Zombies
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public const SlotFlags ProtectiveSlots =
             SlotFlags.FEET |
@@ -63,6 +76,8 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
             SubscribeLocalEvent<ZombieComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
+            SubscribeLocalEvent<ZombieComponent, MindAddedMessage>(OnMindAdded);
+            SubscribeLocalEvent<ZombieComponent, MindRemovedMessage>(OnMindRemoved);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
             SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
@@ -70,6 +85,26 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
+
+            // Sunnrise-Start
+            SubscribeLocalEvent<ZombieComponent, ZombieJumpActionEvent>(OnJump);
+            SubscribeLocalEvent<ZombieComponent, ZombieFlairActionEvent>(OnFlair);
+            SubscribeLocalEvent<ZombieComponent, ThrowDoHitEvent>(OnThrowDoHit);
+            // Sunnrise-End
+        }
+
+        // Sunnrise-Start
+        private void OnThrowDoHit(EntityUid uid, ZombieComponent component, ThrowDoHitEvent args)
+        {
+            if (_mobState.IsDead(uid))
+                return;
+            if (HasComp<ZombieComponent>(args.Target) || HasComp<PendingZombieComponent>(args.Target))
+                return;
+            if (!_mobState.IsAlive(args.Target))
+                return;
+
+            _stun.TryParalyze(args.Target, TimeSpan.FromSeconds(component.ParalyzeTime), false);
+            _damageable.TryChangeDamage(args.Target, component.Damage, origin: args.Thrown);
 
         }
 
@@ -79,6 +114,86 @@ namespace Content.Server.Zombies
             // Current zombies DO remove the anomaly on death.
             args.Cancelled = true;
         }
+
+        private void OnFlair(EntityUid uid, ZombieComponent component, ZombieFlairActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            var zombieXform = Transform(uid);
+            EntityUid? nearestUid = default!;
+            TransformComponent? nearestXform = default!;
+            float? minDistance = null;
+            var query = AllEntityQuery<HumanoidAppearanceComponent>();
+            while (query.MoveNext(out var targetUid, out var humanoidAppearanceComponent))
+            {
+                // Зомби не должны чувствовать тех, у кого иммунитет к ним.
+                if (HasComp<ZombieComponent>(targetUid) || HasComp<ZombieImmuneComponent>(targetUid))
+                    continue;
+                var xform = Transform(targetUid);
+
+                // Почему бы и нет, оптимизация наху
+                var distance = Math.Abs(zombieXform.Coordinates.X - xform.Coordinates.X) +
+                               Math.Abs(zombieXform.Coordinates.Y - xform.Coordinates.Y);
+
+                if (distance > component.MaxFlairDistance)
+                    continue;
+
+                if (minDistance == null || nearestUid == null || minDistance > distance)
+                {
+                    nearestUid = targetUid;
+                    minDistance = distance;
+                }
+            }
+
+            if (nearestUid == null || nearestUid == default!)
+            {
+                _popup.PopupEntity($"Ближайших выживших не найдено.", uid, uid, PopupType.LargeCaution);
+            }
+            else
+            {
+                _popup.PopupEntity($"Ближайший выживший находится {RemoveColorTags(_navMap.GetNearestBeaconString(nearestUid.Value))}", uid, uid, PopupType.LargeCaution);
+            }
+
+            args.Handled = true;
+        }
+
+        private string RemoveColorTags(string input)
+        {
+            // Регулярное выражение для поиска тэгов [color=...] и [/color]
+            var pattern = @"\[\s*\/?\s*color(?:=[^\]]*)?\]";
+            // Заменяем найденные тэги на пустую строку
+            var result = Regex.Replace(input, pattern, string.Empty, RegexOptions.IgnoreCase);
+            return result;
+        }
+
+        private void OnJump(EntityUid uid, ZombieComponent component, ZombieJumpActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            // TODO: Проверка?
+            // if ()
+            // {
+            //     _popup.PopupEntity(Loc.GetString("ни магу"),
+            //         uid, uid, PopupType.LargeCaution);
+            //     return;
+            // }
+
+            args.Handled = true;
+            var xform = Transform(uid);
+            var mapCoords = args.Target.ToMap(EntityManager, _transform);
+            var direction = mapCoords.Position - xform.MapPosition.Position;
+
+            if (direction.Length() > component.MaxThrow)
+            {
+                direction = direction.Normalized() * component.MaxThrow;
+            }
+
+            _throwing.TryThrow(uid, direction, 7F, uid, 10F);
+            _chatSystem.TryEmoteWithChat(uid, "ZombieGroan");
+        }
+        // Sunnrise-End
 
         private void OnPendingMapInit(EntityUid uid, IncurableZombieComponent component, MapInitEvent args)
         {
@@ -163,6 +278,11 @@ namespace Content.Server.Zombies
             if (component.EmoteSoundsId == null)
                 return;
             _protoManager.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
+
+            // Sunnrise-Start
+            _action.AddAction(uid, component.ActionJumpId);
+            _action.AddAction(uid, component.ActionFlairId);
+            // Sunnrise-End
         }
 
         private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteEvent args)
@@ -237,6 +357,13 @@ namespace Content.Server.Zombies
                 if (args.User == entity)
                     continue;
 
+                // Sunrise-Edit-Start
+
+                if (HasComp<MechComponent>(entity))
+                    continue;
+
+                // Sunrise-Edit-End
+
                 if (!TryComp<MobStateComponent>(entity, out var mobState))
                     continue;
 
@@ -272,7 +399,7 @@ namespace Content.Server.Zombies
         /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
         /// <param name="zombiecomp"></param>
         /// <remarks>
-        ///     this currently only restore the name and skin/eye color from before zombified
+        ///     this currently only restore the skin/eye color from before zombified
         ///     TODO: completely rethink how zombies are done to allow reversal.
         /// </remarks>
         public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
@@ -292,14 +419,25 @@ namespace Content.Server.Zombies
             _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
-            _nameMod.RefreshNameModifiers(target);
             return true;
         }
 
-        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        private void OnZombieCloning(Entity<ZombieComponent> ent, ref CloningEvent args)
         {
-            if (UnZombify(args.Source, args.Target, zombiecomp))
-                args.NameHandled = true;
+            UnZombify(ent.Owner, args.CloneUid, ent.Comp);
+        }
+
+        // Make sure players that enter a zombie (for example via a ghost role or the mind swap spell) count as an antagonist.
+        private void OnMindAdded(Entity<ZombieComponent> ent, ref MindAddedMessage args)
+        {
+            if (!_role.MindHasRole<ZombieRoleComponent>(args.Mind))
+                _role.MindAddRole(args.Mind, "MindRoleZombie", mind: args.Mind.Comp);
+        }
+
+        // Remove the role when getting cloned, getting gibbed and borged, or leaving the body via any other method.
+        private void OnMindRemoved(Entity<ZombieComponent> ent, ref MindRemovedMessage args)
+        {
+            _role.MindTryRemoveRole<ZombieRoleComponent>(args.Mind);
         }
     }
 }

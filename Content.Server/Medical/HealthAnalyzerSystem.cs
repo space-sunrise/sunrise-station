@@ -25,8 +25,18 @@ public sealed class HealthAnalyzerSystem : AbstractAnalyzerSystem<HealthAnalyzer
         if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key))
             return;
 
-        if (!HasComp<DamageableComponent>(target))
+        if (!TryComp<DamageableComponent>(target, out var damageableComponent)) // Sunrise-Edit
             return;
+
+        // Sunrise-Start
+        if (!TryComp<HealthAnalyzerComponent>(healthAnalyzer, out var healthAnalyzerComp))
+            return;
+
+        if (healthAnalyzerComp.DamageContainers is not null &&
+            damageableComponent.DamageContainerID is not null &&
+            !healthAnalyzerComp.DamageContainers.Contains(damageableComponent.DamageContainerID))
+            return;
+        // Sunrise-End
 
         var bodyTemperature = float.NaN;
 

@@ -2,7 +2,7 @@
   name: spider clan charge
   description: A modified C-4 charge supplied to you by the Spider Clan. Its explosive power has been juiced up, but only works in one specific area.
   # not actually modified C-4! oh the horror!
-  parent: BaseItem
+  parent: [ BaseItem, BaseMajorContraband ]
   id: SpiderCharge
   components:
   - type: Sprite
@@ -16,7 +16,10 @@
     delay: 10
     delayOptions: [5, 10, 30, 60]
     initialBeepDelay: 0
-    beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    beepSound:
+      path: /Audio/_Sunrise/c4_beep1.ogg # Sunrise-Edit
+      params:
+        volume: 20
     startOnStick: true
   - type: AutomatedTimer
   - type: Sticky

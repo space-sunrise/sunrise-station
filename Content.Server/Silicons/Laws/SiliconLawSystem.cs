@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
@@ -33,6 +35,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    // Sunrise-Start
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    // Sunrise-End
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -170,16 +175,24 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
             Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
+
+        // Sunrise-Start
+        _chatSystem.TrySendInGameICMessage(uid, Loc.GetString("borg-emagged-message"), InGameICChatType.Emote, false, isFormatted: true);
+        // Sunrise-End
     }
 
-    private void EnsureSubvertedSiliconRole(EntityUid mindId)
+    protected override void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
+        base.EnsureSubvertedSiliconRole(mindId);
+
         if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon", silent: true);
     }
 
-    private void RemoveSubvertedSiliconRole(EntityUid mindId)
+    protected override void RemoveSubvertedSiliconRole(EntityUid mindId)
     {
+        base.RemoveSubvertedSiliconRole(mindId);
+
         if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(mindId);
     }
@@ -239,8 +252,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         return ev.Laws;
     }
 
-    public void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
+    public override void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
     {
+        base.NotifyLawsChanged(uid, cue);
+
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 

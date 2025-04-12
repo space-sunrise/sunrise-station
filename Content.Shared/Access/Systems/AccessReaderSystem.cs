@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Tag;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -24,10 +25,13 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedGameTicker _gameTicker = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStationRecordsSystem _recordsSystem = default!;
+
+    private static readonly ProtoId<TagPrototype> PreventAccessLoggingTag = "PreventAccessLogging";
 
     public override void Initialize()
     {
@@ -42,8 +46,8 @@ public sealed class AccessReaderSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
-        args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
+        args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists, component.Group,
+            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit); // Sunrise-edit
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -64,6 +68,7 @@ public sealed class AccessReaderSystem : EntitySystem
         component.AccessLists = new(state.AccessLists);
         component.DenyTags = new(state.DenyTags);
         component.AccessLog = new(state.AccessLog);
+        component.Group = new(state.Group); // Sunrise-alertAccesses
         component.AccessLogLimit = state.AccessLogLimit;
     }
 
@@ -115,13 +120,13 @@ public sealed class AccessReaderSystem : EntitySystem
         var access = FindAccessTags(user, accessSources);
         FindStationRecordKeys(user, out var stationKeys, accessSources);
 
-        if (IsAllowed(access, stationKeys, target, reader))
-        {
-            LogAccess((target, reader), user);
-            return true;
-        }
+        if (!IsAllowed(access, stationKeys, target, reader))
+            return false;
 
-        return false;
+        if (!_tag.HasTag(user, PreventAccessLoggingTag))
+            LogAccess((target, reader), user);
+
+        return true;
     }
 
     public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out Entity<AccessReaderComponent>? ent)
@@ -162,6 +167,9 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!reader.Enabled)
             return true;
 
+        if (AreAccessTagsAllowedAlert(access, reader))
+            return true;
+
         if (reader.ContainerAccessProvider == null)
             return IsAllowedInternal(access, stationKeys, reader);
 
@@ -177,6 +185,11 @@ public sealed class AccessReaderSystem : EntitySystem
         {
             if (!TryComp(entity, out AccessReaderComponent? containedReader))
                 continue;
+
+            // Sunrise-start
+            if (AreAccessTagsAllowedAlert(access, containedReader))
+                return true;
+            // Sunrise-end
 
             if (IsAllowed(access, stationKeys, entity, containedReader))
                 return true;
@@ -220,6 +233,33 @@ public sealed class AccessReaderSystem : EntitySystem
 
         return false;
     }
+
+    // Sunrise-start
+    /// <summary>
+    /// Сравнивает список аварийных доступов с доступами на карте.
+    /// </summary>
+    public bool AreAccessTagsAllowedAlert(ICollection<ProtoId<AccessLevelPrototype>> access, AccessReaderComponent reader)
+    {
+        if (reader.Group == string.Empty)
+            return false;
+
+        if (!_prototype.TryIndex<AccessGroupPrototype>(reader.Group, out var accessTags))
+            return false;
+
+        if (accessTags == null)
+            return false;
+
+        if (accessTags.Tags.Count == 0)
+            return false;
+        foreach (var ent in accessTags.Tags)
+        {
+            if (access.Contains(ent))
+                return true;
+        }
+
+        return false;
+    }
+    // Sunrise-end
 
     /// <summary>
     /// Compares the given stationrecordkeys with the accessreader to see if it is allowed.

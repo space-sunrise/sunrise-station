@@ -89,6 +89,7 @@
     contents:
     - id: ClothingUniformJumpskirtPerformer
     - id: ClothingShoesBootsPerformer
+    - id: ClothingHeadPerformerWig
     - id: ClothingOuterSuitMonkey
     - id: ClothingHeadHatAnimalMonkey
     - id: ClothingNeckCloakMoth
@@ -197,7 +198,7 @@
       - id: BookMedicalReferenceBook
       - id: BookHowToSurvive
       - id: BookChemicalCompendium
-      - id: BookSpaceLaw
+      - id: HyperLinkBookCorporateLaw
 
 - type: entity
   id: CrateServiceSodaDispenser

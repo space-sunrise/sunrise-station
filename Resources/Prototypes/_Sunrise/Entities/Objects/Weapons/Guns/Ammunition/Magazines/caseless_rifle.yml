@@ -1,0 +1,6 @@
+- type: entity
+  parent: BaseMagazinePistolCaselessRifle
+  id: BaseMagazinePistolCaselessRifleExtended
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 20

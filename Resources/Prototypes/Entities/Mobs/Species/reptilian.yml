@@ -5,6 +5,7 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:
@@ -15,6 +16,10 @@
   - type: Puller
     needsHands: false
   - type: Thirst
+    dehydrationDamage:
+      types:
+        Bloodloss: 0.5
+        Asphyxiation: 0.5
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
@@ -76,6 +81,20 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  # Sunrise-start
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+  - type: FootprintEmitter
+    leftBareFootState:
+    - "footprint-left-bare-lizard"
+    rightBareFootState:
+    - "footprint-right-bare-lizard"
+  - type: Carriable
+#Sunrise-end
 
 
 - type: entity

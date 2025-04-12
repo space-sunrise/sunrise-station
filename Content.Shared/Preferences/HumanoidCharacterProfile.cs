@@ -1,12 +1,15 @@
 using System.Linq;
 using System.Text.RegularExpressions;
+using Content.Shared._Sunrise.SunriseCCVars;
 using Content.Shared.CCVar;
+using Content.Shared._Sunrise.TTS;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+using Content.Sunrise.Interfaces.Shared;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -25,12 +28,11 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
-        private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-]");
+        private static readonly Regex RestrictedNameRegex = new("[^А-Яа-яA-Za-zёЁ0-9, ,\\-,'.]"); // Sunrise-edit
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
         public const int MaxNameLength = 32;
         public const int MaxLoadoutNameLength = 32;
-        public const int MaxDescLength = 512;
 
         /// <summary>
         /// Job preferences for initial spawn.
@@ -79,6 +81,9 @@ namespace Content.Shared.Preferences
         public ProtoId<SpeciesPrototype> Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
         [DataField]
+        public string Voice { get; set; } = SharedHumanoidAppearanceSystem.DefaultVoice;
+
+        [DataField]
         public int Age { get; set; } = 18;
 
         [DataField]
@@ -86,6 +91,9 @@ namespace Content.Shared.Preferences
 
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
+
+        [DataField]
+        public string BodyType { get; set; } = SharedHumanoidAppearanceSystem.DefaultBodyType;
 
         /// <summary>
         /// <see cref="Appearance"/>
@@ -130,6 +138,8 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            string voice, // Sunrise-TTS
+            string bodyType,
             int age,
             Sex sex,
             Gender gender,
@@ -144,6 +154,8 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Species = species;
+            Voice = voice; // Sunrise-TTS
+            BodyType = bodyType;
             Age = age;
             Sex = sex;
             Gender = gender;
@@ -175,6 +187,8 @@ namespace Content.Shared.Preferences
             : this(other.Name,
                 other.FlavorText,
                 other.Species,
+                other.Voice,
+                other.BodyType,
                 other.Age,
                 other.Sex,
                 other.Gender,
@@ -218,7 +232,8 @@ namespace Content.Shared.Preferences
 
             var species = random.Pick(prototypeManager
                 .EnumeratePrototypes<SpeciesPrototype>()
-                .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
+                .Where(x => (ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
+                            && !x.SponsorOnly)
                 .ToArray()
             ).ID;
 
@@ -232,11 +247,21 @@ namespace Content.Shared.Preferences
 
             var sex = Sex.Unsexed;
             var age = 18;
+            var bodyType = SharedHumanoidAppearanceSystem.DefaultBodyType;
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
+                bodyType = speciesPrototype.BodyTypes.First();
             }
+
+            // Sunrise-TTS-Start
+            var voiceId = random.Pick(prototypeManager
+                .EnumeratePrototypes<TTSVoicePrototype>()
+                .Where(o => CanHaveVoice(o, sex) && !o.SponsorOnly)
+                .ToArray()
+            ).ID;
+            // Sunrise-TTS-End
 
             var gender = Gender.Epicene;
 
@@ -259,6 +284,8 @@ namespace Content.Shared.Preferences
                 Age = age,
                 Gender = gender,
                 Species = species,
+                Voice = voiceId, // Sunrise-TTS
+                BodyType = bodyType,
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
             };
         }
@@ -293,6 +320,17 @@ namespace Content.Shared.Preferences
             return new(this) { Species = species };
         }
 
+        // Sunrise-TTS-Start
+        public HumanoidCharacterProfile WithVoice(string voice)
+        {
+            return new(this) { Voice = voice };
+        }
+        // Sunrise-TTS-End
+
+        public HumanoidCharacterProfile WithBodyType(string bodyType)
+        {
+            return new HumanoidCharacterProfile(this) { BodyType = bodyType };
+        }
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
@@ -463,6 +501,7 @@ namespace Content.Shared.Preferences
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
+            if (BodyType != other.BodyType) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
@@ -473,7 +512,7 @@ namespace Content.Shared.Preferences
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
-        public void EnsureValid(ICommonSession session, IDependencyCollection collection)
+        public void EnsureValid(ICommonSession session, IDependencyCollection collection, string[] sponsorPrototypes)
         {
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
@@ -483,6 +522,14 @@ namespace Content.Shared.Preferences
                 Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
                 speciesPrototype = prototypeManager.Index(Species);
             }
+
+            // Sunrise-Sponsors-Start: Reset to human if player not sponsor
+            if (speciesPrototype.SponsorOnly && !sponsorPrototypes.Contains(Species.Id))
+            {
+                Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
+                speciesPrototype = prototypeManager.Index<SpeciesPrototype>(Species);
+            }
+            // Sunrise-Sponsors-End
 
             var sex = Sex switch
             {
@@ -506,6 +553,8 @@ namespace Content.Shared.Preferences
                 Gender.Neuter => Gender.Neuter,
                 _ => Gender.Epicene // Invalid enum values.
             };
+
+            var bodyType = speciesPrototype.BodyTypes.Contains(BodyType) ? BodyType : speciesPrototype.BodyTypes.First();
 
             string name;
             if (string.IsNullOrEmpty(Name))
@@ -539,17 +588,31 @@ namespace Content.Shared.Preferences
                 name = GetName(Species, gender);
             }
 
-            string flavortext;
-            if (FlavorText.Length > MaxDescLength)
+            // Sunrise-Start
+            IoCManager.Instance!.TryResolveType<ISharedSponsorsManager>(out var sponsors);
+            var maxDescLength = configManager.GetCVar(SunriseCCVars.FlavorTextBaseLength);
+            if (sponsors != null)
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..MaxDescLength];
+                if (sponsors.IsSponsor(session.UserId))
+                    maxDescLength = sponsors.GetSizeFlavor(session.UserId);
+                if (!sponsors.IsAllowedFlavor(session.UserId) && configManager.GetCVar(SunriseCCVars.FlavorTextSponsorOnly))
+                {
+                    FlavorText = string.Empty;
+                }
+            }
+            // Sunrise-End
+
+            string flavortext;
+            if (FlavorText.Length > maxDescLength) // Sunrise-Edit
+            {
+                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..maxDescLength]; // Sunrise-Edit
             }
             else
             {
                 flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText);
             }
 
-            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
+            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex, sponsorPrototypes);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
             {
@@ -600,6 +663,7 @@ namespace Content.Shared.Preferences
             Age = age;
             Sex = sex;
             Gender = gender;
+            BodyType = bodyType;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
 
@@ -618,6 +682,12 @@ namespace Content.Shared.Preferences
             _traitPreferences.Clear();
             _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
 
+            // Sunrise-TTS-Start
+            prototypeManager.TryIndex<TTSVoicePrototype>(Voice, out var voice);
+            if (voice is null || !CanHaveVoice(voice, Sex))
+                Voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
+            // Sunrise-TTS-End
+
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
 
@@ -629,7 +699,7 @@ namespace Content.Shared.Preferences
                     continue;
                 }
 
-                loadouts.EnsureValid(this, session, collection);
+                loadouts.EnsureValid(this, session, collection, sponsorPrototypes); // Sunrise-Sponsors
             }
 
             foreach (var value in toRemove)
@@ -677,10 +747,17 @@ namespace Content.Shared.Preferences
             return result;
         }
 
-        public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)
+        // Sunrise-TTS-Start
+        public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex)
+        {
+            return voice.RoundStart && sex == Sex.Unsexed || (voice.Sex == sex || voice.Sex == Sex.Unsexed);
+        }
+        // Sunrise-TTS-End
+
+        public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection, string[] sponsorPrototypes)
         {
             var profile = new HumanoidCharacterProfile(this);
-            profile.EnsureValid(session, collection);
+            profile.EnsureValid(session, collection, sponsorPrototypes);
             return profile;
         }
 
@@ -708,6 +785,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(FlavorText);
             hashCode.Add(Species);
             hashCode.Add(Age);
+            hashCode.Add(BodyType);
             hashCode.Add((int)Sex);
             hashCode.Add((int)Gender);
             hashCode.Add(Appearance);
@@ -740,15 +818,15 @@ namespace Content.Shared.Preferences
             return profile;
         }
 
-        public RoleLoadout GetLoadoutOrDefault(string id, ICommonSession? session, ProtoId<SpeciesPrototype>? species, IEntityManager entManager, IPrototypeManager protoManager)
+        public RoleLoadout GetLoadoutOrDefault(string id, ICommonSession? session, ProtoId<SpeciesPrototype>? species, IEntityManager entManager, IPrototypeManager protoManager, string [] sponsorPrototypes)
         {
             if (!_loadouts.TryGetValue(id, out var loadout))
             {
                 loadout = new RoleLoadout(id);
-                loadout.SetDefault(this, session, protoManager, force: true);
+                loadout.SetDefault(this, session, protoManager, sponsorPrototypes, force: true);
             }
 
-            loadout.SetDefault(this, session, protoManager);
+            loadout.SetDefault(this, session, protoManager, sponsorPrototypes);
             return loadout;
         }
 

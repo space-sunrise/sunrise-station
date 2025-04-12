@@ -39,6 +39,9 @@
   - type: Rotatable
   - type: Transform
     noRot: false
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -78,6 +81,14 @@
   - type: GuideHelp
     guides:
     - Pumps
+  # Sunrise-start
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
+  # Sunrise-end
 
 - type: entity
   parent: GasBinaryBase
@@ -95,6 +106,9 @@
     - type: Rotatable
     - type: Transform
       noRot: false
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -140,6 +154,14 @@
     - type: GuideHelp
       guides:
       - Pumps
+    # Sunrise-start
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawTransit
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
+    # Sunrise-end
 
 - type: entity
   parent: GasBinaryBase
@@ -149,6 +171,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -174,6 +199,14 @@
     - type: GuideHelp
       guides:
       - PassiveGate
+    # Sunrise-start
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawTransit
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
+    # Sunrise-end
 
 - type: entity
   parent: GasBinaryBase
@@ -184,6 +217,9 @@
     mode: SnapgridCenter
   components:
     # TODO ATMOS: Give unique sprite.
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -227,6 +263,14 @@
     - type: GuideHelp
       guides:
       - ManualValve
+    # Sunrise-start
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawTransit
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
+    # Sunrise-end
 
 - type: entity
   parent: GasBinaryBase
@@ -237,6 +281,9 @@
     mode: SnapgridCenter
   components:
   - type: StationAiWhitelist
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -291,6 +338,14 @@
   - type: GuideHelp
     guides:
     - SignalValve
+  # Sunrise-start
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
+  # Sunrise-end
 
 - type: entity
   parent: GasBinaryBase
@@ -300,6 +355,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
       layers:
@@ -325,6 +383,16 @@
     - type: GuideHelp
       guides:
       - GasCanisters
+    # Sunrise-start
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
+    # Sunrise-end
 
 - type: entity
   parent: GasVentPump
@@ -334,6 +402,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -451,6 +522,7 @@
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
 
+
 - type: entity
   parent: GasBinaryBase
   id: HeatExchanger
@@ -501,6 +573,9 @@
   id: HeatExchangerBend
   suffix: Bend
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       layers:
       - sprite: Structures/Piping/Atmospherics/pipe.rsi

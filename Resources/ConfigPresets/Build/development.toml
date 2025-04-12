@@ -2,8 +2,11 @@
 # Straight in-game baby
 lobbyenabled = false
 # Dev map for faster loading & convenience
-map = "Dev"
+map = "SunriseDev" # Sunrise-Edit
 role_timers = false
+
+[events]
+enabled = false
 
 [ghost]
 role_time = 0.5
@@ -11,6 +14,9 @@ quick_lottery = true
 
 [gateway]
 generator_enabled = false
+
+[movement]
+mob_pushing = true
 
 [physics]
 # Makes mapping annoying

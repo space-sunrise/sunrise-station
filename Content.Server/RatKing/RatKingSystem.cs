@@ -7,9 +7,12 @@ using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Dataset;
+using Content.Shared.Mobs; // Sunrise-Edit
+using Content.Shared.Mobs.Components; // Sunrise-Edit
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Pointing;
+using Content.Shared.Random.Helpers;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -45,6 +48,21 @@ namespace Content.Server.RatKing
 
             if (!TryComp<HungerComponent>(uid, out var hunger))
                 return;
+
+            // Sunrise-Edit
+            var livingServants = 0;
+            foreach (var servantId in component.Servants)
+            {
+                if (TryComp<MobStateComponent>(servantId, out var mobState) && mobState.CurrentState != MobState.Dead)
+                    livingServants++;
+            }
+
+            if (livingServants >= component.MaxArmyCount)
+            // Sunrise-Edit
+            {
+                _popup.PopupEntity(Loc.GetString("rat-king-max-army", ("amount", component.MaxArmyCount)), uid, uid);
+                return;
+            }
 
             //make sure the hunger doesn't go into the negatives
             if (_hunger.GetHunger(hunger) < component.HungerPerArmyUse)
@@ -120,10 +138,10 @@ namespace Content.Server.RatKing
             base.DoCommandCallout(uid, component);
 
             if (!component.OrderCallouts.TryGetValue(component.CurrentOrder, out var datasetId) ||
-                !PrototypeManager.TryIndex<DatasetPrototype>(datasetId, out var datasetPrototype))
+                !PrototypeManager.TryIndex<LocalizedDatasetPrototype>(datasetId, out var datasetPrototype))
                 return;
 
-            var msg = Random.Pick(datasetPrototype.Values);
+            var msg = Random.Pick(datasetPrototype);
             _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
         }
     }

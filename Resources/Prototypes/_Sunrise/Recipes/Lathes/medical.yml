@@ -1,0 +1,239 @@
+- type: latheRecipe
+  id: HandheldCrewMonitor
+  result: HandheldCrewMonitorEmpty
+  categories:
+  - Tools
+  completetime: 4
+  materials:
+    Glass: 500
+    Steel: 500
+
+- type: latheRecipe
+  id: ScalpelAdvanced
+  result: ScalpelAdvanced
+  categories:
+  - Surgery
+  completetime: 3
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: RetractorAdvanced
+  result: RetractorAdvanced
+  categories:
+  - Surgery
+  completetime: 4
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: SawAdvanced
+  result: SawAdvanced
+  categories:
+  - Surgery
+  completetime: 5
+  materials:
+    Steel: 500
+    Plastic: 100
+
+- type: latheRecipe
+  id: HemostatAdvanced
+  result: HemostatAdvanced
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: BoneSetterAdvanced
+  result: BoneSetterAdvanced
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: BoneGel
+  result: BoneGel
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: BoneSetter
+  result: BoneSetter
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: HyposprayMedical
+  result: HyposprayMedical
+  categories:
+  - Tools
+  completetime: 3
+  materials:
+    Plastic: 100
+    Steel: 300
+    Plasma: 100
+    Glass: 100
+
+#SyringeGuns
+- type: latheRecipe
+  id: LauncherSyringeMed
+  result: LauncherSyringeMed
+  categories:
+  - Tools
+  completetime: 25
+  materials:
+    Plastic: 200
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
+  id: LauncherSyringePistol
+  result: LauncherSyringePistol
+  categories:
+  - Tools
+  completetime: 10
+  materials:
+    Plastic: 200
+    Steel: 1000
+    Glass: 350
+
+- type: latheRecipe
+  id: LauncherSyringeRapid
+  result: LauncherSyringeRapid
+  categories:
+  - Tools
+  completetime: 25
+  materials:
+    Plastic: 200
+    Steel: 1500
+    Glass: 400
+    Silver: 50
+
+- type: latheRecipe
+  id: MiniSyringe
+  result: MiniSyringe
+  categories:
+  - Tools
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 25
+
+- type: latheRecipe
+  id: MiniSyringeCryostasis
+  result: MiniSyringeCryostasis
+  categories:
+  - Tools
+  completetime: 6
+  materials:
+    Plastic: 100
+    Steel: 200
+
+- type: latheRecipe
+  id: MiniSyringeBluespace
+  result: MiniSyringeBluespace
+  categories:
+  - Tools
+  completetime: 10
+  materials:
+    Plastic: 150
+    Steel: 300
+    Silver: 50
+    Plasma: 100
+
+#cyberlimbs
+
+- type: latheRecipe
+  id: LeftArmCyber
+  result: LeftArmCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: RightArmCyber
+  result: RightArmCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: LeftHandCyber
+  result: LeftHandCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+
+- type: latheRecipe
+  id: RightHandCyber
+  result: RightHandCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+
+- type: latheRecipe
+  id: LeftLegCyber
+  result: LeftLegCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: RightLegCyber
+  result: RightLegCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: LeftFootCyber
+  result: LeftFootCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+
+- type: latheRecipe
+  id: RightFootCyber
+  result: RightFootCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100

@@ -28,9 +28,16 @@ public sealed partial class ImplanterSystem
 
     private void OnGibbed(Entity<ImplantedComponent> ent, ref BeingGibbedEvent args)
     {
+
         // Drop the storage implant contents before the implants are deleted by the body being gibbed
         foreach (var implant in ent.Comp.ImplantContainer.ContainedEntities)
         {
+            if (!TryComp<SubdermalImplantComponent>(implant, out var subdermalImplant))
+                continue;
+
+            if (!subdermalImplant.DropContainerItemsIfGib)
+                continue;
+
             if (TryComp<StorageComponent>(implant, out var storage))
                 _container.EmptyContainer(storage.Container, destination: Transform(ent).Coordinates);
         }

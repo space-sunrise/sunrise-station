@@ -16,6 +16,7 @@
         Slash: 0.6
         Piercing: 0.3
         Heat: 0.9
+    staminaModifier: 0.85 #Sunrise-edit
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
@@ -42,7 +43,7 @@
 
 #Detective's vest
 - type: entity
-  parent: [ClothingOuterArmorBase, BaseRestrictedContraband]
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
   name: detective's vest
   description: A hard-boiled private investigator's armored vest.
@@ -75,6 +76,8 @@
   - type: Tag
     tags:
     - HiViz
+    - Vest # Sunrise-Add
+    - WhitelistChameleon # Sunrise-Add
 
 #(Bartender) vest
 - type: entity

@@ -41,6 +41,18 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+    # Sunrise-start
+    - !type:GroupSelector
+      children:
+      - id: PlushieBlackCat
+      - id: PlushieGreyCat
+      - id: PlushieWhiteCat
+      - id: PlushieOrangeCat
+      - id: PlushieRicehatCat
+      - id: PlushieSiameseCat
+      - id: PlushieTabbyCat
+      - id: PlushieTuxedoCat
+    # Sunrise-end
 
 - type: entity
   id: CrateFunPlushie
@@ -102,8 +114,6 @@
         amount: 2
       - id: FrenchHornInstrument
         amount: 2
-      - id: SaxophoneInstrument
-        amount: 2
       - id: EuphoniumInstrument
       - id: TubaInstrument
 
@@ -139,6 +149,8 @@
       - id: ClarinetInstrument
       - id: FluteInstrument
       - id: HarmonicaInstrument
+        amount: 2
+      - id: SaxophoneInstrument
         amount: 2
       - id: OcarinaInstrument
       - id: PanFluteInstrument
@@ -280,6 +292,21 @@
         amount: 4
 
 - type: entity
+  id: CrateFunFoamGuns
+  parent: CratePlastic
+  name: Foam Force crate
+  description: Contains four Foam Force rifles, some grenades, and extra ammo. It's [REDACTED] or nothing!
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleFoam
+      amount: 4
+    - id: BoxDonkSoftBox
+      amount: 2
+    - id: GrenadeFoamDart
+      amount: 4
+
+- type: entity
   id: CrateFunBoxing
   parent: CrateGenericSteel
   name: boxing crate
@@ -324,12 +351,20 @@
       - id: CrazyGlue
         amount: 2
       - id: PlasticBanana
+      # Sunrise-start
+      - id: FunnyPaint
+        orGroup: Paint
+        prob: 0.5
+      - id: FunnyPaintYellow
+        orGroup: Paint
+        prob: 0.5
+      # Sunrise-end
       - id: WhoopieCushion
       - id: ToyHammer
       - id: MrChips
         orGroup: GiftPool
       - id: MrDips
-        orGroup: Giftpool
+        orGroup: GiftPool
       - id: RevolverCapGun
       - id: BalloonNT
       - id: ClothingShoesClownLarge

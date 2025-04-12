@@ -15,6 +15,7 @@
   - Syringe
   - PillCanister
   - HandLabeler
+  - BaseChemistryEmptyVial
 
 - type: latheRecipePack
   parent: BasicChemistryStatic
@@ -33,6 +34,8 @@
   - Drill
   - Saw
   - Hemostat
+  - BoneSetter # Sunrise-Add
+  - BoneGel # Sunrise-Add
 
 - type: latheRecipePack
   id: MedicalStatic

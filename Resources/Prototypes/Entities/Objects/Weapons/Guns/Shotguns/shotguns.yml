@@ -25,7 +25,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      collection: xm1014 # Sunrise-Edit
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
@@ -42,6 +42,17 @@
         ents: []
   - type: StaticPrice
     price: 500
+  # Sunrise start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: ShotgunsPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: ShotgunsDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: ShotgunsDrop
+  # Sunrise end
 
 - type: entity
   name: Bulldog
@@ -73,7 +84,7 @@
     availableModes:
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      collection: xm1014 # Sunrise-Edit
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: ItemSlots
@@ -117,6 +128,8 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 3
+    soundGunshot:
+      collection: m3 # Sunrise-Edit
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -136,7 +149,7 @@
 
 - type: entity
   name: Enforcer
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunEnforcer
   description: A premium semi-automatic shotgun, and the pride of all security forces. Uses .50 shotgun shells.
   components: # intend for Enforcer to have wider choke for semi-auto function
@@ -148,6 +161,9 @@
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun
+    soundGunshot:
+      collection: xm1014 # Sunrise-Edit
 
 - type: entity
   parent: WeaponShotgunEnforcer
@@ -156,28 +172,33 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
-
-- type: entity
-  name: Kammerer
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
-  id: WeaponShotgunKammerer
-  description: An old yet faithful design, and a favorite among irregular forces of many worlds. Uses .50 shotgun shells.
-  components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
-    sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 1
-  - type: Tag
-    tags:
-    - WeaponShotgunKammerer
+    soundGunshot:
+      collection: xm1014 # Sunrise-Edit
+
+#- type: entity
+#  name: Kammerer
+#  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
+#  id: WeaponShotgunKammerer
+#  description: An old yet faithful design, and a favorite among irregular forces of many worlds. Uses .50 shotgun shells.
+#  components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
+#  - type: Item
+#    size: Normal
+#    shape:
+#    - 0,0,4,0
+#    sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
+#  - type: Sprite
+#    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+#  - type: Clothing
+#    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+#  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+#  - type: Tag
+#    tags:
+#    - WeaponShotgunKammerer
+#  - type: Gun
+#    fireRate: 1
+#    soundGunshot:
+#      collection: m3 # Sunrise-Edit
 
 - type: entity
   name: sawn-off shotgun
@@ -194,6 +215,8 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
     fireRate: 3
+    soundGunshot:
+      collection: m3 # Sunrise-Edit
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -230,6 +253,8 @@
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Gun
     fireRate: 4
+    soundGunshot:
+      collection: m3 # Sunrise-Edit
   - type: BallisticAmmoProvider
     capacity: 1
   - type: Construction
@@ -278,6 +303,9 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
+    soundGunshot:
+      collection: m3 # Sunrise-Edit
+    bigTrigger: true # Sunrise-Edit
   - type: BallisticAmmoProvider
     capacity: 1
     proto: null

@@ -14,6 +14,14 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.Power.Components;
+using Content.Shared.PowerCell;
+using Content.Shared.UserInterface;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -27,6 +35,9 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly NavMapSystem _navMapSystem = default!;
     [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPowerCellSystem _cell = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private const float UpdateTime = 1.0f;
 
@@ -190,10 +201,38 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 if (TryComp<AppearanceComponent>(ent, out var entAppearance))
                     _appearance.SetData(ent, AtmosAlertsComputerVisuals.ComputerLayerScreen, (int) highestAlert, entAppearance);
 
+                // Sunrise-start
+                if (HasComp<ActivatableUIRequiresPowerCellComponent>(ent) && TryComp<PowerCellDrawComponent>(ent, out var draw))
+                {
+                    if (_cell.HasActivatableCharge(ent, draw) || _cell.HasDrawCharge(ent, draw))
+                    {
+                        Beep(ent, entConsole, highestAlert);
+                    }
+                }
+                if (HasComp<ActivatableUIRequiresPowerComponent>(ent))
+                {
+                    if (this.IsPowered(ent, EntityManager))
+                    {
+                        Beep(ent, entConsole, highestAlert);
+                    }
+                }
+
+                // Sunrise-end
+
                 // If the console UI is open, send UI data to each subscribed session
                 UpdateUIState(ent, airAlarmEntries, fireAlarmEntries, entConsole, entXform);
             }
         }
+    }
+
+    private void Beep(EntityUid ent, AtmosAlertsComputerComponent entConsole, AtmosAlarmType highestAlert)
+    {
+        if (entConsole.NextBeep >= _gameTiming.CurTime || highestAlert != AtmosAlarmType.Danger ||
+            entConsole.BeepSound == null)
+            return;
+
+        _audio.PlayPvs(entConsole.BeepSound, ent);
+        entConsole.NextBeep = _gameTiming.CurTime + entConsole.Timer;
     }
 
     public void UpdateUIState

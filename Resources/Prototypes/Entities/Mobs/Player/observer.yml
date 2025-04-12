@@ -66,6 +66,21 @@
   - type: PointLight
     radius: 6
     enabled: false
+  # Sunrise-Start
+  - type: InteractionPopup
+    successChance: 1.0
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Pullable
+  - type: UserInterface
+    interfaces:
+      enum.GhostThemeUiKey.Key:
+        type: GhostThemeBoundUserInterface
+        requireInputValidation: false
+  # Sunrise-End
 
 # proto for player ghosts specifically
 - type: entity
@@ -73,6 +88,9 @@
   id: MobObserver
   components:
   - type: Spectral
+  - type: Tag
+    tags:
+    - AllowGhostShownByEvent
 
 - type: entity
   id: ActionGhostBoo

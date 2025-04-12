@@ -8,6 +8,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Mindshield;
 
@@ -29,6 +30,8 @@ public sealed class MindShieldSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SubdermalImplantComponent, ImplantImplantedEvent>(ImplantCheck);
+        SubscribeLocalEvent<MindShieldImplantComponent, EntGotRemovedFromContainerMessage>(OnImplantDraw);
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantEjectEvent>(ImplantCheck);
     }
 
     /// <summary>
@@ -42,6 +45,16 @@ public sealed class MindShieldSystem : EntitySystem
             MindShieldRemovalCheck(ev.Implanted.Value, ev.Implant);
         }
     }
+
+    // Sunrise-Start
+    public void ImplantCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantEjectEvent ev)
+    {
+        if (_tag.HasTag(ev.Implant, MindShieldTag) && ev.Implanted != null)
+        {
+            RemCompDeferred<MindShieldComponent>(ev.Implanted.Value);
+        }
+    }
+    // Sunrise-End
 
     /// <summary>
     /// Checks if the implanted person was a Rev or Head Rev and remove role or destroy mindshield respectively.
@@ -61,4 +74,10 @@ public sealed class MindShieldSystem : EntitySystem
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(implanted)} was deconverted due to being implanted with a Mindshield.");
         }
     }
+
+    private void OnImplantDraw(Entity<MindShieldImplantComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    {
+        RemComp<MindShieldComponent>(args.Container.Owner);
+    }
 }
+

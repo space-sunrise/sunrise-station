@@ -1,16 +1,17 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
-using Content.Server.IgnitionSource;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.Damage.Components;
+using Content.Shared._Sunrise.Mood;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.IgnitionSource;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
@@ -23,6 +24,7 @@ using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.FixedPoint;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -37,7 +39,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
-        [Dependency] private readonly IgnitionSourceSystem _ignitionSourceSystem = default!;
+        [Dependency] private readonly SharedIgnitionSourceSystem _ignitionSourceSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
@@ -82,7 +84,19 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
 
             SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<IgniteOnAmmoHitComponent, HitscanAmmoShotEvent>(HandleHitscanHit); // Sunrise-Edit
         }
+
+        // Sunrise-Start
+        private void HandleHitscanHit(EntityUid uid, IgniteOnAmmoHitComponent component, ref HitscanAmmoShotEvent args)
+        {
+            if (!EntityManager.TryGetComponent(args.Target, out FlammableComponent? flammable))
+                return;
+
+            flammable.FireStacks += component.FireStacks;
+            Ignite(args.Target, uid, flammable);
+        }
+        // Sunrise-End
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
         {
@@ -425,10 +439,12 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (!flammable.OnFire)
                 {
+                    RaiseLocalEvent(uid, new MoodRemoveEffectEvent("OnFire")); // Sunrise Edit
                     _alertsSystem.ClearAlert(uid, flammable.FireAlert);
                     continue;
                 }
 
+                RaiseLocalEvent(uid, new MoodEffectEvent("OnFire")); // Sunrise Edit
                 _alertsSystem.ShowAlert(uid, flammable.FireAlert);
 
                 if (flammable.FireStacks > 0)

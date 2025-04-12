@@ -43,7 +43,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             // The entity is deleted, so play the sound at its position rather than parenting
             var coordinates = Transform(uid).Coordinates;
-            _audio.PlayPvs(_audio.GetSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
+            _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
@@ -99,6 +99,12 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
+
+            // Sunrise-Start
+            var ev = new CreamedEvent(args.Target);
+            RaiseLocalEvent(args.Target, ref ev);
+            // Sunrise-End
+
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", Identity.Name(uid, EntityManager)), ("thrower", args.Thrown)), uid, otherPlayers, false);
         }
 
@@ -108,3 +114,7 @@ namespace Content.Server.Nutrition.EntitySystems
         }
     }
 }
+
+// Sunrise-Edit
+[ByRefEvent]
+public readonly record struct CreamedEvent(EntityUid Target);

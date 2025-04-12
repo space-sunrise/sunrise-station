@@ -4,8 +4,14 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  - type: Absorbable
   - type: Hunger
   - type: Thirst
+    baseDecayRate: 0.3
+    dehydrationDamage:
+      types:
+        Bloodloss: 0.5
+        Asphyxiation: 0.5
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
@@ -33,6 +39,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
@@ -117,6 +125,14 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  # Sunrise edit OwO
+  - type: FootprintEmitter
+    leftBareFootState:
+      - "footprint-left-bare-slime"
+    rightBareFootState:
+      - "footprint-right-bare-slime"
+  - type: Carriable
+  # Sunrise edit end.
 
 - type: entity
   parent: MobHumanDummy

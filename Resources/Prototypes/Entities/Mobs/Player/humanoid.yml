@@ -14,6 +14,14 @@
     - type: MindShield
     - type: AntagImmune
 
+- type: randomHumanoidSettings
+  id: EventHumanoidCentcomm
+  parent: EventHumanoidMindShielded
+  components:
+  - type: AutoImplant
+    implants:
+    - DeathRattleImplantCentcomm
+
 ## Death Squad
 
 - type: entity
@@ -26,14 +34,28 @@
       state: icon
     - type: RandomMetadata
       nameSegments:
-        - NamesFirstMilitaryLeader
-        - NamesLastMilitary
+        - NamesMilitaryFirstLeader
+        - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: DeathSquad
 
 - type: randomHumanoidSettings
   id: DeathSquad
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidCentcomm
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   randomizeName: false
   components:
     - type: GhostRole
@@ -49,8 +71,9 @@
       roleLoadout: [ RoleSurvivalEVA ]
     - type: RandomMetadata
       nameSegments:
-        - NamesFirstMilitaryLeader
-        - NamesLastMilitary
+        - NamesMilitaryFirstLeader
+        - NamesMilitaryLast
+      nameFormat: name-format-ert
 
 
 ## ERT Leader
@@ -65,14 +88,28 @@
       state: ertleader
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
-      - NamesLastMilitary
+      - NamesMilitaryFirstLeader
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTLeader
 
 - type: randomHumanoidSettings
   id: ERTLeader
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidCentcomm
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   randomizeName: false
   components:
     - type: GhostRole
@@ -87,8 +124,9 @@
       roleLoadout: [ RoleSurvivalExtended ]
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
-      - NamesLastMilitary
+      - NamesMilitaryFirstLeader
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -104,6 +142,19 @@
 
 - type: randomHumanoidSettings
   id: ERTLeaderEVA
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTLeader
   components:
     - type: GhostRole
@@ -127,6 +178,19 @@
 
 - type: randomHumanoidSettings
   id: ERTLeaderEVALecter
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTLeaderEVA
   components:
     - type: GhostRole
@@ -153,13 +217,27 @@
       state: chaplain #needs an ERT variant once a good suit it made.
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTChaplain
 
 - type: randomHumanoidSettings
   id: ERTChaplain
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTLeader
   components:
     - type: BibleUser
@@ -172,8 +250,9 @@
       job: ERTChaplain
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTChaplainGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -192,6 +271,19 @@
 
 - type: randomHumanoidSettings
   id: ERTChaplainEVA
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTChaplain
   components:
     - type: GhostRole
@@ -219,13 +311,27 @@
       state: ertjanitor
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTJanitor
 
 - type: randomHumanoidSettings
   id: ERTJanitor
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTLeader
   components:
     - type: GhostRole
@@ -237,8 +343,9 @@
       job: ERTJanitor
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -257,6 +364,19 @@
 
 - type: randomHumanoidSettings
   id: ERTJanitorEVA
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTJanitor
   components:
     - type: GhostRole
@@ -283,13 +403,27 @@
       state: ertengineer
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTEngineer
 
 - type: randomHumanoidSettings
   id: ERTEngineer
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTLeader
   components:
     - type: GhostRole
@@ -301,8 +435,9 @@
       job: ERTEngineer
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -321,6 +456,19 @@
 
 - type: randomHumanoidSettings
   id: ERTEngineerEVA
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTEngineer
   components:
     - type: GhostRole
@@ -347,13 +495,27 @@
       state: ertsecurity
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTSecurity
 
 - type: randomHumanoidSettings
   id: ERTSecurity
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTLeader
   components:
     - type: GhostRole
@@ -365,8 +527,9 @@
       job: ERTSecurity
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -385,6 +548,19 @@
 
 - type: randomHumanoidSettings
   id: ERTSecurityEVA
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTSecurity
   components:
     - type: GhostRole
@@ -408,6 +584,19 @@
 
 - type: randomHumanoidSettings
   id: ERTSecurityEVALecter
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTSecurityEVA
   components:
     - type: GhostRole
@@ -434,13 +623,27 @@
       state: ertmedical
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTMedical
 
 - type: randomHumanoidSettings
   id: ERTMedical
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTLeader
   components:
     - type: GhostRole
@@ -452,8 +655,9 @@
       job: ERTMedical
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -472,6 +676,19 @@
 
 - type: randomHumanoidSettings
   id: ERTMedicalEVA
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   parent: ERTMedical
   components:
     - type: GhostRole
@@ -500,7 +717,20 @@
 
 - type: randomHumanoidSettings
   id: CBURNAgent
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidCentcomm
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
+  - Vulpkanin
+  - Swine
+  - Tajaran
+  - Demon
+  - SlimePerson
+  - Dwarf
   components:
     - type: Loadout
       prototypes: [CBURNGear]
@@ -513,8 +743,9 @@
         settings: short
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - NamesLastMilitary
+      - NamesMilitaryFirst
+      - NamesMilitaryLast
+      nameFormat: name-format-ert
 
 ## Central Command
 
@@ -530,7 +761,14 @@
 
 - type: randomHumanoidSettings
   id: CentcomOfficial
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidCentcomm
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
+  - Moth
+  - Arachnid
+  - Reptilian
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
@@ -539,7 +777,7 @@
       raffle:
         settings: default
     - type: Loadout
-      prototypes: [ CentcomGear ]
+      prototypes: [ CentCommOfficialGear ] # Sunrise-Edit
       roleLoadout: [ RoleSurvivalStandard ]
 
 ## Syndicate
@@ -552,12 +790,16 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
-      nameSegments: [ names_death_commando ]
+      nameSegments: [ NamesDeathCommando ]
     - type: RandomHumanoidSpawner
       settings: SyndicateAgent
 
 - type: randomHumanoidSettings
   id: SyndicateAgent
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
   components:
     - type: RandomHumanoidAppearance
       randomizeName: false
@@ -577,6 +819,10 @@
 
 - type: randomHumanoidSettings
   id: NukeOp
+  speciesBlacklist: # Sunrise-edit
+  - Diona
+  - Vox
+  - Felinid
   components:
     - type: RandomHumanoidAppearance
       randomizeName: false
@@ -594,8 +840,9 @@
       settings: Cluwne
     - type: RandomMetadata
       nameSegments:
-      - names_first
-      - names_last
+      - NamesFirst
+      - NamesLast
+      nameFormat: name-format-standard
 
 - type: randomHumanoidSettings
   id: Cluwne

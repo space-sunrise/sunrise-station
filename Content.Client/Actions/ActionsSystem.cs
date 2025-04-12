@@ -58,19 +58,34 @@ namespace Content.Client.Actions
             var worldActionQuery = EntityQueryEnumerator<WorldTargetActionComponent>();
             while (worldActionQuery.MoveNext(out var uid, out var action))
             {
-                UpdateAction(uid, action);
+                if (IsCooldownActive(action) || !ShouldResetChargesWithTimer(action)) // Sunrise-Edit
+                    continue;
+
+                // Sunrise-Start
+                Dirty(uid, action);
+                // Sunrise-End
             }
 
             var instantActionQuery = EntityQueryEnumerator<InstantActionComponent>();
             while (instantActionQuery.MoveNext(out var uid, out var action))
             {
-                UpdateAction(uid, action);
+                if (IsCooldownActive(action) || !ShouldResetChargesWithTimer(action)) // Sunrise-Edit
+                    continue;
+
+                // Sunrise-Start
+                Dirty(uid, action);
+                // Sunrise-End
             }
 
             var entityActionQuery = EntityQueryEnumerator<EntityTargetActionComponent>();
             while (entityActionQuery.MoveNext(out var uid, out var action))
             {
-                UpdateAction(uid, action);
+                if (IsCooldownActive(action) || !ShouldResetChargesWithTimer(action)) // Sunrise-Edit
+                    continue;
+
+                // Sunrise-Start
+                Dirty(uid, action);
+                // Sunrise-End
             }
         }
 
@@ -88,7 +103,9 @@ namespace Content.Client.Actions
                 return;
 
             component.Whitelist = state.Whitelist;
+            component.Blacklist = state.Blacklist;
             component.CanTargetSelf = state.CanTargetSelf;
+            component.IgnoreContainer = state.IgnoreContainer; // Sunrise-Edit
             BaseHandleState<EntityTargetActionComponent>(uid, component, state);
         }
 
@@ -129,6 +146,8 @@ namespace Content.Client.Actions
             component.Charges = state.Charges;
             component.MaxCharges = state.MaxCharges;
             component.RenewCharges = state.RenewCharges;
+            component.RenewChargeDelay = state.RenewChargeDelay; // Sunrise-Edit
+            component.LastChargeRenewTime = state.LastChargeRenewTime; // Sunrise-Edit
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;

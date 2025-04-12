@@ -1,0 +1,16 @@
+- type: gamePreset
+  id: FleshCult
+  alias:
+  - fleshcult
+  - fs
+  name: flesh-cult-title
+  description: flesh-cult-description
+  showInVote: false
+  hide: true
+  rules:
+  - FleshCult
+  - SubGamemodesRule
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation

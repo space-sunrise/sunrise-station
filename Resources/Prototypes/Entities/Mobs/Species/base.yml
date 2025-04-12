@@ -9,6 +9,7 @@
   id: BaseMobSpecies
   abstract: true
   components:
+  - type: SurgeryTarget
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -19,20 +20,25 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: ["jumpsuit"]
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
+    # Sunrise-start
+    - map: ["bra"]
+    - map: ["pants"]
+    - map: ["socks"]
+    - map: ["jumpsuit"]
+    # Sunrise-end
     - map: ["enum.HumanoidVisualLayers.LHand"]
     - map: ["enum.HumanoidVisualLayers.RHand"]
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
-    - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "id" ]
-    - map: [ "neck" ]
+    - map: [ "outerClothing" ]
     - map: [ "back" ]
+    - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -136,6 +142,9 @@
     - RadiationProtection
     - Drowsiness
     - Adrenaline
+    - LoveEffect  # Sunrise-Edit
+    - Jump # Sunrise-Edit
+    - Flip # Sunrise-Edit
   - type: Body
     prototype: Human
     requiredLegs: 2
@@ -187,6 +196,18 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.SurgeryUIKey.Key:
+        type: SurgeryBui
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      # Sunrise-Start
+      enum.VampireMutationUiKey.Key:
+        type: VampireMutationBoundUserInterface
+      enum.SummonCultistUiKey.Key:
+        type: SummonCultistListWindowBUI
+      enum.CultSpellProviderUiKey.Key:
+        type: SpellSelectorBUI
+      # Sunrise-End
   - type: Puller
   - type: Speech
     speechSounds: Alto
@@ -211,18 +232,49 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+  # Sunrise-Start
+  - type: Paws
+    screamInterval: 3
+    thresholdDamage: 5
+    coughInterval: 5
+    emotesTakeDamage:
+    - Scream
+    - Crying
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 25
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: CognizinFix
+  # Sunrise-End
 
 - type: entity
   save: false
   parent:
+  - BaseMobSpecies # Sunrise
   - MobBloodstream
   - MobRespirator
   - MobAtmosStandard
   - MobFlammable
-  - BaseMobSpecies
+ #- BaseMobSpecies # Wizards
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
+  # Sunrise-Start
+  - type: DarkenedVision
+  - type: CanEscapeInventory
+  - type: Mood
+  - type: CritHeartbeat
+    heartbeatSound:
+      path: /Audio/_Sunrise/Effects/heartbeat.ogg
+      params:
+        volume: -3
+        loop: True
+  # Sunrise-End
   - type: Barotrauma
     damage:
       types:
@@ -263,7 +315,7 @@
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: Perishable
   - type: Butcherable
     butcheringType: Spike # TODO human.
@@ -279,6 +331,7 @@
         Asphyxiation: -1.0
   - type: FireVisuals
     alternateState: Standing
+  - type: PetOnInteract
 
 - type: entity
   save: false
@@ -305,9 +358,14 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: ["jumpsuit"]
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
+    # Sunrise-start
+    - map: ["bra"]
+    - map: ["pants"]
+    - map: ["socks"]
+    - map: ["jumpsuit"]
+    # Sunrise-end
     - map: ["enum.HumanoidVisualLayers.LHand"]
     - map: ["enum.HumanoidVisualLayers.RHand"]
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
@@ -318,12 +376,12 @@
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
-    - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "id" ]
-    - map: [ "neck" ]
+    - map: [ "outerClothing" ]
     - map: [ "back" ]
+    - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -339,6 +397,7 @@
   - type: Body
     prototype: Human
     requiredLegs: 2
+  - type: Absorbable
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key: # sure, this can go here too

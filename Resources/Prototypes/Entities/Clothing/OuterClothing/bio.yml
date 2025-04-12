@@ -7,12 +7,20 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/general.rsi
+  - type: DiseaseImmuneClothing
+    prob: 0.8
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Armor
     modifiers:
       coefficients:
         Caustic: 0.5
+  # Sunrise-Start
+  - type: Tag
+    tags:
+    - FullBodyOuter
+    - WhitelistChameleon
+  # Sunrise-End
 
 - type: entity
   parent: ClothingOuterBioGeneral

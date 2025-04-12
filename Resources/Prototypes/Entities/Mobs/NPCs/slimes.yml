@@ -5,6 +5,7 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
+  - type: VentCrawler # Sunrise-edit
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi
@@ -112,6 +113,10 @@
     speechSounds: Slime
   - type: TypingIndicator
     proto: slime
+  # Sunrise-start
+  - type: Carriable
+  - type: CanEscapeInventory
+  # Sunrise-end
 
 - type: entity
   name: basic slime
@@ -142,6 +147,8 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: TTS
+    voice: Tracer
 
 - type: entity
   name: blue slime

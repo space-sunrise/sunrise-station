@@ -25,8 +25,15 @@
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2
     ClothingHeadHelmetJustice: 1
+    ClothingShoesBootsCowboyBlack: 1 # Sunrise-Edit
+    ClothingHeadHatCowboyBlack: 1 # Sunrise-Edit
+    HandheldCamera: 3  # Sunrise-Edit
+    PepperSprayBottleBlue: 2  # Sunrise-Edit
   contrabandInventory:
     ClothingMaskClownSecurity: 1
     ToyFigurineSecurity: 1
     ToyFigurineWarden: 1
     ToyFigurineHeadOfSecurity: 1
+  emaggedInventory:
+    ClothingHeadHatCowboyBountyHunter: 1 # Sunrise Edit
+    ClothingShoesBootsSyndieFilled: 1 # Sunrise Edit

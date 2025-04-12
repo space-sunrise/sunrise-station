@@ -11,6 +11,7 @@
     DrinkIceBucket: 2
     BarSpoon: 3
     CustomDrinkJug: 2 #to allow for custom drinks in the soda/booze dispensers
+    DrinkCampariBottleFull: 5
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
     DrinkBeerBottleFull: 5
@@ -47,7 +48,7 @@
     DrinkBeerCan: 5
     DrinkWineCan: 5
   contrabandInventory:
-    EthanolChemistryBottle: 3
+    ChemistryBottleEthanol: 3
     DrinkBottleOfNothingFull: 1
   emaggedInventory:
     DrinkPoisonWinebottleFull: 2

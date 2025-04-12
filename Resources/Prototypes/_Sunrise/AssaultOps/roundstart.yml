@@ -1,0 +1,51 @@
+- type: entity
+  id: AssaultOps
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 20
+    minCommandStaff: 3
+  - type: AssaultOpsRule
+    faction: Syndicate
+  - type: LoadMapRule
+    gridPath: /Maps/_Sunrise/Shuttles/assaultops.yml
+  - type: RuleGrids
+  - type: AntagLoadProfileRule
+    speciesOverride: Human
+    speciesOverrideBlacklist:
+    - Vox
+    - Felinid
+    - Diona
+    - HumanoidXeno
+    - Predator
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ AssaultCommander ]
+      fallbackRoles: [ AssaultOperative ]
+      spawnerPrototype: SpawnPointAssaultOpsCommander
+      startingGear: AssaultCommanderGear
+      roleLoadout:
+      - RoleSurvivalAssaultOps
+      components:
+      - type: AssaultOperative
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindRoles:
+      - MindRoleAssaultCommander
+    - prefRoles: [ AssaultOperative ]
+      fallbackRoles: [ AssaultCommander ]
+      spawnerPrototype: SpawnPointAssaultOpsOperative
+      max: 5
+      playerRatio: 15
+      startingGear: AssaultOperativeGear
+      roleLoadout:
+      - RoleSurvivalAssaultOps
+      components:
+      - type: AssaultOperative
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindRoles:
+      - MindRoleAssaultOperative

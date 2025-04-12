@@ -200,6 +200,12 @@ namespace Content.Server.Database
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
+            // Sunrise-TTS-Start
+            var voice = profile.Voice;
+            if (voice == String.Empty)
+                voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
+            // Sunrise-TTS-End
+
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             var markingsRaw = profile.Markings?.Deserialize<List<string>>();
 
@@ -244,6 +250,8 @@ namespace Content.Server.Database
                 profile.CharacterName,
                 profile.FlavorText,
                 profile.Species,
+                voice, // Sunrise-TTS
+                profile.BodyType,
                 profile.Age,
                 sex,
                 gender,
@@ -280,6 +288,8 @@ namespace Content.Server.Database
             profile.CharacterName = humanoid.Name;
             profile.FlavorText = humanoid.FlavorText;
             profile.Species = humanoid.Species;
+            profile.Voice = humanoid.Voice; // Sunrise-TTS
+            profile.BodyType = humanoid.BodyType;
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
@@ -1735,6 +1745,39 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         }
 
         #endregion
+
+        // Sunrise-Start
+        # region Ahelp
+
+        public async Task AddAHelpMessage(Guid senderUserId, Guid receiverUserId, string message, DateTimeOffset sentAt, bool playSound, bool adminOnly)
+        {
+            await using var db = await GetDb();
+            var ahelpMessage = new AHelpMessage
+            {
+                SenderUserId = senderUserId,
+                ReceiverUserId = receiverUserId,
+                Message = message,
+                SentAt = sentAt,
+                PlaySound = playSound,
+                AdminOnly = adminOnly
+            };
+            db.DbContext.AHelpMessages.Add(ahelpMessage);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<AHelpMessage>> GetAHelpMessagesByReceiverAsync(Guid receiverUserId)
+        {
+            await using var db = await GetDb();
+
+            var messages = await db.DbContext.AHelpMessages
+                .Where(m => m.ReceiverUserId == receiverUserId)
+                .ToListAsync();
+
+            return messages;
+        }
+
+        # endregion
+        // Sunrise-End
 
         # region IPIntel
 

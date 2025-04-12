@@ -11,6 +11,7 @@
     - Common
     - Command
     - Engineering
+    - Law # Sunrise-edit
     - Medical
     - Science
     - Security
@@ -22,6 +23,7 @@
     - Common
     - Command
     - Engineering
+    - Law # Sunrise-edit
     - Medical
     - Science
     - Security
@@ -70,11 +72,15 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
+    announceVoice: PortalGlados # Sunrise-Edit
+    sound: /Audio/_Sunrise/Announcements/announce_dig.ogg # Sunrise-Edit
   - type: HolographicAvatar
     layerData:
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
   - type: ShowJobIcons
+  - type: Speech # Sunrise-Edit
+    speechVerb: Robotic # Sunrise-Edit
 
 - type: entity
   id: AiHeldIntellicard
@@ -96,6 +102,7 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+  - type: ShowJobIcons
 
 # Ai
 - type: entity
@@ -406,8 +413,7 @@
 - type: entity
   id: StationAiBrain
   parent: PositronicBrain
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite
     # Once it's in a core it's pretty much an abstract entity at that point.
@@ -430,6 +436,7 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
   - type: Eye
     drawFov: false
   - type: Examiner
@@ -437,6 +444,7 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Borg
+  - type: ShowMindShieldIcons
   - type: Tag
     tags:
     - HideContextMenu
@@ -454,8 +462,7 @@
   id: StationAiHolo
   name: AI eye
   description: The AI's viewer.
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: NoFTL
   - type: WarpPoint
@@ -476,8 +483,7 @@
   id: StationAiHoloLocal
   name: AI hologram
   description: A holographic representation of an AI.
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Transform
     anchored: true
@@ -502,35 +508,36 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+        - Boris # Sunrise-Edit
   - type: ItemSlots
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
+        startingItem: PowerCellHigh
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
 
-- type: entity
-  id: PlayerBorgSyndicateAssaultBattery
-  parent: BorgChassisSyndicateAssault
-  suffix: Battery, Module, Operative
-  components:
-  - type: NukeOperative
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - PositronicBrain
-      borg_module:
-        - BorgModuleOperative
-        - BorgModuleL6C
-        - BorgModuleEsword
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHyper
+# Move to _Sunrise
+#- type: entity
+#  id: PlayerBorgSyndicateAssaultBattery
+#  parent: BorgChassisSyndicateAssault
+#  suffix: Battery, Module, Operative
+#  components:
+#  - type: NukeOperative
+#  - type: ContainerFill
+#    containers:
+#      borg_brain:
+#        - Sofia # Sunrise-Edit
+#      borg_module:
+#        - BorgModuleOperative
+#        - BorgModuleL6C
+#        - BorgModuleEsword
+#  - type: ItemSlots
+#    slots:
+#      cell_slot:
+#        name: power-cell-slot-component-slot-name-default
+#        startingItem: PowerCellHyper
 
 - type: entity
   id: PlayerBorgSyndicateAssaultGhostRole
@@ -545,25 +552,25 @@
         settings: default
     - type: GhostTakeoverAvailable
 
-- type: entity
-  id: PlayerBorgSyndicateSaboteurBattery
-  parent: BorgChassisSyndicateSaboteur
-  suffix: Battery, Module, Operative
-  components:
-  - type: NukeOperative
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - PositronicBrain
-      borg_module:
-        - BorgModuleTool
-        - BorgModuleOperative
-        - BorgModuleSyndicateWeapon
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHyper
+#- type: entity
+#  id: PlayerBorgSyndicateSaboteurBattery
+#  parent: BorgChassisSyndicateSaboteur
+#  suffix: Battery, Module, Operative
+#  components:
+#  - type: NukeOperative
+#  - type: ContainerFill
+#    containers:
+#      borg_brain:
+#        - PositronicBrain
+#      borg_module:
+#        - BorgModuleTool
+#        - BorgModuleOperative
+#        - BorgModuleSyndicateWeapon
+#  - type: ItemSlots
+#    slots:
+#      cell_slot:
+#        name: power-cell-slot-component-slot-name-default
+#        startingItem: PowerCellHyper
 
 - type: entity
   id: PlayerBorgSyndicateSaboteurGhostRole
@@ -613,7 +620,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [names_borg]
+    nameSegments: [NamesBorg]
 
 - type: entity
   id: PlayerBorgDerelictGhostRole

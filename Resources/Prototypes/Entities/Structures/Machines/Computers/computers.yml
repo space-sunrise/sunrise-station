@@ -39,6 +39,8 @@
           True: { visible: false }
           False: { visible: true }
   - type: AtmosAlertsComputer
+    beepSound:
+      path: /Audio/_Sunrise/Effects/beeps.ogg
   - type: ActivatableUI
     singleUser: true
     key: enum.AtmosAlertsComputerUiKey.Key
@@ -625,6 +627,92 @@
       IdCardConsole-privilegedId: !type:ContainerSlot
       IdCardConsole-targetId: !type:ContainerSlot
 
+- type: entity #sunrise-Start
+  parent: ComputerId
+  id: ComputerIdUSSP
+  name: USSP ID card computer
+  description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
+  components:
+  - type: IdCardConsole
+    privilegedIdSlot:
+      name: id-card-console-privileged-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    accessLevels:
+      - Armory
+      - Atmospherics
+      - Bar
+      - Brig
+      - Captain
+      - Cargo
+      - Chapel
+      - Chemistry
+      - Command
+      - Engineering
+      - External
+      - HeadOfSecurity
+      - Hydroponics
+      - Janitor
+      - Kitchen
+      - Lawyer
+      - Maintenance
+      - Medical
+      - Research
+      - Salvage
+      - Security
+      - Service
+      - Theatre
+      - NuclearOperative
+      - SyndicateAgent
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.IdCardConsoleUiKey.Key:
+        type: IdCardConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: id
+      color: red
+    - map: ["computerLayerKeys"]
+      state: id_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+  - type: Tag
+    tags:
+    - EmagImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot #sunrise-End
+
 - type: entity
   parent: BaseComputerAiAccess
   id: computerBodyScanner
@@ -706,6 +794,7 @@
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
     canShuttle: false
+    announceVoice: Sentrybot
     global: true #announce to everyone they're about to fuck shit up
     sound: /Audio/Announcements/war.ogg
   - type: Computer
@@ -747,6 +836,38 @@
     radius: 1.5
     energy: 1.6
     color: "#F317F3"
+
+- type: entity
+  parent: ComputerComms
+  id: CentcommComputerComms
+  name: central command communications computer
+  description: A computer used to make world wide announcements via keyboard. The superior cousin of the regular communications computer.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_logs
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AccessReader
+    access: [[ "CentralCommand" ]]
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-centcom
+    color: "#1d8bad"
+    canShuttle: false
+    global: true
+  - type: Computer
+    board: CentcommCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#00FF00"
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -897,7 +1018,7 @@
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
-    access: [["Cargo"]]
+    access: [["Quartermaster"], ["HeadOfPersonnel"]] # Sunrise-Edit
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -1173,6 +1294,8 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: AccessReader
+    access: [["Cargo"]]
   - type: GuideHelp
     guides:
     - Cargo
@@ -1221,6 +1344,7 @@
   # Putting this as "DO NOT MAP" until the performance issues are fixed.
   # And it's more fleshed out.
   suffix: TESTING, DO NOT MAP
+  categories: [ DoNotMap ]
   components:
     - type: Sprite
       layers:

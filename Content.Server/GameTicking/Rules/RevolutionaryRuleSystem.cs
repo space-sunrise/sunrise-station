@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.EUI;
@@ -11,6 +12,7 @@ using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
+using Content.Server.AlertLevel; // Sunrise-Edit
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
@@ -28,6 +30,9 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
+using Content.Server.Administration.Managers;
+using Content.Server.Administration.Systems;
+using Content.Shared.Popups;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -49,10 +54,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly AlertLevelSystem _alertLevel = default!; // Sunrise-Edit
+    [Dependency] private readonly AdminVerbSystem _adminVerbSystem = default!;
+    [Dependency] private readonly IBanManager _banManager = default!;
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
     public readonly ProtoId<NpcFactionPrototype> RevPrototypeId = "Rev";
+    private Dictionary<EntityUid, TimeSpan> _scheduledSmites = new();
+
+
 
     public override void Initialize()
     {
@@ -75,14 +86,37 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
+        // Check for command loss or if a banned player needs to be smited.
         if (component.CommandCheck <= _timing.CurTime)
         {
             component.CommandCheck = _timing.CurTime + component.TimerWait;
 
+            // Check for command loss
             if (CheckCommandLose())
             {
-                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
+                //  Sunrise-Edit-Start
+                var stations = _stationSystem.GetStations();
+                foreach (var station in stations)
+                {
+                    _alertLevel.SetLevel(station, "epsilon", true, true, true);
+                }
+                _roundEnd.EndRound();
+                //  Sunrise-Edit-End
                 GameTicker.EndGameRule(uid, gameRule);
+            }
+
+            // Execute scheduled smites for banned players
+            if (_scheduledSmites.Count > 0)
+            {
+                var currentTime = _timing.CurTime;
+                foreach (var entity in _scheduledSmites.Keys.ToList().Where(entity => _scheduledSmites[entity] <= currentTime))
+                {
+                    if (EntityManager.EntityExists(entity))
+                    {
+                        _adminVerbSystem.RandomDeath(entity);
+                    }
+                    _scheduledSmites.Remove(entity);
+                }
             }
         }
     }
@@ -136,11 +170,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         if (HasComp<RevolutionaryComponent>(ev.Target) ||
             HasComp<MindShieldComponent>(ev.Target) ||
+            HasComp<CommandStaffComponent>(ev.Target) ||
             !HasComp<HumanoidAppearanceComponent>(ev.Target) &&
             !alwaysConvertible ||
             !_mobState.IsAlive(ev.Target) ||
             HasComp<ZombieComponent>(ev.Target))
         {
+            return;
+        }
+
+        // Check if the user has a ban on "Revolutionary"
+        // Check if the user has a ban on "Revolutionary"
+        if (mind != null && mind.Session != null && _banManager.IsAntagBanned(mind.Session.UserId, "Rev"))
+        {
+            KillDueToBan(ev.Target);
             return;
         }
 
@@ -189,7 +232,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             commandList.Add(id);
         }
 
-        return IsGroupDetainedOrDead(commandList, true, true);
+        return IsGroupDetainedOrDead(commandList, true, true, true);
     }
 
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
@@ -214,7 +257,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
         // Cuffing Head Revs is not enough - they must be killed.
-        if (IsGroupDetainedOrDead(headRevList, false, false))
+        if (IsGroupDetainedOrDead(headRevList, false, false, false))
         {
             var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
             while (rev.MoveNext(out var uid, out _, out var mc))
@@ -251,38 +294,58 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <param name="list">The list of the entities</param>
     /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them missing in action. (Won't check when emergency shuttle arrives just in case)</param>
     /// <param name="countCuffed">Bool for if you don't want to count cuffed entities.</param>
+    /// <param name="countRevolutionaries">Bool for if you want to count revolutionaries.</param>
     /// <returns></returns>
-    private bool IsGroupDetainedOrDead(List<EntityUid> list, bool checkOffStation, bool countCuffed)
+    private bool IsGroupDetainedOrDead(List<EntityUid> list, bool checkOffStation, bool countCuffed, bool countRevolutionaries)
     {
         var gone = 0;
+
         foreach (var entity in list)
         {
             if (TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0 && countCuffed)
             {
                 gone++;
+                continue;
             }
-            else
+
+            if (TryComp<MobStateComponent>(entity, out var state))
             {
-                if (TryComp<MobStateComponent>(entity, out var state))
-                {
-                    if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
-                    {
-                        gone++;
-                    }
-                    else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
-                    {
-                        gone++;
-                    }
-                }
-                //If they don't have the MobStateComponent they might as well be dead.
-                else
+                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
                 {
                     gone++;
+                    continue;
                 }
+
+                if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
+                {
+                    gone++;
+                    continue;
+                }
+            }
+            //If they don't have the MobStateComponent they might as well be dead.
+            else
+            {
+                gone++;
+                continue;
+            }
+
+            if ((HasComp<RevolutionaryComponent>(entity) || HasComp<HeadRevolutionaryComponent>(entity)) && countRevolutionaries)
+            {
+                gone++;
+                continue;
             }
         }
 
         return gone == list.Count || list.Count == 0;
+    }
+
+    private void KillDueToBan(EntityUid target)
+    {
+        _popup.PopupEntity(Loc.GetString("rev-banned"), target, target, PopupType.LargeCaution);
+
+        var randomDelay = new Random().Next(10, 60); // 10-60 seconds
+        var targetTime = _timing.CurTime + TimeSpan.FromSeconds(randomDelay);
+        _scheduledSmites[target] = targetTime;
     }
 
     private static readonly string[] Outcomes =

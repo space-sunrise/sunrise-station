@@ -5,6 +5,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared._RMC14.Explosion;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -16,6 +17,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
@@ -38,6 +40,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
@@ -254,11 +257,12 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         }
         else
         {
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}");
             var alertMinExplosionIntensity = _cfg.GetCVar(CCVars.AdminAlertExplosionMinIntensity);
-            if (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
-                _chat.SendAdminAlert(user.Value, $"caused {ToPrettyString(uid)} to explode ({typeId}:{totalIntensity}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")}");
+            var logImpact = (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
+                ? LogImpact.Extreme
+                : LogImpact.High;
+            _adminLogger.Add(LogType.Explosion, logImpact,
+                $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}");
         }
     }
 
@@ -319,6 +323,14 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         };
         _explosionQueue.Enqueue(boom);
         _queuedExplosions.Add(boom);
+
+        // Sunrise added start
+        if (!cause.HasValue)
+            return;
+
+        var ev = new CMExplosiveTriggeredEvent();
+        RaiseLocalEvent(cause.Value, ref ev);
+        // Sunrise added end
     }
 
     /// <summary>
@@ -339,13 +351,14 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
         var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
 
-        var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
+        // Sunrise edit - queued.Proto.ID -> queued.Proto
+        var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
         // camera shake
         CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
-        var mapEntityCoords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(pos.MapId), pos, _transformSystem, EntityManager);
+        var mapEntityCoords = _transformSystem.ToCoordinates(_mapSystem.GetMap(pos.MapId), pos);
 
         // play sound.
         // for the normal audio, we want everyone in pvs range

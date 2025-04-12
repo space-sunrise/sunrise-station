@@ -23,7 +23,7 @@
 
 #Basic Helmet (Security Helmet)
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseRestrictedContraband]
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
   name: helmet
   description: Standard security gear. Protects the head from impacts.
@@ -51,7 +51,7 @@
 
 #SWAT Helmet
 - type: entity
-  parent: [ClothingHeadBase, BaseRestrictedContraband]
+  parent: [ClothingHeadBase, BaseSecurityContraband]
   id: ClothingHeadHelmetSwat
   name: SWAT helmet
   description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
@@ -87,7 +87,7 @@
 
 #Light Riot Helmet
 - type: entity
-  parent: [ClothingHeadBase, BaseRestrictedContraband]
+  parent: [ClothingHeadBase, BaseSecurityContraband]
   id: ClothingHeadHelmetRiot
   name: light riot helmet
   description: It's a helmet specifically designed to protect against close range attacks.
@@ -137,7 +137,7 @@
   id: ClothingHeadHelmetJanitorBombSuit
   name: janitorial bombsuit helmet
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
@@ -187,12 +187,12 @@
     - HeadTop
     - HeadSide
 
-#Templar Helmet
+#Knight Helmet
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetTemplar
-  name: templar helmet
-  description: DEUS VULT!
+  name: knight helmet
+  description: Decorative helmet fashioned to resemble the knights of old.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/templar.rsi
@@ -322,6 +322,13 @@
     sprite: Clothing/Head/Helmets/ert_leader.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_leader.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85 #sunrise-start
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85 #sunrise-end
 
 #ERT Security Helmet
 - type: entity
@@ -334,6 +341,13 @@
     sprite: Clothing/Head/Helmets/ert_security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_security.rsi
+  - type: Armor #sunrise-start
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85 #sunrise-end
 
 #ERT Medic Helmet
 - type: entity
@@ -346,6 +360,13 @@
     sprite: Clothing/Head/Helmets/ert_medic.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_medic.rsi
+  - type: Armor #sunrise-start
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85 #sunrise-end
 
 #ERT Engineer Helmet
 - type: entity
@@ -358,6 +379,13 @@
     sprite: Clothing/Head/Helmets/ert_engineer.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_engineer.rsi
+  - type: Armor #sunrise-start
+    modifiers:
+      coefficients:
+        Blunt: 0.85 #sunrise-start
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85 #sunrise-end
 
 #ERT Janitor Helmet
 - type: entity
@@ -370,6 +398,13 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
+  - type: Armor #sunrise-start
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85 #sunrise-end
 
 - type: entity
   parent: [ BaseSyndicateContraband, ClothingHeadHelmetBase ]
@@ -388,6 +423,7 @@
         Slash: 0.85
         Piercing: 0.85
         Heat: 0.85
+
 
 #Bone Helmet
 - type: entity
@@ -417,7 +453,7 @@
 
 #Justice Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetBase, BaseRestrictedContraband ]
+  parent: [ ClothingHeadHelmetBase, BaseSecurityContraband ]
   id: ClothingHeadHelmetJustice
   name: justice helm
   description: Advanced security gear. Protects the station from ne'er-do-wells.
@@ -504,3 +540,23 @@
     useDelay: 1
     itemIconStyle: BigItem
     event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ChangelingClothingHeadHelmet
+  name: chitinous helmet
+  description: An all-consuming chitinous mass of armor.
+  suffix: Unremoveable
+  components:
+  - type: Sprite
+    sprite: Changeling/ling_armor_helmet.rsi
+  - type: Clothing
+    sprite: Changeling/ling_armor_helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Unremoveable

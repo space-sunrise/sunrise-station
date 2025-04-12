@@ -19,3 +19,6 @@
   contrabandInventory:
     BalloonNT: 2
     LuxuryPen: 1
+  emaggedInventory:
+    CyberPen: 1 # Sunrise Edit
+    BalloonSyn: 2 # Sunrise Edit

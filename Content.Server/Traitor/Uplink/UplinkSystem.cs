@@ -9,6 +9,7 @@ using Content.Shared.Mind;
 using Content.Shared.PDA;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink;
@@ -21,6 +22,7 @@ public sealed class UplinkSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -61,7 +63,7 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Configure TC for the uplink
     /// </summary>
-    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
+    public void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
     {
         if (!_mind.TryGetMind(user, out var mind, out _))
             return;
@@ -125,6 +127,11 @@ public sealed class UplinkSystem : EntitySystem
                 if (!pdaUid.ContainedEntity.HasValue)
                     continue;
 
+                // Sunrtise-Start
+                if (_tagSystem.HasTag(pdaUid.ContainedEntity.Value, "SunriseUplink"))
+                    continue;
+                // Sunrtise-End
+
                 if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
                     return pdaUid.ContainedEntity.Value;
             }
@@ -133,10 +140,41 @@ public sealed class UplinkSystem : EntitySystem
         // Also check hands
         foreach (var item in _handsSystem.EnumerateHeld(user))
         {
+            // Sunrtise-Start
+            if (_tagSystem.HasTag(item, "SunriseUplink"))
+                continue;
+            // Sunrtise-End
+
             if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
                 return item;
         }
 
         return null;
     }
+
+    // Sunrtise-Start
+    public EntityUid? FindUplinkByTag(EntityUid user, string tag)
+    {
+        // Try to find PDA in inventory
+        if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
+        {
+            while (containerSlotEnumerator.MoveNext(out var uplinkUid))
+            {
+                if (!uplinkUid.ContainedEntity.HasValue) continue;
+
+                if (_tagSystem.HasTag(uplinkUid.ContainedEntity.Value, tag))
+                    return uplinkUid.ContainedEntity.Value;
+            }
+        }
+
+        // Also check hands
+        foreach (var item in _handsSystem.EnumerateHeld(user))
+        {
+            if (_tagSystem.HasTag(item, tag))
+                return item;
+        }
+
+        return null;
+    }
+    // Sunrtise-End
 }

@@ -12,11 +12,14 @@ public sealed record PlayerInfo(
     string StartingJob,
     bool Antag,
     RoleTypePrototype RoleProto,
+    int SortWeight,
     NetEntity? NetEntity,
     NetUserId SessionId,
     bool Connected,
     bool ActiveThisRound,
-    TimeSpan? OverallPlaytime)
+    TimeSpan? OverallPlaytime,
+    bool IsSponsor, // Sunrise-Sponsors
+    string? SponsorTitle)  // Sunrise-Sponsors)
 {
     private string? _playtimeString;
 

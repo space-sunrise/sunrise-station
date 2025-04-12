@@ -6,16 +6,18 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 36000 #10 hrs
+      time: 54000 #15 hrs # Sunrise-RoleTime
+  weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  displayWeight: 70  # Sunrise
   access:
   - Security
   - Brig
   - Armory
-  - Maintenance
+#  - Maintenance #Sunrise-Edit
   - Service
   - External
   - Detective
@@ -23,6 +25,8 @@
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
+  speciesBlacklist:
+  - Vox
 
 - type: startingGear
   id: WardenGear
@@ -30,8 +34,7 @@
     eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolMk58
   storage:
     back:
     - Flash
-    - MagazinePistol
+#    - MagazineGlock22 # Sunrise-Edit

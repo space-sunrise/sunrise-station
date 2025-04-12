@@ -9,6 +9,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
+using Content.Shared._Sunrise.Economy;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -230,6 +231,7 @@ namespace Content.Server.Lathe
                 if (comp.CurrentRecipe.Result is { } resultProto)
                 {
                     var result = Spawn(resultProto, Transform(uid).Coordinates);
+                    EnsureComp<DontSellComponent>(result); // Sunrise-Edit
                     _stack.TryMergeToContacts(result);
                 }
 

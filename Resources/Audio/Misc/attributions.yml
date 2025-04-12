@@ -1,3 +1,8 @@
+- files: ["emergency_meeting.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/commit/97945e7d08d1457ffc27e46526a48c0453cc95e4"
+
 - files: ["tension_session.ogg"]
   license: "CC-BY-3.0"
   copyright: "Created by qwertyquerty"
@@ -6,6 +11,11 @@
 - files: ["ninja_greeting.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by Chillyconmor"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
+
+- files: ["nparadox_clone_greeting.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by ps3moira"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
 
 - files: ["thief_greeting.ogg"]

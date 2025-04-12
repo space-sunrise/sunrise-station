@@ -35,6 +35,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gasfilter.rsi
       layers:
@@ -75,6 +78,18 @@
     - type: GuideHelp
       guides:
       - MixingAndFiltering
+      # Sunrise-start
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+        - -90
+        - 180
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
+      # Sunrise-end
 
 - type: entity
   parent: GasFilter
@@ -84,6 +99,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     layers:
@@ -119,6 +137,18 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
+    # Sunrise-start
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
+    degrees:
+      - 0
+      - -90
+      - 180
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
+    # Sunrise-end
 
 - type: entity
   parent: GasTrinaryBase
@@ -128,6 +158,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gasmixer.rsi
       layers:
@@ -168,6 +201,18 @@
     - type: GuideHelp
       guides:
       - MixingAndFiltering
+      # Sunrise-start
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+        - -90
+        - 180
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
+      # Sunrise-end
 
 - type: entity
   parent: GasMixer
@@ -211,6 +256,18 @@
         pipeDirection: North
   - type: Construction
     node: mixerflipped
+    # Sunrise-start
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
+    degrees:
+      - 0
+      - -90
+      - 180
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
+    # Sunrise-end
 
 - type: entity
   parent: GasPipeBase
@@ -227,6 +284,8 @@
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: NodeContainer
       nodes:
         inlet:
@@ -274,3 +333,15 @@
       - PneumaticValve
       - Pumps
       - Valves
+      # Sunrise-start
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+        - -90
+        - 180
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
+      # Sunrise-end

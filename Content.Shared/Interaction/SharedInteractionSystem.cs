@@ -37,6 +37,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -87,6 +88,8 @@ namespace Content.Shared.Interaction
         public const float MaxRaycastRange = 100f;
         public const string RateLimitKey = "Interaction";
 
+        private static readonly ProtoId<TagPrototype> BypassInteractionRangeChecksTag = "BypassInteractionRangeChecks";
+
         public delegate bool Ignored(EntityUid entity);
 
         public override void Initialize()
@@ -103,7 +106,7 @@ namespace Content.Shared.Interaction
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
 
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
-            SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
+            SubscribeLocalEvent<ActivatableUIComponent, BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
 
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
 
@@ -148,13 +151,12 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Check that the user that is interacting with the BUI is capable of interacting and can access the entity.
         /// </summary>
-        private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
+        private void OnBoundInterfaceInteractAttempt(Entity<ActivatableUIComponent> ent, ref BoundUserInterfaceMessageAttempt ev)
         {
-            _uiQuery.TryComp(ev.Target, out var uiComp);
             if (!_actionBlockerSystem.CanInteract(ev.Actor, ev.Target))
             {
                 // We permit ghosts to open uis unless explicitly blocked
-                if (ev.Message is not OpenBoundInterfaceMessage || !HasComp<GhostComponent>(ev.Actor) || uiComp?.BlockSpectators == true)
+                if (ev.Message is not OpenBoundInterfaceMessage || !HasComp<GhostComponent>(ev.Actor) || ent.Comp.BlockSpectators)
                 {
                     ev.Cancel();
                     return;
@@ -172,16 +174,14 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (uiComp == null)
-                return;
 
-            if (uiComp.SingleUser && uiComp.CurrentSingleUser != null && uiComp.CurrentSingleUser != ev.Actor)
+            if (ent.Comp.SingleUser && ent.Comp.CurrentSingleUser != null && ent.Comp.CurrentSingleUser != ev.Actor)
             {
                 ev.Cancel();
                 return;
             }
 
-            if (uiComp.RequiresComplex && !_actionBlockerSystem.CanComplexInteract(ev.Actor))
+            if (ent.Comp.RequiresComplex && !_actionBlockerSystem.CanComplexInteract(ev.Actor))
                 ev.Cancel();
         }
 
@@ -318,7 +318,7 @@ namespace Content.Shared.Interaction
         {
             // This is for Admin/mapping convenience. If ever there are other ghosts that can still interact, this check
             // might need to be more selective.
-            return !_tagSystem.HasTag(user, "BypassInteractionRangeChecks");
+            return !_tagSystem.HasTag(user, BypassInteractionRangeChecksTag);
         }
 
         /// <summary>
@@ -484,7 +484,7 @@ namespace Content.Shared.Interaction
             }
 
             // allow for special logic before main interaction
-            var ev = new BeforeInteractHandEvent(target);
+            var ev = new BeforeInteractHandEvent(target, user); // Sunrise edit
             RaiseLocalEvent(user, ev);
             if (ev.Handled)
             {
@@ -995,7 +995,8 @@ namespace Content.Shared.Interaction
             EntityUid target,
             EntityCoordinates clickLocation,
             bool checkCanInteract = true,
-            bool checkCanUse = true)
+            bool checkCanUse = true,
+            bool needHand = true) // Sunrise-Edit
         {
             if (IsDeleted(user) || IsDeleted(used) || IsDeleted(target))
                 return false;
@@ -1024,7 +1025,7 @@ namespace Content.Shared.Interaction
             if (interactUsingEvent.Handled)
                 return true;
 
-            if (InteractDoAfter(user, used, target, clickLocation, canReach: true, checkDeletion: false))
+            if (InteractDoAfter(user, used, target, clickLocation, canReach: true, checkDeletion: false, needHand: needHand)) // Sunrise-Edit
                 return true;
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(used) && !IsDeleted(target));
@@ -1041,7 +1042,7 @@ namespace Content.Shared.Interaction
         /// <param name="canReach">Whether the <paramref name="user"/> is in range of the <paramref name="target"/>.
         ///     </param>
         /// <returns>True if the interaction was handled. Otherwise, false.</returns>
-        public bool InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach, bool checkDeletion = true)
+        public bool InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach, bool checkDeletion = true, bool needHand = true) // Sunrise-Edit
         {
             if (target is { Valid: false })
                 target = null;
@@ -1049,7 +1050,7 @@ namespace Content.Shared.Interaction
             if (checkDeletion && (IsDeleted(user) || IsDeleted(used) || IsDeleted(target)))
                 return false;
 
-            var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
+            var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach, needHand); // Sunrise-Edit
             RaiseLocalEvent(used, afterInteractEvent);
             DoContactInteraction(user, used, afterInteractEvent);
             if (canReach)

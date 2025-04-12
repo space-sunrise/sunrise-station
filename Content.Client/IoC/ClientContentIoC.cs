@@ -1,3 +1,5 @@
+﻿using Content.Client._Sunrise.IoC;
+using Content.Client._Sunrise.ServersHub;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -59,6 +61,11 @@ namespace Content.Client.IoC
             collection.Register<PlayerRateLimitManager>();
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
+
+            // Sunrise-Start
+            collection.Register<ServersHubManager>();
+            SunriseClientContentIoC.Register();
+            // Sunrise-End
         }
     }
 }

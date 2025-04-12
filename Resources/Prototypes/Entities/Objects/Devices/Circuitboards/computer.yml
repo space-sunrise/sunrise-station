@@ -10,6 +10,11 @@
       state: cpuboard
     - type: Item
       storedRotation: -90
+#Sunrise-start
+    - type: Tag
+      tags:
+        - Board
+#Sunrise-end
     - type: StaticPrice
       price: 100
     - type: PhysicalComposition
@@ -178,7 +183,7 @@
   description: A computer printed circuit board for a surveillance wireless camera monitor.
   components:
   - type: Sprite
-    state: cpu_security
+    state: cpu_service
   - type: ComputerBoard
     prototype: ComputerSurveillanceWirelessCameraMonitor
 
@@ -297,6 +302,17 @@
     state: cpu_wizard
   - type: ComputerBoard
     prototype: WizardComputerComms
+
+- type: entity
+  parent: [ BaseComputerCircuitboard, BaseCentcommContraband ]
+  id: CentcommCommsComputerCircuitboard
+  name: central command communications computer board
+  description: A computer printed circuit board for a central command communications console.
+  components:
+  - type: Sprite
+    state: cpu_centcomm
+  - type: ComputerBoard
+    prototype: CentcommComputerComms
 
 - type: entity
   parent: BaseComputerCircuitboard

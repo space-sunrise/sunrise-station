@@ -8,6 +8,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+  - type: MobCollision
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -43,6 +44,11 @@
   - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
+  # Sunrise-Start
+  - type: TTS
+  - type: DamageOverlay
+  - type: EmoteAnimation
+  # Sunrise-End
 
 - type: entity
   save: false
@@ -62,8 +68,8 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:DamageTypeTrigger
-        damageType: Blunt
+        !type:DamageGroupTrigger # Sunrise-Edit
+        damageGroup: Brute # Sunrise-Edit
         damage: 400
       behaviors:
       - !type:GibBehavior { }
@@ -157,7 +163,7 @@
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: MovedByPressure
 
 # Used for mobs that require regular atmospheric conditions.
@@ -173,7 +179,7 @@
     sweatHeatRegulation: 500
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: Temperature
     heatDamageThreshold: 325
     coldDamageThreshold: 260
@@ -228,6 +234,12 @@
   abstract: true
   components:
   - type: SolutionContainerManager
+    # Sunrise-Edit
+    solutions:
+      foots:
+        maxVol: 5
+      body_surface:
+        maxVol: 15
   - type: InjectableSolution
     solution: chemicals
   - type: Bloodstream
@@ -237,3 +249,9 @@
     bloodlossHealDamage:
       types:
         Bloodloss: -1
+  - type: MeleeSound
+    soundTypes:
+      Slash:
+        collection: SquishyHitSlash
+      Piercing:
+        collection: SquishyHitPiercing

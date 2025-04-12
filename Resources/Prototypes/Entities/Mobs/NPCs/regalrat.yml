@@ -55,7 +55,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 12
+        Slash: 16  # Sunrise-edit
         Piercing: 8
   - type: Body
     prototype: Rat
@@ -102,8 +102,8 @@
       - FootstepSound
   - type: NoSlip
   - type: RatKing
-    hungerPerArmyUse: 25
-    hungerPerDomainUse: 50
+    hungerPerArmyUse: 15  # Sunrise-edit
+    hungerPerDomainUse: 50  # Sunrise-edit
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
@@ -115,8 +115,9 @@
     price: 2500 # rat wealth
   - type: RandomMetadata
     nameSegments:
-    - RegalRatNameKingdom
-    - RegalRatNameTitle
+    - NamesRegalratKingdom
+    - NamesRegalratTitle
+    nameFormat: name-format-regal-rat
   - type: GuideHelp
     guides:
     - MinorAntagonists
@@ -124,6 +125,12 @@
     attributes:
       gender: male
   - type: Sharp
+  # Sunrise-start
+  - type: Bloodstream
+    bleedReductionAmount: 1
+    bloodRefreshAmount: 1.5
+  - type: VentCrawler
+  # Sunrise-end
 
 - type: entity
   id: MobRatKingBuff
@@ -169,6 +176,7 @@
   description: He's da mini rat. He don't make da roolz.
   categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
+  - type: VentCrawler # Sunrise-edit
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
@@ -201,7 +209,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -226,8 +233,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      15: Critical
-      30: Dead
+      40: Critical  # Sunrise-edit
+      60: Dead  # Sunrise-edit
   - type: Stamina
     critThreshold: 60
   - type: MeleeWeapon

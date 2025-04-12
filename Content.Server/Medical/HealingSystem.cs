@@ -83,7 +83,7 @@ public sealed class HealingSystem : EntitySystem
         if (healing.ModifyBloodLevel != 0)
             _bloodstreamSystem.TryModifyBloodLevel(entity.Owner, healing.ModifyBloodLevel);
 
-        var healed = _damageable.TryChangeDamage(entity.Owner, healing.Damage, true, origin: args.Args.User);
+        var healed = _damageable.TryChangeDamage(entity.Owner, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.Args.User);
 
         if (healed == null && healing.BloodlossModifier != 0)
             return;
@@ -130,7 +130,7 @@ public sealed class HealingSystem : EntitySystem
         var healingDict = healing.Damage.DamageDict;
         foreach (var type in healingDict)
         {
-            if (damageableDict[type.Key].Value > 0)
+            if (damageableDict.TryGetValue(type.Key, out var damageValue) && damageValue.Value > 0) //Sunrise-edit: fix server crashes
             {
                 return true;
             }

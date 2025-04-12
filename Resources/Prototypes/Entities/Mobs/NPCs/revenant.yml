@@ -72,13 +72,19 @@
     - StolenEssence
   - type: RandomMetadata
     nameSegments:
-    - The
-    - RevenantType
-    - of
-    - RevenantAdjective
-    - RevenantTheme
+    - NamesRevenantType
+    - NamesRevenantAdjective
+    - NamesRevenantTheme
+    nameFormat: name-format-revenant
   - type: Speech
     speechVerb: Ghost
   - type: Reactive
     groups:
       Acidic: [Touch]
+  # Sunrise-start
+  - type: Tag
+    tags:
+    - NoPaint
+  - type: TTS
+    voice: HermaeusMora
+  # Sunrise-end

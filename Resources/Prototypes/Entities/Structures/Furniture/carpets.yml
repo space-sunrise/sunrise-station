@@ -36,6 +36,14 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: TrayScanReveal
+  # Sunrise start
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
+      params:
+        volume: 3
+  # Sunrise end
 
 - type: entity
   id: Carpet
@@ -364,3 +372,4 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: TrayScanReveal

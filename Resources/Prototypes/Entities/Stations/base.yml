@@ -31,6 +31,7 @@
   abstract: true
   components:
     - type: StationArrivals
+      shuttlePath: /Maps/_Sunrise/Shuttles/arrivals.yml # Sunrise-edit
 
 - type: entity
   id: BaseStationGateway
@@ -42,39 +43,87 @@
   id: BaseStationShuttles
   abstract: true
   components:
-    - type: StationCargoShuttle
-      path: /Maps/Shuttles/cargo.yml
+# Sunrise-Edit
+#    - type: StationCargoShuttle
+#      path: /Maps/Shuttles/cargo.yml
     - type: GridSpawn
       groups:
-        trade: !type:GridSpawnGroup
-          addComponents:
-            - type: ProtectedGrid
-            - type: TradeStation
+        mining: !type:GridSpawnGroup
           paths:
-            - /Maps/Shuttles/trading_outpost.yml
+          - /Maps/_Sunrise/Shuttles/mining.yml # Sunrise-edit
+          nameGrid: false
+# Sunrise-Edit
+#        trade: !type:GridSpawnGroup
+#          addComponents:
+#            - type: ProtectedGrid
+#            - type: TradeStation
+#          paths:
+#            - /Maps/Shuttles/trading_outpost.yml
         # Spawn last
-        ruins: !type:GridSpawnGroup
-          hide: true
-          nameGrid: true
+        satelite: !type:GridSpawnGroup
+          minimumDistance: 300
+          maximumDistance: 350
+          nameGrid: false
           minCount: 2
           maxCount: 2
+          stationGrid: true
+          paths:
+          - /Maps/_Sunrise/Nonstations/telecom_satelite2.yml
+          - /Maps/_Sunrise/Nonstations/telecom_satelite.yml
+        ruins: !type:GridSpawnGroup
+          hide: false # Sunrise-Edit
+          nameGrid: true
+          minCount: 3
+          maxCount: 6
           stationGrid: false
           paths:
-          - /Maps/Ruins/abandoned_outpost.yml
           - /Maps/Ruins/chunked_tcomms.yml
           - /Maps/Ruins/biodome_satellite.yml
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
-          - /Maps/Ruins/empty_flagship.yml
+          #- /Maps/Ruins/empty_flagship.yml
           - /Maps/Ruins/old_ai_sat.yml
           - /Maps/Ruins/ruined_prison_ship.yml
           - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
           - /Maps/Ruins/wrecklaimer.yml
+          - /Maps/_Sunrise/Ruins/abandoned_Station.yml
+          - /Maps/_Sunrise/Ruins/collector_lair.yml
+          - /Maps/_Sunrise/Ruins/destroyed_trade_shuttle.yml
+          - /Maps/_Sunrise/Ruins/anomal_laboratiry.yml
+          - /Maps/_Sunrise/Ruins/Ignota_Laboratorium.yml
+          - /Maps/_Sunrise/Ruins/oblomok_33.yml
+          - /Maps/_Sunrise/Ruins/oblomok_44.yml
+          - /Maps/_Sunrise/Ruins/oblomok_library.yml
+          - /Maps/_Sunrise/Ruins/oblomok_pectine_syndicate_shuttle.yml
+          - /Maps/_Sunrise/Ruins/Ruins_of_Free_Cargonia.yml
+          - /Maps/_Sunrise/Ruins/Suspicious_Asteroid.yml
+        abandoned: !type:GridSpawnGroup
+          minimumDistance: 500
+          maximumDistance: 550
+          hide: false
+          nameGrid: false
+          stationGrid: false
+          minCount: 5
+          maxCount: 5
+          paths:
+          - /Maps/Ruins/abandoned_outpost.yml
+          - /Maps/_Sunrise/Ruins/abandoned_mining_outpost.yml
+          - /Maps/_Sunrise/Ruins/abandoned_satelite.yml
+          - /Maps/_Sunrise/Ruins/abandoned_lab.yml
+          - /Maps/_Sunrise/Ruins/abandoned_syndi_lab.yml
+        victory_mine: !type:GridSpawnGroup
+          minimumDistance: 1000
+          maximumDistance: 1050
+          hide: false
+          nameGrid: false
+          stationGrid: false
+          paths:
+          - /Maps/_Sunrise/Ruins/victory_mine.yml
         vgroid: !type:DungeonSpawnGroup
-          minimumDistance: 300
-          maximumDistance: 350
+          minimumDistance: 1000
+          maximumDistance: 1050
           nameDataset: NamesBorer
           stationGrid: false
           addComponents:
@@ -84,11 +133,12 @@
           protos:
           - VGRoid
 
-- type: entity
-  id: BaseStationCentcomm
-  abstract: true
-  components:
-    - type: StationCentcomm
+# Sunrise-Edit: Вынесено в _Sunrise
+#- type: entity
+#  id: BaseStationCentcomm
+#  abstract: true
+#  components:
+#    - type: StationCentcomm
 
 - type: entity
   id: BaseStationEvacuation
@@ -127,6 +177,12 @@
   abstract: true
   components:
     - type: StationNews
+
+- type: entity
+  id: BaseStationDeliveries
+  abstract: true
+  components:
+  - type: CargoDeliveryData
 
 - type: entity
   id: BaseStationAllEventsEligible

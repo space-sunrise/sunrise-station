@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: FootstepBoots
+  files:
+  - /Audio/_Sunrise/Effects/Footsteps/Boots/step1.ogg
+  - /Audio/_Sunrise/Effects/Footsteps/Boots/step2.ogg
+  - /Audio/_Sunrise/Effects/Footsteps/Boots/step3.ogg

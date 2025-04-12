@@ -5,12 +5,17 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Moth
     hideLayersOnEquip:
     - HeadTop
   - type: Hunger
   - type: Thirst
+    dehydrationDamage:
+      types:
+        Bloodloss: 0.5
+        Asphyxiation: 0.5
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
     state: full
@@ -83,11 +88,16 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
       - map: [ "enum.HumanoidVisualLayers.LFoot" ]
       - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      # Sunrise-start
+      - map: ["bra"]
+      - map: ["pants"]
+      - map: ["socks"]
+      - map: ["jumpsuit"]
+      # Sunrise-end
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
@@ -96,13 +106,13 @@
       - map: [ "gloves" ]
       - map: [ "shoes" ]
       - map: [ "ears" ]
-      - map: [ "outerClothing" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
       - map: [ "id" ]
+      - map: [ "outerClothing" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] #in the utopian future we should probably have a wings enum inserted here so everyhting doesn't break
-      - map: [ "neck" ]
       - map: [ "back" ]
+      - map: [ "neck" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -116,12 +126,17 @@
         state: "creampie_moth"
         visible: false
   - type: Inventory
+    speciesId: moth
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  # Sunrise edit ;3
+  - type: FootprintEmitter
+  - type: Carriable
+  # Sunrise edit end 0_0
 
 
 - type: entity
@@ -132,6 +147,7 @@
   - type: HumanoidAppearance
     species: Moth
   - type: Inventory
+    speciesId: moth
     femaleDisplacements:
       jumpsuit:
         sizeMaps:

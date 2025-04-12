@@ -15,6 +15,8 @@
         type: GhostRoleRadioBoundUserInterface
   - type: ActivatableUI
     key: enum.GhostRoleRadioUiKey.Key
+  - type: EmitSoundOnUse
+    sound: /Audio/Misc/emergency_meeting.ogg
 
 - type: entity
   parent: ReinforcementRadio
@@ -68,7 +70,7 @@
       settings: default
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
-    selectablePrototypes: ["SyndicateMonkey", "SyndicateKobold"]
+    selectablePrototypes: ["SyndicateMonkey", "SyndicateKobold", "SyndicateInferiorVulpkanin", "SyndicateFelinid"] # Sunrise Edit
 
 - type: entity
   parent: ReinforcementRadioSyndicateAncestor
@@ -79,7 +81,7 @@
     rules: ghost-role-information-nukeop-reinforcement-rules
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgentNukeops
-    selectablePrototypes: ["SyndicateMonkeyNukeops", "SyndicateKoboldNukeops"]
+    selectablePrototypes: ["SyndicateMonkeyNukeops", "SyndicateKoboldNukeops", "SyndicateInferiorVulpkaninNukeops", "SyndicateFelinidNukeops"] # Sunrise Edit
 
 - type: entity
   parent: ReinforcementRadio
@@ -100,20 +102,21 @@
   - type: EmitSoundOnUse
     sound: /Audio/Animals/cat_meow.ogg
 
-- type: entity
-  parent: ReinforcementRadio
-  id: ReinforcementRadioSyndicateCyborgAssault # Reinforcement radio exclusive to nukeops uplink
-  name: syndicate assault cyborg reinforcement radio
-  description: Call in a well armed assault cyborg, instantly!
-  suffix: NukeOps
-  components:
-    - type: GhostRole
-      name: ghost-role-information-syndicate-cyborg-assault-name
-      description: ghost-role-information-syndicate-cyborg-description
-      rules: ghost-role-information-silicon-rules
-      mindRoles:
-      - MindRoleGhostRoleSilicon
-      raffle:
-        settings: default
-    - type: GhostRoleMobSpawner
-      prototype: PlayerBorgSyndicateAssaultBattery
+# Move to _Sunrise
+#- type: entity
+#  parent: ReinforcementRadio
+#  id: ReinforcementRadioSyndicateCyborgAssault # Reinforcement radio exclusive to nukeops uplink
+#  name: syndicate assault cyborg reinforcement radio
+#  description: Call in a well armed assault cyborg, instantly!
+#  suffix: NukeOps
+#  components:
+#    - type: GhostRole
+#      name: ghost-role-information-syndicate-cyborg-assault-name
+#      description: ghost-role-information-syndicate-cyborg-description
+#      rules: ghost-role-information-silicon-rules
+#      raffle:
+#        settings: default
+#       mindRoles:
+#        - MindRoleGhostRoleSilicon
+#    - type: GhostRoleMobSpawner
+#      prototype: PlayerBorgSyndicateAssaultBattery

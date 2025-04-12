@@ -1,3 +1,19 @@
+# Sunrise edit start
+- type: entity
+  abstract: true
+  id: BaseClothingOuterSounds
+  components:
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Sunrise/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Sunrise/Items/Handling/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Sunrise/Items/Handling/cloth_drop.ogg
+# Sunrise edit end
+
 - type: entity
   abstract: true
   parent: Clothing
@@ -11,7 +27,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, BaseClothingOuterSounds] # Sunrise
   id: ClothingOuterBaseLarge
   components:
   - type: Item
@@ -26,7 +42,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, BaseClothingOuterSounds] # Sunrise
   id: ClothingOuterStorageBase
   components:
   - type: Storage
@@ -42,6 +58,12 @@
         type: StorageBoundUserInterface
   - type: StaticPrice
     price: 70
+  # Sunrise-Start
+  - type: Tag
+    tags:
+    - Vest
+    - WhitelistChameleon
+  # Sunrise-End
 
 - type: entity
   abstract: true
@@ -125,6 +147,9 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
+    # Sunrise start
+    staminaModifier: 0.8 
+    # Sunrise end
   - type: ToggleableClothing
     slot: head
   - type: ContainerContainer
@@ -135,6 +160,8 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - FullBodyOuter # Sunrise-Edit
+    - WhitelistChameleonSuit #Sunrise-edit
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
   - type: DamageOnInteractProtection
@@ -168,6 +195,12 @@
       flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
+  # Sunrise-Start
+  - type: Tag
+    tags:
+    - FullBodyOuter
+    - WhitelistChameleon
+  # Sunrise-End
 
 - type: entity
   parent: ClothingOuterBase

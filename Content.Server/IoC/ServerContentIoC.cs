@@ -1,3 +1,6 @@
+using Content.Server._Sunrise.IoC;
+using Content.Server._Sunrise.ServersHub;
+using Content.Server._Sunrise.TTS;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -62,6 +65,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<UserDbDataManager>();
+            IoCManager.Register<TTSManager>(); // Sunrise-TTS
             IoCManager.Register<ServerInfoManager>();
             IoCManager.Register<PoissonDiskSampler>();
             IoCManager.Register<DiscordWebhook>();
@@ -76,6 +80,12 @@ namespace Content.Server.IoC
             IoCManager.Register<IWatchlistWebhookManager, WatchlistWebhookManager>();
             IoCManager.Register<ConnectionManager>();
             IoCManager.Register<MultiServerKickManager>();
+            IoCManager.Register<CVarControlManager>();
+
+            // Sunrise-Start
+            IoCManager.Register<ServersHubManager>();
+            SunriseServerContentIoC.Register();
+            // Sunrise-End
         }
     }
 }

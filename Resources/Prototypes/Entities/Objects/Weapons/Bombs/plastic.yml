@@ -52,11 +52,16 @@
     slots:
     - HEAD
     quickEquip: false
+    equipDelay: 3
+    unequipDelay: 6
   - type: OnUseTimerTrigger
     delay: 10
     delayOptions: [10, 30, 60, 120, 300]
     initialBeepDelay: 0
-    beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    beepSound:
+      path: /Audio/_Sunrise/c4_beep1.ogg # Sunrise-Edit
+      params:
+        volume: 20
     startOnStick: true
     canToggleStartOnStick: true
   - type: TimerStartOnSignal

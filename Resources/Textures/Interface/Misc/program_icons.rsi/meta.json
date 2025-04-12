@@ -12,6 +12,9 @@
       },
       {
         "name": "crew_manifest"
+      },
+      {
+        "name": "nano_task"
       }
     ]
 }

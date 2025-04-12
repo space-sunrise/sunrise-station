@@ -1,0 +1,16 @@
+- type: gamePreset
+  id: AssaultOps
+  alias:
+    - assaultops
+    - assops # yeeeeah
+  name: assaultops-title
+  description: assaultops-description
+  showInVote: false
+  hide: true
+  rules:
+    - AssaultOps
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation

@@ -12,6 +12,9 @@
             "name": "Detective"
         },
         {
+            "name": "Adjutant"
+        },
+        {
             "name": "QuarterMaster"
         },
         {
@@ -108,6 +111,9 @@
             "name": "Brigmedic"
         },
         {
+            "name": "Pilot"
+        },
+        {
             "name": "MedicalDoctor"
         },
         {
@@ -147,6 +153,9 @@
             "name": "SecurityCadet"
         },
         {
+            "name": "IAA"
+        },
+        {
             "name": "Zombie"
         },
         {
@@ -171,6 +180,9 @@
             "name": "HeadRevolutionary"
         },
         {
+            "name": "Magistrat"
+        },
+        {
             "name": "MindShield",
             "delays":
             [
@@ -191,6 +203,15 @@
         },
         {
             "name": "Admin"
+        },
+        {
+            "name": "ParadoxClone"
+        },
+        {
+            "name": "Changeling"
+        },
+        {
+            "name": "Vampire"
         }
     ]
 }

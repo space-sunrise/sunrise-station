@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
+using Content.Shared._Sunrise.UnbuildableGrid;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -395,6 +396,11 @@ namespace Content.Server.Construction
                     Transform(user).Coordinates) is not { Valid: true } item)
                 return false;
 
+            // Sunrise-Start
+            var ev = new ItemConstructionCreated(item);
+            RaiseLocalEvent(user, ref ev);
+            // Sunrise-End
+
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
             // or drop the item as normal.
             _stackSystem.TryMergeToHands(item, user);
@@ -456,6 +462,14 @@ namespace Content.Server.Construction
             }
 
             var location = GetCoordinates(ev.Location);
+
+            // Sunrise-start
+            if (HasComp<UnbuildableGridComponent>(location.EntityId))
+            {
+                Cleanup();
+                return;
+            }
+            // Sunrise-end
 
             foreach (var condition in constructionPrototype.Conditions)
             {

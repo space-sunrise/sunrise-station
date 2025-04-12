@@ -5,6 +5,7 @@
   components:
   - type: Item
     size: Small
+  - type: Animateable
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -42,6 +43,10 @@
     noRot: false
   - type: Pullable
   - type: DamageExaminable
+  - type: TTS
+    voice: FactCore # Sunrise-TTS
+  - type: StaticPrice
+    price: 0 # Sunrise-TTS
 
 - type: entity
   name: "storage item"

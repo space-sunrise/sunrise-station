@@ -14,6 +14,7 @@
         visible: true
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Item
+    heldPrefix: analyzer
     storedRotation: -90
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
@@ -26,6 +27,8 @@
   - type: HealthAnalyzer
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
+    damageContainers:
+      - Biological
   - type: Tag
     tags:
       - DiscreteHealthAnalyzer
