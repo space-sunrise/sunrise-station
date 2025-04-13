@@ -2,7 +2,6 @@
   id: SunriseMapPool
   maps:
   - SunriseDelta
-  - SunriseBox
   - SunriseFland
   - SunriseMarathon
   - SunriseBagel
@@ -12,6 +11,7 @@
   - SunriseOasis
   - SunriseConvex
   - SunriseLoop
+  #- SunriseBox БОКСА БОЛЬШЕ НЕТ
   # Неиграбельно
   #- SunriseReach
   #- SunriseCorvaxGelta
