@@ -11,7 +11,7 @@
   - SunriseOasis
   - SunriseConvex
   - SunriseLoop
-  #- SunriseBox БОКСА БОЛЬШЕ НЕТ
+  - SunriseBox
   # Неиграбельно
   #- SunriseReach
   #- SunriseCorvaxGelta
