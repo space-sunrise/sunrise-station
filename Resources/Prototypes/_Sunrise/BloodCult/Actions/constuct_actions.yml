@@ -1,7 +1,5 @@
 ﻿- type: entity
   id: ArtificerCreateSoulStone
-  name: artificer-create-soul-stone-action-name
-  description: artificer-create-soul-stone-action-description
   categories: [ HideSpawnMenu ]
   components:
     - type: InstantAction
@@ -14,8 +12,6 @@
 
 - type: entity
   id: ArtificerCreateConstructShell
-  name: artificer-create-construct-shell-action-name
-  description: artificer-create-construct-shell-action-description
   categories: [ HideSpawnMenu ]
   components:
     - type: InstantAction
@@ -29,8 +25,6 @@
 
 - type: entity
   id: ArtificerConvertCultistFloor
-  name: artificer-convert-cultist-floor-action-name
-  description: artificer-convert-cultist-floor-action-description
   categories: [ HideSpawnMenu ]
   components:
     - type: InstantAction
@@ -44,8 +38,6 @@
 
 - type: entity
   id: ArtificerCreateCultistWall
-  name: artificer-create-cultist-wall-action-name
-  description: artificer-create-cultist-wall-action-description
   categories: [ HideSpawnMenu ]
   components:
     - type: InstantAction
@@ -59,8 +51,6 @@
 
 - type: entity
   id: ArtificerCreateCultistAirlock
-  name: artificer-create-cultist-airlock-action-name
-  description: artificer-create-cultist-airlock-action-description
   categories: [ HideSpawnMenu ]
   components:
     - type: InstantAction
@@ -74,8 +64,6 @@
 
 - type: entity
   id: WraithPhase
-  name: wraith-phase-action-name
-  description: wraith-phase-action-description
   categories: [ HideSpawnMenu ]
   components:
     - type: InstantAction
@@ -89,8 +77,6 @@
 
 - type: entity
   id: JuggernautCreateWall
-  name: juggernaut-create-wall-action-name
-  description: juggernaut-create-wall-action-description
   categories: [ HideSpawnMenu ]
   components:
     - type: InstantAction

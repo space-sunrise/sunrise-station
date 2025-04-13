@@ -136,7 +136,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         {
             return;
         }
-        if (message.PlaySound && localPlayer.UserId != message.TrueSender && !message.DbLoad)
+        if (message.PlaySound && localPlayer.UserId != message.TrueSender && !message.DbLoad) // Sunrise-Edit
         {
             if (_aHelpSound != null && (_bwoinkSoundEnabled || !_adminManager.IsActive()))
                 _audio.PlayGlobal(_aHelpSound, Filter.Local(), false);
@@ -179,7 +179,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         UIHelper?.Dispose();
         var ownerUserId = _playerManager.LocalUser!.Value;
 
-        UIHelper = isAdmin ? new AdminAHelpUIHandler(ownerUserId, _bwoinkSystem) : new UserAHelpUIHandler(ownerUserId, _bwoinkSystem);
+        UIHelper = isAdmin ? new AdminAHelpUIHandler(ownerUserId, _bwoinkSystem) : new UserAHelpUIHandler(ownerUserId, _bwoinkSystem); // Sunrise-Edit
         UIHelper.DiscordRelayChanged(_discordRelayActive);
 
         UIHelper.SendMessageAction = (userId, textMessage, playSound, adminOnly) => _bwoinkSystem?.Send(userId, textMessage, playSound, adminOnly);
@@ -338,10 +338,10 @@ public interface IAHelpUIHandler : IDisposable
 public sealed class AdminAHelpUIHandler : IAHelpUIHandler
 {
     private readonly NetUserId _ownerId;
-    private BwoinkSystem? _bwoinkSystem;
-    public AdminAHelpUIHandler(NetUserId owner, BwoinkSystem? bwoinkSystem)
+    private BwoinkSystem? _bwoinkSystem; // Sunrise-Edit
+    public AdminAHelpUIHandler(NetUserId owner, BwoinkSystem? bwoinkSystem) // Sunrise-Edit
     {
-        _bwoinkSystem = bwoinkSystem;
+        _bwoinkSystem = bwoinkSystem; // Sunrise-Edit
         _ownerId = owner;
     }
     private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
@@ -416,6 +416,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
             panel.UpdatePlayerTyping(args.PlayerName, args.Typing);
     }
 
+    // Sunrise-Start
     public void SetLoadDb(NetUserId userId)
     {
         if (_activePanelMap.TryGetValue(userId, out var panel))
@@ -428,6 +429,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     {
         _bwoinkSystem?.LoadDbMessages(userId);
     }
+    // Sunrise-End
 
     public event Action? OnClose;
     public event Action? OnOpen;
@@ -514,11 +516,11 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
 public sealed class UserAHelpUIHandler : IAHelpUIHandler
 {
     private readonly NetUserId _ownerId;
-    private BwoinkSystem? _bwoinkSystem;
-    public UserAHelpUIHandler(NetUserId owner, BwoinkSystem? bwoinkSystem)
+    private BwoinkSystem? _bwoinkSystem; // Sunrise-Edit
+    public UserAHelpUIHandler(NetUserId owner, BwoinkSystem? bwoinkSystem) // Sunrise-Edit
     {
         _ownerId = owner;
-        _bwoinkSystem = bwoinkSystem;
+        _bwoinkSystem = bwoinkSystem; // Sunrise-Edit
     }
     public bool IsAdmin => false;
     public bool IsOpen => _window is { Disposed: false, IsOpen: true };
@@ -535,6 +537,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         _window!.OpenCentered();
     }
 
+    // Sunrise-Start
     public void SetLoadDb(NetUserId userId)
     {
         LoadDb = true;
@@ -544,6 +547,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     {
         return LoadDb;
     }
+    // Sunrise-End
 
     public void Close()
     {
@@ -552,8 +556,6 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
 
     public void ToggleWindow()
     {
-        if (!IsLoadDb(_ownerId))
-            _bwoinkSystem?.LoadDbMessages(_ownerId);
         EnsureInit(_discordRelayActive);
         if (_window!.IsOpen)
         {
@@ -613,9 +615,21 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         _window.OnOpen += () => { OnOpen?.Invoke(); };
         _window.Contents.AddChild(_chatPanel);
 
-        var introText = Loc.GetString("bwoink-system-introductory-message");
-        var introMessage = new SharedBwoinkSystem.BwoinkTextMessage( _ownerId, SharedBwoinkSystem.SystemUserId, introText);
-        Receive(introMessage);
+        // Sunrise-Start
+        if (!IsLoadDb(_ownerId))
+        {
+            /*
+             * SUNRISE-TODO: Если открыть ахелп в котором уже есть сообщения то при загрузке с бд они продублируются.
+             * Ничего лучше чем очищать все сообщения перед загрузкой истории я не придумал.
+             */
+            _chatPanel.TextOutput.Clear();
+            _bwoinkSystem?.LoadDbMessages(_ownerId);
+        }
+
+        //var introText = Loc.GetString("bwoink-system-introductory-message");
+        //var introMessage = new SharedBwoinkSystem.BwoinkTextMessage( _ownerId, SharedBwoinkSystem.SystemUserId, introText);
+        //Receive(introMessage);
+        // Sunrise-End
     }
 
     public void Dispose()

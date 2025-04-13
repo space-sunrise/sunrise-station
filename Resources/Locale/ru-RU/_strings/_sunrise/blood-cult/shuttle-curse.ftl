@@ -4,5 +4,3 @@ shuttle-curse-max-curses = Сфера доносит, что шаттл боль
 shuttle-curse-cooldown = Сфера доносит, что ей нужно собрать силы на прокльяте
 shuttle-curse-shuttle-arrived = Сфера доносит, что уже слишком поздно
 shuttle-curse-shuttle-delayed = Сфера доносит, что прокльяте наложено
-ent-CultShuttleCurse = сфера проклятия
-    .desc = Cтранная каменная сфера, пульсирующая красным светом.

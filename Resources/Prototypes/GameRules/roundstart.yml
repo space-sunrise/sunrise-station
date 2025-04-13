@@ -471,14 +471,14 @@
   - type: RoundstartStationVariationRule
     rules:
     - id: BasicPoweredLightVariationPass
-    - id: BasicTrashVariationPass
+    #- id: BasicTrashVariationPass
     - id: SolidWallRustingVariationPass
     - id: ReinforcedWallRustingVariationPass
-    - id: BasicPuddleMessVariationPass
-      prob: 0.99
-      orGroup: puddleMess
-    - id: BloodbathPuddleMessVariationPass
-      prob: 0.01
-      orGroup: puddleMess
+    #- id: BasicPuddleMessVariationPass
+    #  prob: 0.99
+    #  orGroup: puddleMess
+    #- id: BloodbathPuddleMessVariationPass
+    #  prob: 0.01
+    #  orGroup: puddleMess
     - id: SmugglerStashVariationPass
       prob: 0.90

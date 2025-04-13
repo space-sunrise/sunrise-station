@@ -56,11 +56,11 @@ namespace Content.Client.Administration.UI.Bwoink
 
         public void ReceiveLine(SharedBwoinkSystem.BwoinkTextMessage message)
         {
-            if (!Visible && !message.DbLoad)
+            if (!Visible && !message.DbLoad) // Sunrise-Edit
                 Unread++;
 
             var formatted = new FormattedMessage(1);
-            var formattedDate = $"[bold]{message.SentAt:dd.MM HH:mm}[/bold]";
+            var formattedDate = $"[bold]{message.SentAt:dd.MM HH:mm}[/bold]"; // Sunrise-Edit
             formatted.AddMarkupOrThrow($"{formattedDate} {message.Text}");
             TextOutput.AddMessage(formatted);
             LastMessage = message.SentAt;

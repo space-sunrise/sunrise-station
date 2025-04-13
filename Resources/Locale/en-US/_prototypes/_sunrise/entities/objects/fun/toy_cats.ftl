@@ -1,4 +1,4 @@
-﻿ent-PlushieBlackCat = Black Cat Plushie
+ent-PlushieBlackCat = Black Cat Plushie
     .desc = Dark, mysterious, and possibly involved in occult rituals... or just snuggles. Might bring luck, or chaos.
 ent-PlushieGreyCat = Grey Cat Plushie
     .desc = A cat with "I exist, but won't show emotions" energy. Perfect for philosophical reflections and passive aggression.
