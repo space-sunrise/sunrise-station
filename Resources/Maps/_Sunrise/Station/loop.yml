@@ -4,8 +4,8 @@ meta:
   engineVersion: 252.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/14/2025 01:41:14
-  entityCount: 18209
+  time: 04/14/2025 08:16:21
+  entityCount: 18211
 maps:
 - 1
 grids:
@@ -4241,7 +4241,8 @@ entities:
           -10,12:
             0: 3822
           -9,9:
-            0: 47879
+            0: 47877
+            7: 2
           -9,10:
             0: 56723
           -9,11:
@@ -5326,6 +5327,21 @@ entities:
           moles:
           - 27.225372
           - 102.419266
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -7332,7 +7348,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -84725.4
+      secondsUntilStateChange: -85133.23
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7513,7 +7529,7 @@ entities:
       pos: 9.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -24209.65
+      secondsUntilStateChange: -24617.48
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7854,7 +7870,7 @@ entities:
       pos: 18.5,64.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8089.5396
+      secondsUntilStateChange: -8497.37
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -41167,6 +41183,24 @@ entities:
     - type: Transform
       pos: -34.5,36.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 6593
     components:
     - type: Transform
@@ -44050,7 +44084,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -332480.94
+      secondsUntilStateChange: -332888.78
       state: Opening
   - uid: 7013
     components:
@@ -44058,7 +44092,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -332481.66
+      secondsUntilStateChange: -332889.5
       state: Opening
   - uid: 7014
     components:
@@ -44066,7 +44100,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -332480.22
+      secondsUntilStateChange: -332888.06
       state: Opening
   - uid: 7015
     components:
@@ -44074,7 +44108,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -332479.6
+      secondsUntilStateChange: -332887.44
       state: Opening
 - proto: CyberPen
   entities:
@@ -50016,6 +50050,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -24.5,39.5
+      parent: 2
+  - uid: 14796
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -37.5,33.5
+      parent: 2
+  - uid: 14797
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -32.5,28.5
       parent: 2
 - proto: Emitter
   entities:
@@ -96377,46 +96423,8 @@ entities:
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: -56.5,27.5
+      pos: -56.5,33.5
       parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Dorm 3
-  - uid: 14796
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -56.5,23.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Dorm 2
-  - uid: 14797
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -47.5,23.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Dorm 1
-  - uid: 14798
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -55.5,33.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Cryostasis
   - uid: 14799
     components:
     - type: Transform
@@ -96519,6 +96527,12 @@ entities:
       id: Entrance hall
 - proto: SurveillanceCameraMedical
   entities:
+  - uid: 14798
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -36.5,33.5
+      parent: 2
   - uid: 14812
     components:
     - type: Transform
@@ -96582,6 +96596,18 @@ entities:
       - SurveillanceCameraMedical
       nameSet: True
       id: Virology
+  - uid: 18210
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -43.5,28.5
+      parent: 2
+  - uid: 18211
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -26.5,34.5
+      parent: 2
 - proto: SurveillanceCameraRouterCommand
   entities:
   - uid: 14818
@@ -99992,7 +100018,7 @@ entities:
       pos: -39.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -9497.008
+      secondsUntilStateChange: -9904.839
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -100026,7 +100052,7 @@ entities:
       pos: -44.5,34.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -16985.96
+      secondsUntilStateChange: -17393.791
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
