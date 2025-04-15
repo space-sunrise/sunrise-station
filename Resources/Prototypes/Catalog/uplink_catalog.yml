@@ -1704,13 +1704,19 @@
     Telecrystal: 3
   categories:
   - UplinkWearables
-  #Sunrise-start
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
-  #Sunrise-end
+
+- type: listing
+  id: UplinkClothingOuterVestWebElite
+  name: uplink-clothing-outer-vest-web-elite-name
+  description: uplink-clothing-outer-vest-web-elite-desc
+  productEntity: ClothingOuterVestWebElite
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkWearables
 
 - type: listing
   id: UplinkClothingShoesBootsMagSyndie
@@ -1796,20 +1802,15 @@
   description: uplink-hardsuit-syndieelite-desc
   icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 12 #Sunrise-edit
   cost:
-    Telecrystal: 16   #Sunrise-edit
+    Telecrystal: 12
   categories:
   - UplinkWearables
-  #Sunrise-start
   conditions:
   - !type:StoreWhitelistCondition
     whitelist:
       tags:
       - NukeOpsUplink
-  #Sunrise-end
 
 - type: listing
   id: UplinkClothingOuterHardsuitJuggernaut
@@ -1817,20 +1818,15 @@
   description: uplink-clothing-outer-hardsuit-juggernaut-desc
   icon: { sprite: /Textures/Structures/Storage/Crates/syndicate.rsi, state: icon }
   productEntity: CrateCybersunJuggernautBundle
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 16 # Sunrise-Edit
   cost:
-    Telecrystal: 20 # Sunrise-Edit
+    Telecrystal: 12
   categories:
   - UplinkWearables
-  #Sunrise-start
   conditions:
   - !type:StoreWhitelistCondition
-    blacklist:
+    whitelist:
       tags:
-      - AssaultOpsUplink
-  #Sunrise-end
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkClothingEyesHudSyndicate
