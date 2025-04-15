@@ -52,6 +52,17 @@
       - id: PlushieSiameseCat
       - id: PlushieTabbyCat
       - id: PlushieTuxedoCat
+    - !type:GroupSelector
+      children:
+      - id: PlushieBlackfox
+      - id: PlushieBluefox
+      - id: PlushieCoffeefox
+      - id: PlushieCrimsonfox
+      - id: PlushieMarblefox
+      - id: PlushieOrangefox
+      - id: PlushiePinkfox
+      - id: PlushiePurplefox
+      - id: PlushieRedfox
     # Sunrise-end
 
 - type: entity
@@ -84,7 +95,7 @@
           amount: !type:ConstantNumberSelector
             value: 3
 
-- type: entity  
+- type: entity
   id: CrateFunSharkPlushieBulk
   parent: CrateGenericSteel
   name: bulk soft toy shark crate
