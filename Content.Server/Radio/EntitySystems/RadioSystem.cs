@@ -113,16 +113,16 @@ public sealed class RadioSystem : EntitySystem
             speech = evntProto;
         else
             speech = _chat.GetSpeechVerb(messageSource, message);
+        // Sunrise-Start
+        if (GetIdCardIsBold(messageSource))
+        {
+            message = $"[bold]{message}[/bold]";
+        }
+        // Sunrise-End
 
         var content = escapeMarkup
             ? FormattedMessage.EscapeText(message)
             : message;
-        // Sunrise-Start
-        if (GetIdCardIsBold(messageSource))
-        {
-            content = $"[bold]{content}[/bold]";
-        }
-        // Sunrise-End
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
             ("color", channel.Color),
@@ -141,7 +141,7 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []); // Sunrise-TTS
+        var ev = new RadioReceiveEvent(FormattedMessage.RemoveMarkupPermissive(message), messageSource, channel, radioSource, chatMsg, []); // Sunrise-TTS
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);

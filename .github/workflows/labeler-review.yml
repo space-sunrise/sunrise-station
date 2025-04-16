@@ -5,7 +5,7 @@ on:
 jobs:
   add_label:
     # Change the repository name after you've made sure the team name is correct for your fork!
-    if: ${{ (github.repository == 'space-sunrise/space-station-14') && (github.event.review.state == 'APPROVED') }}
+    if: ${{ (github.repository == 'space-sunrise/sunrise-station') && (github.event.review.state == 'APPROVED') }}
     permissions:
       contents: read
       pull-requests: write
@@ -16,7 +16,7 @@ jobs:
       with:
         username: ${{ github.actor }}
         team: "content-maintainers,junior-maintainers"
-        GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
       uses: actions-ecosystem/action-add-labels@v1
       with:
