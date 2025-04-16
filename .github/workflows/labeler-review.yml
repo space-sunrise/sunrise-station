@@ -11,7 +11,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: tspascoal/get-user-teams-membership@v3
+    - uses: tspascoal/get-user-teams-membership@v1
       id: checkUserMember
       with:
         username: ${{ github.actor }}
