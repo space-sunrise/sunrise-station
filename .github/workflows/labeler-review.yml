@@ -9,7 +9,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-      members: read
     runs-on: ubuntu-latest
     steps:
     - uses: tspascoal/get-user-teams-membership@v3
@@ -17,7 +16,7 @@ jobs:
       with:
         username: ${{ github.actor }}
         team: "content-maintainers,junior-maintainers"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
     - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
       uses: actions-ecosystem/action-add-labels@v1
       with:
