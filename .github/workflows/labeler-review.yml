@@ -9,6 +9,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      members: read
     runs-on: ubuntu-latest
     steps:
     - uses: tspascoal/get-user-teams-membership@v3
