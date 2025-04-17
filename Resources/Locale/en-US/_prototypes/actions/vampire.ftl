@@ -22,3 +22,5 @@ ent-ActionVampireCloakOfDarkness = Cloak of Darkness
     .desc = Cloak yourself from mortal eyes, rendering you invisible while stationary. Activation Cost: 30 Essence. Upkeep: 1 Essence/Second Cooldown: 10 Seconds
 ent-ActionVampireThermalVision = Thermal Vision
     .desc = Toggle thermal vision, allowing you to see living beings through walls.
+ent-ActionVampireBloodScale = blood scale
+    .desc = Strengthen your muscles by compressing blood in order to develop maximum speed. Activation Cost: 10 Essence. Upkeep: 4 Essence/Second Cooldown: 5 Seconds

@@ -578,6 +578,30 @@ MuteToxinChemistryBottle: ChemistryBottleMuteToxin
 LeadChemistryBottle: ChemistryBottleLead
 ToxinChemistryBottle: ChemistryBottleToxin
 
+# 2025-03-29
+ClothingBackpackDuffelSyndicateRaidBundle: ClothingBackpackSyndicateRaidBundle
+
+# 2025-04-14
+MailRobustToolsSpam: MailSpamLetter
+MailNanotrasenSpam: MailSpamLetter
+MailSyndicateSpam: MailSpamLetter
+MailAlternativeDimensionSpam: MailSpamLetter
+MailNarsieCultSpam: MailSpamLetter
+MailRageCageSpam: MailSpamLetter
+MailVoyageAdvertisementSpam: MailSpamLetter
+MailScienceSpiderClanSpam: MailSpamLetter
+MailAllAccessSpam: MailSpamLetter
+MailCentcommRetributionSpam: MailSpamLetter
+MailEvilLizardSpam: MailSpamLetter
+MailParentsNeedMoneySpam: MailSpamLetter
+
+# 2025-04-15
+SimpleXenoArtifact: ComplexXenoArtifact
+MediumXenoArtifact: ComplexXenoArtifact
+SimpleXenoArtifactItem: ComplexXenoArtifactItem
+MediumXenoArtifactItem: ComplexXenoArtifactItem
+VariedXenoArtifactItem: ComplexXenoArtifactItem
+
 # Sunrise migrations
 AirlockExternalGlassShuttleArrivals: AirlockExternalGlassShuttleArrivalsLocked
 AirlockHatchSyndicate: AirlockHatchSyndicateLocked
@@ -650,16 +674,10 @@ ClothingUniformMNKTracksuitBlack: null
 QSI: null
 EffectHearts: null
 Oracle: null
-CloningPod: null
-ComputerCloningConsole: null
-MedicalScanner: null
 ServiceTechFab: null
 ServiceTechFabCircuitboard: null
 EngineeringTechFab: null
 ScienceTechFab: null
 ReverseEngineeringMachine: null
-CloningPodMachineCircuitboard: null
-CloningConsoleComputerCircuitboard: null
-MedicalScannerMachineCircuitboard: null
 ScienceTechFabCircuitboard: null
 EngineeringTechFabCircuitboard: null

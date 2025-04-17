@@ -34,15 +34,6 @@
   - type: ShowJobIcons
   - type: ShowCriminalRecordIcons
   - type: ShowMindShieldIcons
-  - type: ShowHealthBars
-    damageContainers:
-    - Biological
-  - type: ShowHealthIcons
-    damageContainers:
-    - Biological
-  - type: Tag
-    tags:
-    - HudMedical
   - type: EyeProtection
     protectionTime: 5
 

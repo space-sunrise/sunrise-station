@@ -135,17 +135,3 @@
   recipeUnlocks:
   - WeaponGunLaserCarbineAutomatic
   - WeaponEnergyGunPistol
-  technologyPrerequisites:
-  - ExperimentalBatteryAmmo
-
-- type: technology
-  id: ThermalWeaponry
-  name: research-technology-thermal-weaponry
-  icon:
-    sprite: _Sunrise/Objects/Weapons/Guns/Battery/temperaturegun.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 3
-  cost: 17500
-  recipeUnlocks:
-  - WeaponTemperatureGun

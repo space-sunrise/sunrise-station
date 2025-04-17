@@ -128,59 +128,19 @@
   - HoloprojectorField
 
 - type: technology
-  id: IndustrialRobotic
-  name: research-technology-industrial-robotics
-  icon:
-    sprite: _Sunrise/Structures/Machines/hyper_exosuit_fabricator.rsi
-    state: fab-idle
-  discipline: Experimental
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - ExosuitFabricatorHyperConvectionMachineCircuitboard
-  technologyPrerequisites:
-  - BasicRobotics
-  - IndustrialEngineering
-
-
-# Tier 3
-
-- type: technology
-  id: Phazon
-  name: research-technology-phazon
-  icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: phazon
-  discipline: Experimental
-  tier: 3
-  cost: 20000
-  recipeUnlocks:
-  - MechPhasicScanningModule
-  - PhazonHarness
-  - PhazonArmor
-  - PhazonHead
-  - PhazonLArm
-  - PhazonLLeg
-  - PhazonRArm
-  - PhazonRLeg
-  - PhazonCentralElectronics
-  - PhazonPeripheralsElectronics
-  - PhazonTargetingElectronics
-  technologyPrerequisites:
-  - Durand
-
-- type: technology
   id: GravityManipulation
   name: research-technology-gravity-manipulation
   icon:
     sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
     state: base
   discipline: Experimental
-  tier: 3
+  tier: 2
   cost: 10000
   recipeUnlocks:
     - WeaponForceGun
     - WeaponTetherGun
+
+# Tier 3
 
 - type: technology
   id: QuantumLeaping
@@ -193,3 +153,15 @@
   cost: 10000
   recipeUnlocks:
   - DeviceQuantumSpinInverter
+
+- type: technology
+  id: BluespaceTimeManipulation
+  name: research-technology-bluespace-time-manipulation
+  icon:
+    sprite: Objects/Devices/desynchronizer.rsi
+    state: icon
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - DeviceDesynchronizer

@@ -32,6 +32,8 @@ public sealed class GameMapManager : IGameMapManager
     [ViewVariables(VVAccess.ReadOnly)]
     private int _mapQueueDepth = 1;
 
+    private readonly HashSet<string> _excludedMaps = new(); // Sunrise-Edit
+
     private ISawmill _log = default!;
 
     public void Initialize()
@@ -98,6 +100,23 @@ public sealed class GameMapManager : IGameMapManager
         var maps = AllVotableMaps().Where(IsMapEligible).ToArray();
         return maps.Length == 0 ? AllMaps().Where(x => x.Fallback) : maps;
     }
+
+    // Sunrise-Start
+    public IEnumerable<string> CurrentlyExcludedMaps()
+    {
+        return _excludedMaps;
+    }
+
+    public void AddExcludedMap(string mapId)
+    {
+        _excludedMaps.Add(mapId);
+    }
+
+    public void ClearExcludedMaps()
+    {
+        _excludedMaps.Clear();
+    }
+    // Sunrise-End
 
     public IEnumerable<GameMapPrototype> AllVotableMaps()
     {

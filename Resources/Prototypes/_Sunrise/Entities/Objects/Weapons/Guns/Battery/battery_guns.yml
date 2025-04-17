@@ -239,7 +239,7 @@
   - type: Clothing
     sprite: _Sunrise/Objects/Weapons/Guns/Battery/pulse_revolver.rsi
   - type: Gun
-    fireRate: 2.75
+    fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
     soundEmpty:
@@ -249,9 +249,9 @@
     startingCharge: 720
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 40
+    autoRechargeRate: 60
     autoRechargePause: true
-    autoRechargePauseTime: 25
+    autoRechargePauseTime: 6
   - type: EnergyGunFireModes
     fireModes:
     - hitscanProto: BulletDisabler
@@ -1050,52 +1050,3 @@
     maxCharge: 7500
     startingCharge: 7500
   - type: EmpImmune
-
-- type: entity
-  name: temperature gun
-  parent: [BaseWeaponBattery, BaseGunWieldable]
-  id: WeaponTemperatureGun
-  description: An advanced gun that shoots body-temperature-changing beams. This probably constitutes as some kind of war crime.
-  components:
-  - type: Sprite
-    sprite: _Sunrise/Objects/Weapons/Guns/Battery/temperaturegun.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-1
-      visible: false
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Appearance
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,3,1
-  - type: MagazineVisuals
-    magState: mag
-    steps: 5
-    zeroVisible: false
-  - type: Clothing
-    sprite: _Sunrise/Objects/Weapons/Guns/Battery/temperaturegun.rsi
-  - type: Gun
-    fireRate: 1
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: BoltTempgunCold
-    fireCost: 100
-  - type: BatteryWeaponFireModes
-    fireModes:
-    - proto: BoltTempgunCold
-      fireCost: 125
-    - proto: BoltTempgunHot
-      fireCost: 100
-    - proto: BoltTempgunVeryCold
-      fireCost: 250
-    - proto: BoltTempgunVeryHot
-      fireCost: 200
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
-  - type: StaticPrice
-    price: 100

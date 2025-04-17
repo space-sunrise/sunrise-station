@@ -278,14 +278,28 @@ namespace Content.Server.Voting.Managers
 
         private void CreateMapVote(ICommonSession? initiator)
         {
+            // Sunrise-Start
             var maps = new Dictionary<string, GameMapPrototype>();
-            var eligibleMaps = _gameMapManager.CurrentlyEligibleMaps().ToList();
-            var selectedMaps = eligibleMaps.OrderBy(_ => _random.Next()).Take(_cfg.GetCVar(SunriseCCVars.MapVotingCount)).ToList();
+            var excludedMaps = _gameMapManager.CurrentlyExcludedMaps();
+
+            var eligibleMaps = _gameMapManager.CurrentlyEligibleMaps()
+                .Where(map => !excludedMaps.Contains(map.ID))
+                .ToList();
+
+            if (eligibleMaps.Count == 0)
+            {
+                _gameMapManager.ClearExcludedMaps();
+                eligibleMaps = _gameMapManager.CurrentlyEligibleMaps().ToList();
+            }
+
+            var selectedMaps = eligibleMaps.OrderBy(_ => _random.Next()).ToList();
+            maps.Clear();
             maps.Add(Loc.GetString("ui-vote-secret-map"), _random.Pick(selectedMaps));
             foreach (var map in selectedMaps)
             {
                 maps.Add(map.MapName, map);
             }
+            // Sunrise-End
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -295,6 +309,7 @@ namespace Content.Server.Voting.Managers
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
                     : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap)),
                 DisplayVotes = _cfg.GetCVar(SunriseCCVars.ShowMapVotes), // Sunrise-Edit
+                DisplayVotesAdmins = _cfg.GetCVar(SunriseCCVars.ShowMapVotes), // Sunrise-Edit
             };
 
             if (alone)
@@ -326,13 +341,14 @@ namespace Content.Server.Voting.Managers
 
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Map vote finished: {picked.MapName}");
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
-                // Sunrise-Start
                 if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
                 {
-                    _cfg.SetCVar(CCVars.GameMap, picked.ID);
+                    if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
+                    {
+                        ticker.UpdateInfoText();
+                    }
                     ticker.UpdateInfoText();
                 }
-                // Sunrise-End
                 else
                 {
                     if (ticker.RoundPreloadTime <= TimeSpan.Zero)

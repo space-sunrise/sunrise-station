@@ -347,12 +347,17 @@ namespace Content.Server.Administration.Systems
             }
         }
 
+        // Sunrise-Start
         private async void OnRequestDbMessages(BwoinkRequestDbMessages msg, EntitySessionEventArgs args)
         {
             var isAdmin = _adminManager.IsAdmin(args.SenderSession);
 
             var messages = await _dbManager.GetAHelpMessagesByReceiverAsync(msg.UserId);
 
+            /*
+             * SUNRISE-TODO: Мы отправляем всю историю по одному сообщению используя ванильный класс.
+             * Вероятно более разумно было бы отправлять все сообщения одним эвентом... Возможно.
+             */
             foreach (var aHelpMessage in messages)
             {
                 var formatMessage = await FormatDbAhelpMessage(
@@ -368,7 +373,7 @@ namespace Content.Server.Administration.Systems
                     (NetUserId) aHelpMessage.ReceiverUserId,
                     (NetUserId) aHelpMessage.SenderUserId,
                     formatMessage,
-                    aHelpMessage.SentAt.DateTime,
+                    aHelpMessage.SentAt.DateTime.ToLocalTime(),
                     playSound: aHelpMessage.PlaySound,
                     adminOnly: aHelpMessage.AdminOnly,
                     dbLoad: true);
@@ -383,6 +388,10 @@ namespace Content.Server.Administration.Systems
         private async Task<string> FormatDbAhelpMessage(string message, NetUserId senderUserId,
             bool playSound = true, bool adminOnly = false)
         {
+            /*
+             * SUNRISE-TODO: Ахуенная идея, обращаться к БД при каждом форматировании сообщения.
+             * Очевидно нужно использовать кеширование, но мне впадлу.
+             */
             var senderAdmin = await _adminManager.LoadAdminData(senderUserId);
             var senderData = await _dbManager.GetPlayerRecordByUserId(senderUserId);
             var username = "";
@@ -392,7 +401,7 @@ namespace Content.Server.Administration.Systems
             }
 
             string bwoinkText;
-            string adminPrefix = "";
+            var adminPrefix = "";
 
             if (_config.GetCVar(CCVars.AhelpAdminPrefix) && senderAdmin is not null && senderAdmin.Value.dat.Title is not null)
             {
@@ -432,6 +441,7 @@ namespace Content.Server.Administration.Systems
 
             return $"{(adminOnly ? Loc.GetString("bwoink-message-admin-only") : !playSound ? Loc.GetString("bwoink-message-silent") : "")} {bwoinkText}: {escapedText}";
         }
+        // Sunrise-End
 
         private void OnServerNameChanged(string obj)
         {
@@ -816,8 +826,10 @@ namespace Content.Server.Administration.Systems
 
             LogBwoink(msg);
 
+            // Sunrise-Start
             var sentAt = DateTimeOffset.UtcNow;
             _dbManager.AddAHelpMessage(senderSession.UserId, message.UserId, message.Text, sentAt, message.PlaySound, message.AdminOnly);
+            // Sunrise-End
 
             var admins = GetTargetAdmins();
 

@@ -31,7 +31,7 @@ public sealed class SunriseCCVars
     /// Amount of seconds before timeout for API
     /// </summary>
     public static readonly CVarDef<int> TTSApiTimeout =
-        CVarDef.Create("tts.api_timeout", 5, CVar.SERVERONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.api_timeout", 10, CVar.SERVERONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Option to disable TTS events for client
@@ -203,7 +203,7 @@ public sealed class SunriseCCVars
      */
 
     public static readonly CVarDef<bool> MinPlayersEnable =
-            CVarDef.Create("planet_prison.enable", true, CVar.SERVERONLY);
+            CVarDef.Create("planet_prison.enable", false, CVar.SERVERONLY);
 
     public static readonly CVarDef<int> MinPlayersPlanetPrison =
         CVarDef.Create("planet_prison.min_players", 0, CVar.SERVERONLY);
@@ -277,8 +277,6 @@ public sealed class SunriseCCVars
     public static readonly CVarDef<float> ChancePresetVoteAfterRestart = CVarDef.Create("vote.chance_preset_vote_after_restart", 0.5f);
 
     public static readonly CVarDef<int> VotingsDelay = CVarDef.Create("vote.votings_delay", 60);
-
-    public static readonly CVarDef<int> MapVotingCount = CVarDef.Create("vote.map_voting_count", 5);
 
     public static readonly CVarDef<int> RoundVotingCount = CVarDef.Create("vote.round_voting_count", 3);
 

@@ -25,6 +25,7 @@
   hide: true # Sunrise-Edit
   description: kessler-syndrome-description
   rules:
+    - MeteorSwarmMildScheduler
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
@@ -44,6 +45,11 @@
     - Traitor
     - Revolutionary
     - Zombie
+    - Wizard
+    - FleshCult
+    - BloodCult
+    - AssaultOps
+    - SubGamemodesRule
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
@@ -66,6 +72,11 @@
     - Traitor
     - Revolutionary
     - Zombie
+    - Wizard
+    - FleshCult
+    - BloodCult
+    - AssaultOps
+    - SubGamemodesRule
     - BasicStationEventScheduler
     - KesslerSyndromeScheduler
     - MeteorSwarmMildScheduler

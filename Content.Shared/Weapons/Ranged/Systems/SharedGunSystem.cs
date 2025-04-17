@@ -173,7 +173,15 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
 
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
-        gun.Target = GetEntity(msg.Target);
+        gun.Targets.Clear();
+        foreach (var target in msg.Targets)
+        {
+            var targetUid = GetEntity(target);
+            if (targetUid != EntityUid.Invalid)
+            {
+                gun.Targets.Add(targetUid);
+            }
+        }
         AttemptShoot(user.Value, ent, gun);
     }
 
@@ -245,13 +253,14 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
-        gun.Target = null;
+        gun.Targets.Clear();
         EntityManager.DirtyField(uid, gun, nameof(GunComponent.ShotCounter));
     }
 
     public void SetTarget(GunComponent gun, EntityUid target)
     {
-        gun.Target = target;
+        gun.Targets.Clear();
+        gun.Targets.Add(target);
     }
 
     /// <summary>

@@ -47,18 +47,6 @@
     Plasma: 500
 
 - type: latheRecipe
-  id: WeaponTemperatureGun
-  result: WeaponTemperatureGun
-  categories:
-  - Weapons
-  completetime: 5
-  materials:
-    Steel: 1500
-    Glass: 1000
-    Plastic: 1000
-    Silver: 250
-
-- type: latheRecipe
   parent: BaseAmmoRecipe
   id: MagazineLightRifleBoxIncendiary
   result: MagazineLightRifleBoxIncendiary
@@ -490,14 +478,6 @@
     Uranium: 50
 
 - type: latheRecipe
-  id: MagazineGrenadeEmpty
-  result: MagazineGrenadeEmpty
-  completetime: 3
-  materials:
-    Steel: 150
-    Plastic: 50
-
-- type: latheRecipe
   id: ShellEMPArtillery
   result: ShellEMPArtillery
   completetime: 3
@@ -523,17 +503,6 @@
     Steel: 150
     Plastic: 100
     Glass: 20
-
-- type: latheRecipe
-  id: PortableRecharger
-  result: PortableRecharger
-  completetime: 15
-  materials:
-    Steel: 2000
-    Uranium: 2000
-    Plastic: 1000
-    Plasma: 500
-    Glass: 500
 
 # Mech Weapons
 - type: latheRecipe

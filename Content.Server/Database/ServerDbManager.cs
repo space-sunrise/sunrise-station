@@ -362,6 +362,7 @@ namespace Content.Server.Database
 
         #endregion
 
+        // Sunrise-Start
         #region Ahelp
 
         Task AddAHelpMessage(Guid senderSessionUserId, Guid messageUserId, string message, DateTimeOffset sentAt, bool playSound, bool adminOnly);
@@ -369,6 +370,7 @@ namespace Content.Server.Database
         public Task<List<AHelpMessage>> GetAHelpMessagesByReceiverAsync(Guid receiverUserId);
 
         #endregion
+        // Sunrise-End
     }
 
     /// <summary>

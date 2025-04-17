@@ -1,10 +1,10 @@
 - type: gameMap
   id: SunriseDelta
-  mapName: 'Delta Station'
+  mapName: 'Delta'
   mapPath: /Maps/_Sunrise/Station/delta.yml
   maxRandomOffset: 0
   randomRotation: false
-  minPlayers: 0
+  minPlayers: 40
   stations:
     Delta:
       stationProto: StandardNanotrasenStation

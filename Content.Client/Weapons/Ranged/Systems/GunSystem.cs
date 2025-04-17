@@ -12,6 +12,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
+using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -265,15 +266,23 @@ public sealed partial class GunSystem : SharedGunSystem
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
         var coordinates = TransformSystem.ToCoordinates(entity, mousePos);
 
-        NetEntity? target = null;
+        var targets = new List<NetEntity>();
         if (_state.CurrentState is GameplayStateBase screen)
-            target = GetNetEntity(screen.GetClickedEntity(mousePos));
+        {
+            var spriteTree = EntityManager.EntitySysManager.GetEntitySystem<SpriteTreeSystem>();
+            var entities = spriteTree.QueryAabb(mousePos.MapId, Box2.CenteredAround(mousePos.Position, new Vector2(1.5f, 1.5f)));
+
+            foreach (var ent in entities)
+            {
+                targets.Add(GetNetEntity(ent.Uid));
+            }
+        }
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
         EntityManager.RaisePredictiveEvent(new RequestShootEvent
         {
-            Target = target,
+            Targets = targets,
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gunUid),
         });

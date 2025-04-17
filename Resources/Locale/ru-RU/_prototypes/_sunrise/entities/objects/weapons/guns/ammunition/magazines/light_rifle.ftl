@@ -24,3 +24,5 @@ ent-MagazineDl6902 = короб-магазин DL6902
     .desc = { ent-BaseMagazineLightRifle.desc }
 ent-MagazinePistolSubMachineGunSIAR52 = Расширенный магазин (безгильзовые)
     .desc = { ent-BaseMagazineLightRifle.desc }
+ent-MagazineScarH = scar-h magazine
+    .desc = { ent-BaseItem.desc }

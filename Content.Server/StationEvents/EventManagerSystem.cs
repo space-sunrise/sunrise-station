@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.EntityTable;
+using Prometheus;
 
 namespace Content.Server.StationEvents;
 
@@ -24,6 +25,16 @@ public sealed class EventManagerSystem : EntitySystem
 
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
+
+    // Sunrise-Start
+    private readonly Counter _eventAddedCounter = Metrics.CreateCounter(
+        "random_event_added",
+        "Amount of times each event was added in round.",
+        new CounterConfiguration
+        {
+            LabelNames = ["event"]
+        });
+    // Sunrise-End
 
     public override void Initialize()
     {
@@ -73,6 +84,8 @@ public sealed class EventManagerSystem : EntitySystem
             Log.Warning("A requested event is not available!");
             return;
         }
+
+        _eventAddedCounter.WithLabels(randomLimitedEvent).Inc(); // Sunrise-Edit
 
         GameTicker.AddGameRule(randomLimitedEvent);
     }

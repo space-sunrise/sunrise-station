@@ -133,7 +133,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
     private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float range, float minDistance) // Sunrise-Edit
     {
-        var userCoords = userXform.Coordinates.ToMap(EntityManager, _xform);
+        var userCoords = _xform.ToMapCoordinates(userXform.Coordinates);
         _targetGrids.Clear();
         _lookupSystem.GetEntitiesInRange(userCoords, range, _targetGrids);
         Entity<MapGridComponent>? targetGrid = null;

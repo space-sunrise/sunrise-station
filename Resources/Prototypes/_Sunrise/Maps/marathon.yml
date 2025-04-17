@@ -1,6 +1,6 @@
 - type: gameMap
   id: SunriseMarathon
-  mapName: 'Marathon Station'
+  mapName: 'Marathon'
   mapPath: /Maps/_Sunrise/Station/marathon.yml
   maxRandomOffset: 0
   randomRotation: false
@@ -127,4 +127,5 @@
           - CleaningUp
           - HumanitarianAid
           - PersonnelRecovery
+          - CrewEducation
           #- VirusFlesh

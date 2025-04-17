@@ -45,6 +45,7 @@
     whitelist:
       tags:
       - Document
+      - Paper
     storage:
       SheetPrinter: 0
 

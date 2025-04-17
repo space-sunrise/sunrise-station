@@ -30,7 +30,7 @@ public sealed partial class CCVars
     ///     Goes from 0 (no recoil at all) to 1 (regular amounts of recoil)
     /// </summary>
     public static readonly CVarDef<float> ScreenShakeIntensity =
-        CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("accessibility.screen_shake_intensity", 0.5f, CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     ///     A generic toggle for various visual effects that are color sensitive.
@@ -60,17 +60,5 @@ public sealed partial class CCVars
     public static readonly CVarDef<float> SpeechBubbleBackgroundOpacity =
         CVarDef.Create("accessibility.speech_bubble_background_opacity", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
-    /// <summary>
-    /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the client.
-    /// Both this and AccessibilityServerCensorNudity must be false to display nudity on the client.
-    /// </summary>
-    public static readonly CVarDef<bool> AccessibilityClientCensorNudity =
-        CVarDef.Create("accessibility.censor_nudity", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
-    /// <summary>
-    /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the server.
-    /// Both this and AccessibilityClientCensorNudity must be false to display nudity on the client.
-    /// </summary>
-    public static readonly CVarDef<bool> AccessibilityServerCensorNudity =
-            CVarDef.Create("accessibility.server_censor_nudity", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 }

@@ -1,9 +1,9 @@
 - type: gameMap
   id: SunriseBox
-  mapName: 'Box Station'
+  mapName: 'Box'
   mapPath: /Maps/_Sunrise/Station/box.yml
   maxRandomOffset: 0
-  minPlayers: 0
+  minPlayers: 30
   randomRotation: false
   stations:
     Boxstation:
@@ -125,4 +125,7 @@
           - Furs
           - Crew
           - CleaningUp
+          - HumanitarianAid
+          - PersonnelRecovery
+          - CrewEducation
           #- VirusFlesh

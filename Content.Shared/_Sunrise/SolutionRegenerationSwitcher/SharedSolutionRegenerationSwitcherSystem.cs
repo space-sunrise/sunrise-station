@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Sunrise.SolutionRegenerationSwitcher
 {
@@ -42,13 +43,15 @@ namespace Content.Shared._Sunrise.SolutionRegenerationSwitcher
                 Verb reagent = new()
                 {
                     Text = proto.LocalizedName,
-                    Category = VerbCategory.ReagentSwitch,
+                    Icon = i == component.CurrentIndex
+                        ? new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/spill.svg.192dpi.png"))
+                        : null,
                     Act = () =>
                     {
                         component.CurrentIndex = index;
                         SwitchReagent(uid, componentOption, component, args.User);
                     },
-                    Priority = 2,
+                    Priority = 20,
                     Message = Loc.GetString("solution-regeneration-switcher-switch-verb-text"),
                 };
                 args.Verbs.Add(reagent);

@@ -114,7 +114,7 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderContraband]
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderZookeeperContraband]
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic. Uses .50 shotgun shells.
   components:
@@ -305,6 +305,7 @@
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
     soundGunshot:
       collection: m3 # Sunrise-Edit
+    bigTrigger: true # Sunrise-Edit
   - type: BallisticAmmoProvider
     capacity: 1
     proto: null

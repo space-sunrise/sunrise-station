@@ -2,8 +2,7 @@
   id: SunrisePlasma
   mapName: 'Plasma'
   mapPath: /Maps/_Sunrise/Station/plasma.yml
-  minPlayers: 20
-  maxPlayers: 100
+  minPlayers: 40
   maxRandomOffset: 0
   randomRotation: false
   stations:
@@ -125,4 +124,9 @@
           - Saboteurs
           - Furs
           - Crew
+          - CleaningUp
+          - HumanitarianAid
+          - PersonnelRecovery
+          - CrewEducation
           #- VirusFlesh
+

@@ -9,6 +9,7 @@ namespace Content.Shared._Sunrise.SolutionRegenerationSwitcher
         [DataField(required: true), ViewVariables, AutoNetworkedField]
         public List<ReagentQuantity> Options = [];
 
+        [AutoNetworkedField]
         public int CurrentIndex;
 
         [DataField, ViewVariables]

@@ -8,25 +8,16 @@ namespace Content.Server.Stunnable.Components
     {
         // TODO: Can probably predict this.
 
-        /// <summary>
-        /// how long a player will have stamina crit
-        /// </summary>
-        [DataField("stunAmount")]
-        public double StunAmount;
-
-        /// <summary>
-        /// how long the player will be on the floor
-        /// </summary>
-        [DataField("knockdownAmount")]
-        public double KnockdownAmount;
-
-        /// <summary>
-        /// how long the player will have a slowdown
-        /// </summary>
-        [DataField("slowdownAmount")]
-        public double SlowdownAmount;
-
         // See stunsystem for what these do
+        [DataField("stunAmount")]
+        public float StunAmount;
+
+        [DataField("knockdownAmount")]
+        public float KnockdownAmount;
+
+        [DataField("slowdownAmount")]
+        public float SlowdownAmount;
+
         [DataField("walkSpeedMultiplier")]
         public float WalkSpeedMultiplier = 1f;
 

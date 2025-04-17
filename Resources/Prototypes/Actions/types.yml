@@ -264,18 +264,6 @@
     event: !type:VendingMachineSelfDispenseEvent
 
 - type: entity
-  id: ActionArtifactActivate
-  name: Activate Artifact
-  description: Immediately activates your current artifact node.
-  components:
-  - type: InstantAction
-    icon:
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      state: ano01
-    useDelay: 60
-    event: !type:ArtifactSelfActivateEvent
-
-- type: entity
   id: ActionToggleBlock
   name: Block
   description: Raise or lower your shield.
@@ -314,6 +302,7 @@
   description: Go to sleep.
   components:
   - type: InstantAction
+    temporary: true # Sunrise-Edit
     checkCanInteract: false
     checkConsciousness: false
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
@@ -395,7 +384,7 @@
   name: Toggle Paramedic Siren
   description: Toggles the paramedic siren on and off.
   components:
-  - type: InstantAction 
+  - type: InstantAction
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
       state: icon-siren

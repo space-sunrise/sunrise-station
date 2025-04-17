@@ -198,7 +198,7 @@
     radius: 15 # Sunrise-edit
     netsync: false
   - type: AccessReader
-  - type: DamageOverlay
+  - type: DamageOverlay # Sunrise-Edit
 
 # Ripley MK-I
 - type: entity
