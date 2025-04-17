@@ -1793,7 +1793,6 @@ entities:
             color: '#FFFFFFFF'
             id: BrickTileSteelLineS
           decals:
-            2893: 12,-83
             2894: 14,-83
             2895: 10,-83
             2897: 11,-83
@@ -1982,7 +1981,6 @@ entities:
             2973: 15,-94
             2974: 15,-95
             2975: 15,-98
-            2998: 15,-90
             2999: 15,-89
             3000: 15,-88
             3001: 15,-87
@@ -7606,7 +7604,6 @@ entities:
       - 18091
       - 18737
       - 13567
-      - 2893
       - 12421
       - 12422
   - uid: 18058
@@ -7667,9 +7664,6 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 19425
-      - 19426
-      - 19427
       - 19421
       - 19419
       - 19422
@@ -7692,7 +7686,6 @@ entities:
       - 8587
       - 8588
       - 8589
-      - 16435
       - 8591
       - 7498
       - 7654
@@ -7874,7 +7867,6 @@ entities:
       - 8684
       - 8683
       - 18805
-      - 2998
       - 9765
       - 18802
   - uid: 3897
@@ -8666,13 +8658,10 @@ entities:
       - 8542
       - 8543
       - 8544
-      - 19426
-      - 19425
       - 9643
       - 15636
       - 9496
       - 14601
-      - 19427
   - uid: 18864
     components:
     - type: Transform
@@ -53635,7 +53624,6 @@ entities:
       devices:
       - 13567
       - 18091
-      - 2893
   - uid: 18881
     components:
     - type: Transform
@@ -54381,17 +54369,6 @@ entities:
       parent: 2
 - proto: Firelock
   entities:
-  - uid: 2893
-    components:
-    - type: Transform
-      pos: 14.5,-81.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 18013
-      - 15095
   - uid: 11712
     components:
     - type: Transform
@@ -56247,17 +56224,6 @@ entities:
       - 14460
       - 14458
       - 14459
-  - uid: 2998
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 22.5,-68.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 2197
   - uid: 3529
     components:
     - type: Transform
@@ -58002,16 +57968,6 @@ entities:
       deviceLists:
       - 15451
       - 17947
-  - uid: 16435
-    components:
-    - type: Transform
-      pos: 88.5,-41.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 467
   - uid: 17106
     components:
     - type: Transform
@@ -58116,39 +58072,6 @@ entities:
       - 2110
       - 14590
       - 14591
-  - uid: 19425
-    components:
-    - type: Transform
-      pos: 25.5,-9.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 19395
-      - 18598
-  - uid: 19426
-    components:
-    - type: Transform
-      pos: 24.5,-9.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 19395
-      - 18598
-  - uid: 19427
-    components:
-    - type: Transform
-      pos: 23.5,-9.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 19395
-      - 18598
 - proto: Fireplace
   entities:
   - uid: 3000
