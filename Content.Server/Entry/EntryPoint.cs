@@ -1,3 +1,4 @@
+using Content.Server._Sunrise.Contributors;
 using Content.Server._Sunrise.Entry;
 using Content.Server._Sunrise.GuideGenerator;
 using Content.Server._Sunrise.ServersHub;
@@ -51,6 +52,7 @@ namespace Content.Server.Entry
         private IVoteManager _voteManager = default!;
         private ServerUpdateManager _updateManager = default!;
         private ServersHubManager _serversHubManager = default!; // Sunrise-Edit
+        private ContributorsManager _contributorsManager = default!; // Sunrise-Edit
         private PlayTimeTrackingManager? _playTimeTracking;
         private IEntitySystemManager? _sysMan;
         private IServerDbManager? _dbManager;
@@ -101,6 +103,7 @@ namespace Content.Server.Entry
                 _voteManager = IoCManager.Resolve<IVoteManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _serversHubManager = IoCManager.Resolve<ServersHubManager>(); // Sunrise-Edit
+                _contributorsManager = IoCManager.Resolve<ContributorsManager>(); // Sunrise-Edit
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
                 _connectionManager = IoCManager.Resolve<IConnectionManager>();
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
@@ -117,11 +120,12 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<ContentNetworkResourceManager>().Initialize();
                 IoCManager.Resolve<GhostKickManager>().Initialize();
-                IoCManager.Resolve<TTSManager>().Initialize(); // Sunrise-TTS
                 IoCManager.Resolve<ServerInfoManager>().Initialize();
                 IoCManager.Resolve<ServerApi>().Initialize();
 
+                IoCManager.Resolve<TTSManager>().Initialize(); // Sunrise-TTS
                 IoCManager.Resolve<ServersHubManager>().Initialize(); // Sunrise-Hub
+                IoCManager.Resolve<ContributorsManager>().Initialize(); // Sunrise-Hub
 
                 // Sunrise-Sponsors-Start
                 SunriseServerEntry.Init();
@@ -207,6 +211,7 @@ namespace Content.Server.Entry
                     _watchlistWebhookManager.Update();
                     _connectionManager?.Update();
                     _serversHubManager.Update(); // Sunrise-Edit
+                    _contributorsManager.Update(); // Sunrise-Edit
                     _sponsorsManager?.Update(); // Sunrise-Edit
                     break;
             }

@@ -1,5 +1,6 @@
 using Content.Client._RMC14.Explosion;
 using Content.Client._RMC14.Xenonids.Screech;
+using Content.Client._Sunrise.Contributors;
 using Content.Client._Sunrise.Entry;
 using Content.Client._Sunrise.ServersHub;
 using Content.Client.Administration.Managers;
@@ -79,6 +80,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
         [Dependency] private readonly ServersHubManager _serversHubManager = default!; // Sunrise-Hub
+        [Dependency] private readonly ContributorsManager _contributorsManager = default!; // Sunrise-Edit
 
         public override void Init()
         {
@@ -145,6 +147,7 @@ namespace Content.Client.Entry
             _playbackMan.Initialize();
 
             _serversHubManager.Initialize(); // Sunrise-Hub
+            _contributorsManager.Initialize(); // Sunrise-Hub
 
             // Sunrise-Sponsors-Start
             SunriseClientEntry.Init();
