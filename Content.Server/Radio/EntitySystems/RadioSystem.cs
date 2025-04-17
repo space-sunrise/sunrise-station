@@ -142,7 +142,7 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(FormattedMessage.RemoveMarkupPermissive(message), messageSource, channel, radioSource, chatMsg, []); // Sunrise-TTS
+        var ev = new RadioReceiveEvent(FormattedMessage.RemoveMarkupPermissive(message), messageSource, channel, radioSource, chatMsg);
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);
