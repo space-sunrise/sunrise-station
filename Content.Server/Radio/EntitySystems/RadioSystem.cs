@@ -4,6 +4,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
+using Content.Shared._Sunrise.TTS;
 using Content.Shared.Access.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -68,8 +69,16 @@ public sealed class RadioSystem : EntitySystem
 
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
+        // Sunrise-TTS-Start
         if (TryComp(uid, out ActorComponent? actor))
+        {
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
+            if (uid != args.MessageSource && HasComp<TTSComponent>(args.MessageSource))
+            {
+                args.Receivers.Add(uid);
+            }
+        }
+        // Sunrise-TTS-End
     }
 
     /// <summary>
