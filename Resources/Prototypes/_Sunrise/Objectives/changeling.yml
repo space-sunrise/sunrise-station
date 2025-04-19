@@ -55,6 +55,7 @@
   id: ChangelingAbsorbObjective
   components:
   - type: Objective
+    difficulty: 0
     icon:
       sprite: Mobs/Demons/abomination.rsi
       state: dead
@@ -70,6 +71,7 @@
   id: ChangelingStealDNAObjective
   components:
   - type: Objective
+    difficulty: 0
     icon:
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
@@ -86,6 +88,7 @@
   description: I need to escape on the evacuation shuttle. Undercover.
   components:
   - type: Objective
+    difficulty: 0
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink

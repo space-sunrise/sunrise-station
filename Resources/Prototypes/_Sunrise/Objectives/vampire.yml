@@ -175,6 +175,7 @@
   id: VampireDrainObjective
   components:
   - type: Objective
+    difficulty: 0
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
       state: blood_drain_icon
