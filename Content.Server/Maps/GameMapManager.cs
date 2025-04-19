@@ -111,7 +111,7 @@ public sealed class GameMapManager : IGameMapManager
 
     public void AddExcludedMap(string mapId)
     {
-        if (_cfg.GetCVar(SunriseCCVars.ExcludeMaps))
+        if (!_cfg.GetCVar(SunriseCCVars.ExcludeMaps))
             return;
 
         _excludedMaps.Add(mapId);
