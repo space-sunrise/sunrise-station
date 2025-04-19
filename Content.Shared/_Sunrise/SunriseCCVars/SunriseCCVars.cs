@@ -284,7 +284,7 @@ public sealed partial class SunriseCCVars : CVars
 
     public static readonly CVarDef<bool> VoteMusicDisable = CVarDef.Create("vote.music_disable", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
-    public static readonly CVarDef<bool> ExcludeMaps = CVarDef.Create("vote.enabled", false, CVar.SERVERONLY);
+    public static readonly CVarDef<bool> ExcludeMaps = CVarDef.Create("vote.exclude_map", false, CVar.SERVERONLY);
 
     /*
      * Preset
