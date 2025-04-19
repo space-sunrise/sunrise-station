@@ -1,19 +1,24 @@
+# НЕ ДОБАВЛЯТЬ НОВЫЕ КАРТЫ БЕЗ МОЕГО РЕВЬЮ! ~ SplikZerys
+# ВСЕ КАРТЫ ДОЛЖНЫ ИМЕТЬ SMESExtended ВМЕСТО БАЗОВОГО SMESBasic!
+
 - type: gameMapPool
   id: SunriseMapPool
   maps:
+  # НАИБОЛЕЕ ПРИОРИТЕТНЫЕ КАРТЫ
   - SunriseDelta
+  - SunriseBox
+  - SunriseMeta
+  # МЕНЕЕ ВАЖНЫЕ:
   - SunriseBarratry
   - SunriseFland
   - SunriseMarathon
   - SunriseBagel
-  - SunriseMeta
   - SunrisePlasma
   - SunrisePacked
   - SunriseOasis
   - SunriseConvex
   - SunriseLoop
-  - SunriseBox
-  # Неиграбельно
+  # НЕИГРАБЕЛЬНЫЕ:
   #- SunriseReach
   #- SunriseCorvaxGelta
   #- SunriseRelic
@@ -28,5 +33,3 @@
   #- Kettle
   #- Tortuga
   #- Arena
-
-# НЕ ДОБАВЛЯТЬ НОВЫЕ КАРТЫ БЕЗ МОЕГО РЕВЬЮ! ~ SplikZerys

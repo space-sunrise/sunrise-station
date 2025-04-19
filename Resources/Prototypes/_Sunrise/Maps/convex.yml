@@ -2,7 +2,7 @@
   id: SunriseConvex
   mapName: 'Convex'
   mapPath: /Maps/_Sunrise/Station/convex.yml
-  minPlayers: 65
+  minPlayers: 0
   maxRandomOffset: 0
   randomRotation: false
   stations:
