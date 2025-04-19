@@ -1,0 +1,7 @@
+﻿- type: entity
+  id: RCDAdvancedSunrise
+  name: advanced RCD
+  suffix: CE
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 30
