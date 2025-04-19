@@ -82880,7 +82880,7 @@ entities:
     - type: Transform
       pos: 27.5,-33.5
       parent: 2
-- proto: SMESBasic
+- proto: SMESExtended
   entities:
   - uid: 12800
     components:
