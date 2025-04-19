@@ -24,7 +24,7 @@ public sealed partial class FleshCultistComponent : Component
     public string ActionFleshCultistShop = "FleshCultistShop";
 
     [DataField]
-    public FixedPoint2 StartingMutationPoints = 5;
+    public FixedPoint2 StartingMutationPoints = 3;
 
     [DataField]
     public EntityUid? ActionFleshCultistShopEntity;
