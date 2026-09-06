@@ -1,4 +1,5 @@
 using Content.Server.Access.Systems;
+using Content.Shared._Sunrise.Records;
 using Content.Shared.Access.Components;
 using Content.Shared.Forensics.Components;
 using Content.Shared.GameTicking;
@@ -11,6 +12,8 @@ using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+// Sunrise-Edit: RequiredEducationByJob/EnsureRequiredEducation вынесены в
+// Content.Server._Sunrise.StationRecords.Systems.StationRecordsSystem.Records.cs
 
 
 namespace Content.Server.StationRecords.Systems;
@@ -34,7 +37,7 @@ namespace Content.Server.StationRecords.Systems;
 ///     depend on this general record being created. This is subject
 ///     to change.
 /// </summary>
-public sealed class StationRecordsSystem : SharedStationRecordsSystem
+public sealed partial class StationRecordsSystem : SharedStationRecordsSystem // Sunrise-Edit: partial
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly StationRecordKeyStorageSystem _keyStorage = default!;
@@ -175,6 +178,17 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             DNA = dna,
             Silicon = silicon, // Sunrise-Edit
             HumanoidProfile = profile, // Sunrise edit
+            // Sunrise added start — заполняем досье из профиля персонажа
+            MedicalRecord = profile.MedicalRecord,
+            SecurityRecord = profile.SecurityRecord,
+            EmploymentRecord = EnsureRequiredEducation(profile.EmploymentRecord, jobId, age),
+            FullName = HumanoidCharacterProfile.ComposeFullName(name, profile.Patronymic),
+            // Sunrise-Edit: раньше было "||" — при заполнении только дня ИЛИ только месяца
+            // получалась ломаная дата вида ".12.3008" или "22..3008"
+            DateOfBirth = !string.IsNullOrEmpty(profile.BirthDay) && !string.IsNullOrEmpty(profile.BirthMonth)
+                ? $"{profile.BirthDay}.{profile.BirthMonth}.{RecordDateConventions.CurrentYear - age}"
+                : string.Empty,
+            // Sunrise added end
         };
 
         var key = AddRecordEntry(station, record);

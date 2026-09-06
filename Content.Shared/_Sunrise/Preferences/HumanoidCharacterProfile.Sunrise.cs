@@ -27,6 +27,17 @@ public sealed partial class HumanoidCharacterProfile
 
     public IReadOnlyDictionary<ProtoId<JobPrototype>, LocId> JobAlternativeTitles => SunriseProfile.JobAlternativeTitles;
 
+    // Sunrise added start — аксессоры полей досье
+    public string MedicalRecord => SunriseProfile.MedicalRecord;
+    public string SecurityRecord => SunriseProfile.SecurityRecord;
+    public string EmploymentRecord => SunriseProfile.EmploymentRecord;
+    // Отчество персонажа: базовые имя и фамилия уже задаются в редакторе персонажа,
+    // здесь хранится только необязательное отчество для составления полного ФИО в досье
+    public string Patronymic => SunriseProfile.FullName;
+    public string BirthDay => SunriseProfile.BirthDay;
+    public string BirthMonth => SunriseProfile.BirthMonth;
+    // Sunrise added end
+
     public HumanoidCharacterProfile WithVoice(string voice)
     {
         return new(this) { SunriseProfile = SunriseProfile.WithVoice(voice) };
@@ -61,6 +72,41 @@ public sealed partial class HumanoidCharacterProfile
     {
         return new(this) { SunriseProfile = SunriseProfile.WithJobAlternativeTitles(alternativeTitles) };
     }
+
+    // Sunrise added start — With-методы для полей досье
+    public HumanoidCharacterProfile WithMedicalRecord(string value)
+        => new(this) { SunriseProfile = SunriseProfile.WithMedicalRecord(value) };
+
+    public HumanoidCharacterProfile WithSecurityRecord(string value)
+        => new(this) { SunriseProfile = SunriseProfile.WithSecurityRecord(value) };
+
+    public HumanoidCharacterProfile WithEmploymentRecord(string value)
+        => new(this) { SunriseProfile = SunriseProfile.WithEmploymentRecord(value) };
+
+    public HumanoidCharacterProfile WithPatronymic(string value)
+        => new(this) { SunriseProfile = SunriseProfile.WithFullName(value) };
+
+    public HumanoidCharacterProfile WithBirthDay(string value)
+        => new(this) { SunriseProfile = SunriseProfile.WithBirthDay(value) };
+
+    public HumanoidCharacterProfile WithBirthMonth(string value)
+        => new(this) { SunriseProfile = SunriseProfile.WithBirthMonth(value) };
+
+    /// <summary>
+    /// Составляет полное ФИО из уже заданного имени персонажа и необязательного отчества.
+    /// Отчество дописывается в конец, порядок имени и фамилии не меняется.
+    /// </summary>
+    // Sunrise-Edit: раньше двухсловное имя переставлялось в порядок "Фамилия Имя Отчество"
+    // ("Исмаэль Аддисон" + "Егеров" -> "Аддисон Исмаэль Егеров"), хотя ожидался порядок
+    // "Исмаэль Аддисон Егеров" — имя и фамилия как есть, отчество просто в конце
+    public static string ComposeFullName(string name, string patronymic)
+    {
+        if (string.IsNullOrWhiteSpace(patronymic))
+            return name;
+
+        return $"{name.Trim()} {patronymic.Trim()}";
+    }
+    // Sunrise added end
 
     public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex)
     {
